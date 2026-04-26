@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ночная доставка напитков в Москве | АлкоДоставка</title>
+  <meta name="description" content="Срочная доставка напитков по Москве: заказать алкоголь онлайн, собрать корзину и получить заказ без задержек. Только 18+.">
+  <meta property="og:title" content="Ночная доставка напитков в Москве | АлкоДоставка">
+  <meta property="og:description" content="Закажите напитки онлайн: вечерние и ночные заявки, понятная корзина и быстрая обработка.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://alkodostavka24.vercel.app/">
+  <link rel="canonical" href="https://alkodostavka24.vercel.app/">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body data-page="main">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">АлкоДоставка</a>
+      <nav class="top-links" aria-label="Основная навигация">
+        <a href="vodka.html">Водка</a>
+        <a href="vino.html">Вино</a>
+        <a href="viski.html">Виски</a>
+        <a href="dostavka.html">Доставка</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="#" class="js-cart-toggle">Корзина <span class="cart-count">0</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Заказать алкоголь онлайн в Москве без лишних шагов</h1>
+      <p>Сервис работает для тех, кому нужна не просто доставка, а предсказуемый результат: ночная доставка, срочная доставка напитков, аккуратная комплектация заказа и быстрая связь с оператором. Мы не используем шаблонные тексты, а даем понятные условия и живой каталог.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#quick-order">Оформить заявку</a>
+        <a class="btn btn-secondary" href="tel:+79997863967">Позвонить: +7 (999) 786-39-67</a>
+        <a class="btn btn-tg" href="https://t.me/alkodostavka" target="_blank" rel="noopener noreferrer">Перейти в Telegram</a>
+      </div>
+      <div class="chips" aria-label="Быстрые разделы">
+        <a href="dostavka.html">Условия доставки</a>
+        <a href="faq.html">Частые вопросы</a>
+        <a href="about.html">О сервисе</a>
+        <a href="policy.html">Политика конфиденциальности</a>
+        <a href="blog.html">Блог</a>
+        <a href="city-moskva.html">Москва</a>
+        <a href="landing-viski.html">Лендинг: виски</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Популярные позиции каталога</h2>
+      <p class="muted">Подборка обновляется автоматически по наличию. Для каждой карточки включена lazy-загрузка изображений и fallback на webp.</p>
+      <div id="main-products" class="product-grid"></div>
+    </section>
+
+    <section class="section content-box">
+      <h2>Как проходит оформление</h2>
+      <p>Вы добавляете нужные позиции в корзину, оставляете контакты и адрес, после чего менеджер подтверждает состав и время прибытия. Формат удобен для домашних встреч, поздних заказов после мероприятий и ситуаций, когда важно получить доставку без задержек.</p>
+      <h3>Зоны обслуживания</h3>
+      <p>Заявки принимаются по Москве, а по ближайшим пригородам возможность доставки уточняется во время подтверждения. При высокой загрузке мы сразу сообщаем реальный интервал прибытия.</p>
+      <h3>Возрастные ограничения</h3>
+      <p>Продажа алкогольной продукции доступна только для 18+. Курьер вправе запросить документ, подтверждающий возраст получателя.</p>
+    </section>
+
+    <section class="section faq">
+      <h2>Ответы на частые вопросы</h2>
+      <details>
+        <summary>Можно ли оформить заказ поздно вечером?</summary>
+        <p>Да, ночная доставка напитков доступна. По времени ориентируем по фактической дорожной ситуации в вашем районе.</p>
+      </details>
+      <details>
+        <summary>Какие способы связи доступны?</summary>
+        <p>Вы можете позвонить, написать в Telegram или отправить форму на сайте. Контактные данные сохранены без изменений.</p>
+      </details>
+      <details>
+        <summary>Есть ли срочная обработка заявки?</summary>
+        <p>Срочная доставка напитков поддерживается по возможности свободных курьеров, приоритет подтверждается оператором.</p>
+      </details>
+    </section>
+
+    <section id="quick-order" class="order-form-block">
+      <h3>Быстрая заявка</h3>
+      <form class="quick-order-form" data-page="main">
+        <input type="text" class="quick-name" placeholder="Ваше имя" required autocomplete="name">
+        <input type="tel" class="quick-phone" placeholder="Телефон" required autocomplete="tel">
+        <button type="submit">Отправить</button>
+      </form>
+      <div class="order-message"></div>
+    </section>
+  </main>
+
+  <div class="cart-panel" id="cart-panel">
+    <div class="cart-header">
+      <h3>Корзина</h3>
+      <button class="close-cart" id="close-cart" type="button" aria-label="Закрыть">×</button>
+    </div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-total" id="cart-total">Итого: 0 ₽</div>
+    <form class="cart-form" id="order-form">
+      <input type="text" id="order-name" placeholder="Ваше имя" required autocomplete="name">
+      <input type="tel" id="order-phone" placeholder="Телефон" required autocomplete="tel">
+      <input type="text" id="order-address" placeholder="Адрес доставки" required autocomplete="street-address">
+      <textarea id="order-comment" placeholder="Комментарий"></textarea>
+      <button id="submit-order" type="submit">Оформить заказ</button>
+    </form>
+  </div>
+  <div class="overlay" id="overlay"></div>
+
+  <div class="sticky-cta" aria-label="Быстрые действия">
+    <a class="cta-call" href="tel:+79997863967">Заказать</a>
+    <a class="cta-wa" href="https://wa.me/79997863967" target="_blank" rel="noopener noreferrer">Написать</a>
+    <a class="cta-tg" href="https://t.me/alkodostavka" target="_blank" rel="noopener noreferrer">Telegram</a>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3>Информация</h3>
+          <ul>
+            <li><a href="about.html">О сервисе</a></li>
+            <li><a href="dostavka.html">Условия доставки</a></li>
+            <li><a href="faq.html">Вопросы и ответы</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Категории</h3>
+          <ul>
+            <li><a href="vino.html">Вино</a></li>
+            <li><a href="vodka.html">Водка</a></li>
+            <li><a href="viski.html">Виски</a></li>
+            <li><a href="shampanskoe.html">Шампанское</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Контакты</h3>
+          <ul>
+            <li><a href="tel:+79997863967">+7 (999) 786-39-67</a></li>
+            <li><a href="mailto:info@alkodostavka.vercel.app">info@alkodostavka.vercel.app</a></li>
+            <li><a href="contacts.html">Страница контактов</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">© 2026 АлкоДоставка. Только для лиц старше 18 лет.</div>
+    </div>
+  </footer>
+
+  <script defer src="products.js"></script>
+  <script defer src="cart.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "АлкоДоставка",
+        "url": "https://alkodostavka24.vercel.app/",
+        "logo": "https://alkodostavka24.vercel.app/favicon.svg",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+7-999-786-39-67",
+          "contactType": "customer support",
+          "areaServed": "RU-MOW"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "name": "АлкоДоставка",
+        "url": "https://alkodostavka24.vercel.app/"
+      },
+      {
+        "@type": "ItemList",
+        "name": "Каталог напитков",
+        "itemListElement": [
+          {"@type":"ListItem","position":1,"name":"Вино","url":"https://alkodostavka24.vercel.app/vino.html"},
+          {"@type":"ListItem","position":2,"name":"Водка","url":"https://alkodostavka24.vercel.app/vodka.html"},
+          {"@type":"ListItem","position":3,"name":"Виски","url":"https://alkodostavka24.vercel.app/viski.html"}
+        ]
+      }
+    ]
+  }
+  </script>
+</body>
+</html>
