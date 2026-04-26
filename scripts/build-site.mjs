@@ -50,11 +50,15 @@ function brandOf(name) {
   return cleaned.split(/\s+/).slice(0, 2).join(" ");
 }
 
-/** Путь к файлу как в папке photo (без ведущего слэша): photo/1.jpg */
+/** Корневой URL картинки: /photo/1.jpg — одинаково работает с главной, категорий и /product/ */
 function photoSrc(p) {
   const raw = (p && p.image) ? String(p.image) : "";
-  if (raw) return raw.replace(/^\//, "");
-  return `photo/${p.id}.jpg`;
+  const rel = raw ? raw.replace(/^\//, "") : `photo/${p.id}.jpg`;
+  return `/${rel}`;
+}
+
+function photoAbsoluteUrl(p) {
+  return `${domain}${photoSrc(p)}`;
 }
 
 function longSeoText(topic, min = 21000) {
@@ -231,7 +235,7 @@ for (const p of inScopeProducts) {
     h1: p.name,
     canonicalPath: `/product/${slug}.html`,
     content: `<section class="section"><div class="grid"><article class="card"><img src="${photoSrc(p)}" alt="${p.name}" loading="eager"><p class="price">${p.price} ₽</p><p>Категория: <a href="/${p.category}/">${categoryTitle}</a></p><button class="btn add" data-id="${p.id}">Добавить в корзину</button></article><article class="card"><h2>Описание товара</h2><div class="seo">${productDescription(p, 3600)}</div></article></div></section>`,
-    schema: `<script>window.__PRODUCTS__=${JSON.stringify(inScopeProducts)};</script><script type="application/ld+json">${JSON.stringify({"@context":"https://schema.org","@type":"Product","name":p.name,"offers":{"@type":"Offer","priceCurrency":"RUB","price":p.price,"availability":p.inStock?"https://schema.org/InStock":"https://schema.org/OutOfStock"},"image":[`${domain}/${photoSrc(p)}`]})}</script>`
+    schema: `<script>window.__PRODUCTS__=${JSON.stringify(inScopeProducts)};</script><script type="application/ld+json">${JSON.stringify({"@context":"https://schema.org","@type":"Product","name":p.name,"offers":{"@type":"Offer","priceCurrency":"RUB","price":p.price,"availability":p.inStock?"https://schema.org/InStock":"https://schema.org/OutOfStock"},"image":[photoAbsoluteUrl(p)]})}</script>`
   });
   write(`product/${slug}.html`, page);
   allRoutes.push(`/product/${slug}.html`);
