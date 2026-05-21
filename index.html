@@ -1,54 +1,571 @@
-<!doctype html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Доставка алкоголя Москва 24/7 — заказать онлайн</title>
-  <meta name="description" content="Алкоголь на дом круглосуточно: каталог с ценами, быстрый заказ, корзина и подтверждение через Telegram.">
-  <link rel="canonical" href="https://alkodostavka24.vercel.app/">
-  <meta property="og:title" content="Доставка алкоголя Москва 24/7 — заказать онлайн">
-  <meta property="og:description" content="Алкоголь на дом круглосуточно: каталог с ценами, быстрый заказ, корзина и подтверждение через Telegram.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://alkodostavka24.vercel.app/">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/assets/app.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Круглосуточная доставка алкоголя — на дом в Москве и области | телефон, WhatsApp, Telegram · 18+</title>
+    <meta name="description" content="АлкоДоставка 24 — напитки и закуски по Москве и МО, приём заказов 24/7. Часто 20–40 минут после подтверждения. Звонок, WhatsApp или Telegram. Только 18+, документ при получении. alkodostavka24.vercel.app">
+    <meta name="author" content="АлкоДоставка 24">
+    <meta name="geo.region" content="RU-MOW">
+    <meta name="geo.placename" content="Москва">
+    <link rel="canonical" href="https://alkodostavka24.vercel.app/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:url" content="https://alkodostavka24.vercel.app/">
+    <meta property="og:title" content="АлкоДоставка 24 — Москва и МО, круглосуточно, от 650 ₽ доставка | 18+">
+    <meta property="og:description" content="Крепкий алкоголь, вино, пиво, закуски. Часто 20–40 мин по Москве. +7 (999) 786-39-67. 18+.">
+    <meta property="og:image" content="https://alkodostavka24.vercel.app/favicon.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="АлкоДоставка 24 — доставка алкоголя 24/7 по Москве">
+    <meta name="twitter:description" content="Доставка алкоголя и закусок на дом в Москве и МО. Круглосуточно. 18+.">
+    <link rel="preconnect" href="https://mc.yandex.ru" crossorigin>
+    <link rel="preload" href="/style.css" as="style">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://alkodostavka24.vercel.app/#website",
+                "url": "https://alkodostavka24.vercel.app/",
+                "name": "АлкоДоставка 24",
+                "inLanguage": "ru-RU",
+                "publisher": { "@id": "https://alkodostavka24.vercel.app/#business" }
+            },
+            {
+                "@type": "LocalBusiness",
+                "@id": "https://alkodostavka24.vercel.app/#business",
+                "name": "АлкоДоставка 24",
+                "image": "https://alkodostavka24.vercel.app/favicon.svg",
+                "url": "https://alkodostavka24.vercel.app/",
+                "telephone": "+79997863967",
+                "priceRange": "₽₽",
+                "areaServed": { "@type": "City", "name": "Москва" },
+                "openingHoursSpecification": [{
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+                    "opens": "00:00",
+                    "closes": "23:59"
+                }]
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Как заказать доставку алкоголя на дом?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Позвоните по телефону +7 (999) 786-39-67, напишите в WhatsApp или Telegram, либо оставьте заявку на странице Контакты. Мы принимаем заказы круглосуточно."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Работаете ли вы круглосуточно?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Да, приём заказов и доставка по согласованию доступны 24/7, включая ночные часы и выходные."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Доставляете ли алкоголь ночью?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Да, ночная доставка по Москве и области возможна. Точное время зависит от района и загрузки — уточняйте у оператора."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Какая минимальная сумма заказа?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Минимальная сумма заказа от 1000 ₽. Условия акций и бесплатной доставки уточняйте при оформлении."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Как быстро привезут заказ?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Во многих заказах по Москве укладываемся в 20–40 минут после подтверждения; в часы пик, ночью или при плохой погоде срок может быть ближе к часу. Менеджер назовёт реалистичное окно."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
 </head>
-<body class="">
-  <header class="header">
-    <div class="wrap header-row">
-      <a class="logo" href="/">АлкоДоставка24</a>
-      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false">☰</button>
-      <nav class="nav">
-        <a href="/">Главная</a><a href="/catalog/">Каталог</a><a href="/delivery/">Доставка</a><a href="/faq/">FAQ</a><a href="/contacts/">Контакты</a><a href="/policy/">Policy</a>
-      </nav>
-      <button class="cart-open" type="button">Корзина <span class="cart-count">0</span></button>
-    </div>
-  </header>
-  <main class="wrap">
-    <section class="hero">
-      <h1>Круглосуточная доставка алкоголя по Москве и области</h1>
-      <div class="hero-actions">
-        <a class="btn primary" href="tel:+79997863967">Позвонить</a>
-        <a class="btn wa" href="https://wa.me/79997863967" target="_blank" rel="noopener noreferrer">Написать</a>
-        <a class="btn tg" href="https://t.me/alkodostavka" target="_blank" rel="noopener noreferrer">Telegram</a>
+<body>
+    <div class="age-strip" role="note">18+ Продажа и передача алкоголя только совершеннолетним. Чрезмерное употребление вредит здоровью.</div>
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+<header class="header site-header">
+    <div class="header-mobile-callbar" aria-label="Звонок, приём 24/7, только 18+">
+      <div class="mobile-callbar-left">
+        <span class="mobile-callbar-pill">Приём 24/7</span>
+        <span class="mobile-callbar-age">18+</span>
       </div>
-    </section>
-    <section class="section"><h2>Популярные товары</h2><p class="popular-note"></p><div id="popular-grid" class="grid"></div></section>
-<section class="section"><h2>Категории</h2><div class="grid"><a class="card" href="/vodka/"><h3>Водка</h3><p>Перейти в каталог категории</p></a><a class="card" href="/viski/"><h3>Виски</h3><p>Перейти в каталог категории</p></a><a class="card" href="/pivo/"><h3>Пиво</h3><p>Перейти в каталог категории</p></a><a class="card" href="/vino/"><h3>Вино</h3><p>Перейти в каталог категории</p></a><a class="card" href="/konyak/"><h3>Коньяк</h3><p>Перейти в каталог категории</p></a><a class="card" href="/rom/"><h3>Ром</h3><p>Перейти в каталог категории</p></a><a class="card" href="/tekila/"><h3>Текила</h3><p>Перейти в каталог категории</p></a><a class="card" href="/dzhin/"><h3>Джин</h3><p>Перейти в каталог категории</p></a><a class="card" href="/liker/"><h3>Ликер</h3><p>Перейти в каталог категории</p></a><a class="card" href="/shampanskoe/"><h3>Шампанское</h3><p>Перейти в каталог категории</p></a><a class="card" href="/vermut/"><h3>Вермут</h3><p>Перейти в каталог категории</p></a><a class="card" href="/sigarety/"><h3>Сопутствующие товары</h3><p>Перейти в каталог категории</p></a></div></section>
-<section class="section"><h2>О доставке и напитках</h2><div class="prose"><p>Иногда вечер просится к столу сам: город за окном шумит, а вам хочется простого — выбрать бутылку без очередей и лишних разговоров в магазине.</p>
-<p>В каталоге собраны водка и виски, вино и пиво, крепкий бренди и лёгкие аперитивы — можно собрать сет под ужин, праздник или тихую пятницу вдвоём.</p>
-<p>Мы делаем ставку на понятность: видно цену, категорию и можно сразу положить товар в корзину. Остальное — вопрос пары минут на звонок или сообщение оператору.</p>
-<p>Если вы не уверены, что выбрать, начните с привычного бренда или объёма — так проще не промахнуться с подарком или с «тем самым» вкусом.</p>
-<p>Напоминаем: алкоголь — удовольствие для взрослых. Берегите себя и окружающих, не смешивайте разное без меры и планируйте дорогу домой заранее.</p>
-<p>Мы работаем в Москве и по области: оформите заявку через корзину или позвоните — оператор поможет собрать заказ и уточнить детали.</p>
-<p>Цены в карточках ориентировочные для витрины; итог и наличие конкретных позиций проще всего подтвердить при звонке или в переписке.</p>
-<p>Пейте ответственно, не садитесь за руль в состоянии опьянения и помните про возраст 18+.</p></div></section>
-  </main>
-  <div class="quick-actions"><a href="tel:+79997863967">Позвонить</a><a href="https://wa.me/79997863967" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="https://t.me/alkodostavka" target="_blank" rel="noopener noreferrer">Telegram</a></div>
-  <aside class="cart"><div class="cart-head"><strong>Корзина</strong><button type="button" class="cart-close">×</button></div><div class="cart-items"></div><div class="cart-total"></div><form class="order"><input required name="name" placeholder="Ваше имя"><input required name="phone" placeholder="Телефон"><button type="submit">Оформить заказ</button></form><div class="order-msg"></div></aside>
-  <div class="overlay"></div>
-  <footer class="footer"><div class="wrap"><p>Телефон: <a href="tel:+79997863967">+7 (999) 786-39-67</a> · Telegram: <a href="https://t.me/alkodostavka" target="_blank" rel="noopener noreferrer">t.me/alkodostavka</a> · Email: <a href="mailto:info@alkodostavka.vercel.app">info@alkodostavka.vercel.app</a></p><p>Только 18+. Информация носит справочный характер.</p></div></footer>
-  <script src="/assets/app.js" defer></script>
-  <script>window.__PRODUCTS__=[{"id":1,"name":"ВЕРМУТ CINZANO BIANCO 1,0 ЛИТРА","price":2429,"category":"vermut","inStock":true,"image":"/photo/1.jpg"},{"id":2,"name":"ВЕРМУТ MARTINI EXTRA DRY белый сухой 0,75 ЛИТРА","price":2190,"category":"vermut","inStock":true,"image":"/photo/2.jpg"},{"id":3,"name":"ВЕРМУТ MARTINI FIERO 1 ЛИТРА + Schweppes 1 ЛИТРА","price":2449,"category":"vermut","inStock":false,"image":"/photo/3.jpg"},{"id":4,"name":"ВЕРМУТ GANCIA BIANCO 0,5 ЛИТРА","price":990,"category":"vermut","inStock":true,"image":"/photo/4.jpg"},{"id":5,"name":"ВЕРМУТ CINZANO BIANCO белое сладкое 0,5 ЛИТРА","price":1829,"category":"vermut","inStock":true,"image":"/photo/5.jpg"},{"id":6,"name":"ВЕРМУТ MARTINI BIANCO 0,75 ЛИТРА","price":2099,"category":"vermut","inStock":true,"image":"/photo/6.jpg"},{"id":7,"name":"ВИНО COMTE DE MARIAC красное полусладкое 0,7 ЛИТРА","price":1190,"category":"vino","inStock":true,"image":"/photo/7.jpg"},{"id":8,"name":"ВИНО C’ERA UNA VOLTA PINOT GRIGIO белое сухое 0,75 ЛИТРА","price":1549,"category":"vino","inStock":true,"image":"/photo/8.jpg"},{"id":9,"name":"ВИНО COMTE DE MARIAC белое сухое 0,7 ЛИТРА","price":1190,"category":"vino","inStock":true,"image":"/photo/9.jpg"},{"id":10,"name":"ВИНО CHIANTI DOCG красное сухое 0,75 ЛИТРА","price":1850,"category":"vino","inStock":true,"image":"/photo/10.jpg"},{"id":11,"name":"ВИНО COMTE DE MARIAC белое полусладкое 0,7 ЛИТРА","price":1190,"category":"vino","inStock":true,"image":"/photo/11.jpg"},{"id":12,"name":"ВИНО MANCURA SAUVIGNON BLANC белое сухое 0,75 ЛИТРА","price":1429,"category":"vino","inStock":true,"image":"/photo/12.jpg"},{"id":13,"name":"ВИНО VINEDOS SANTA LUCIA SAUVIGNON BLANC белое сухое 0,75 ЛИТРА","price":1529,"category":"vino","inStock":true,"image":"/photo/13.jpg"},{"id":14,"name":"ВИНО КИНДЗМАРАУЛИ красное полусладкое 0,75 ЛИТРА","price":1349,"category":"vino","inStock":true,"image":"/photo/14.jpg"},{"id":15,"name":"ВИНО Gewurztraminer белое полусладкое 0,75 ЛИТРА","price":1599,"category":"vino","inStock":true,"image":"/photo/15.jpg"},{"id":16,"name":"ВИНО MARE ALTA VINHO VERDE белое полусухое 0,7 ЛИТРА","price":1490,"category":"vino","inStock":true,"image":"/photo/16.jpg"},{"id":17,"name":"ВИНО MANCURA CABERNET красное сухое 0,75 ЛИТРА","price":1429,"category":"vino","inStock":false,"image":"/photo/17.jpg"},{"id":18,"name":"ВИНО COMTE DE MARIAC красное сухое 0,7 ЛИТРА","price":1190,"category":"vino","inStock":true,"image":"/photo/18.jpg"},{"id":19,"name":"Вино Кампо Вента Дон Хуан Тиерра де Кастилья белое сухое 0.75 ЛИТРА","price":1490,"category":"vino","inStock":true,"image":"/photo/19.jpg"},{"id":20,"name":"ВИНО ИГРИСТОЕ INKERMAN ROSE полусладкое 0,75 ЛИТРА","price":1490,"category":"vino","inStock":true,"image":"/photo/20.jpg"},{"id":21,"name":"ВИНО PINOT NOIR красное сухое 0,75 ЛИТРА","price":1800,"category":"vino","inStock":true,"image":"/photo/21.jpg"},{"id":22,"name":"ВИНО INKERMAN МУСКАТ белое полусладкое 0,75 ЛИТРА","price":1390,"category":"vino","inStock":true,"image":"/photo/22.jpg"},{"id":23,"name":"ВИСКИ BALLANTINE’s 1,0 ЛИТРА","price":4249,"category":"viski","inStock":true,"image":"/photo/23.jpg"},{"id":24,"name":"WHITE HORSE 0,5 ЛИТРА","price":1890,"category":"viski","inStock":true,"image":"/photo/24.jpg"},{"id":25,"name":"ВИСКИ BELL’S 0,5 ЛИТРА","price":1890,"category":"viski","inStock":true,"image":"/photo/25.jpg"},{"id":26,"name":"ВИСКИ WILLIAM LAWSON’S 0,7 ЛИТРА","price":2429,"category":"viski","inStock":true,"image":"/photo/26.jpg"},{"id":27,"name":"ВИСКИ BELL’S 1,0 ЛИТРА","price":2849,"category":"viski","inStock":true,"image":"/photo/27.jpg"},{"id":28,"name":"ВИСКИ BALLANTINE’s 0,5 ЛИТРА","price":3249,"category":"viski","inStock":true,"image":"/photo/28.jpg"},{"id":29,"name":"ВИСКИ JAMESON 0,5 ЛИТРА","price":2999,"category":"viski","inStock":true,"image":"/photo/29.jpg"},{"id":30,"name":"ВИСКИ JACK DANIEL’S 0,7 ЛИТРА","price":4590,"category":"viski","inStock":true,"image":"/photo/30.jpg"},{"id":31,"name":"ВИСКИ JOHNNIE WALKER RED LABEL 0,5 ЛИТРА","price":2490,"category":"viski","inStock":true,"image":"/photo/31.jpg"},{"id":32,"name":"ВИСКИ JIM BEAM 0,5 ЛИТРА","price":2849,"category":"viski","inStock":true,"image":"/photo/32.jpg"},{"id":33,"name":"ВИСКИ WILLIAM LAWSON’S 1,0 ЛИТРА","price":2790,"category":"viski","inStock":true,"image":"/photo/33.jpg"},{"id":34,"name":"ВИСКИ JAMESON 0,7 ЛИТРА","price":4290,"category":"viski","inStock":true,"image":"/photo/34.jpg"},{"id":35,"name":"ВИСКИ JIM BEAM APPLE 0,7 ЛИТРА","price":4029,"category":"viski","inStock":true,"image":"/photo/35.jpg"},{"id":36,"name":"ВИСКИ JOHNNIE WALKER RED LABEL 0,7 ЛИТРА","price":2949,"category":"viski","inStock":true,"image":"/photo/36.jpg"},{"id":37,"name":"ВИСКИ BELL’s SPICED 0,7 ЛИТРА","price":2490,"category":"viski","inStock":true,"image":"/photo/37.jpg"},{"id":38,"name":"ВИСКИ JAMESON 1,0 ЛИТРА","price":5999,"category":"viski","inStock":true,"image":"/photo/38.jpg"},{"id":39,"name":"ВОДКА 5 ОЗЕР 0,7 ЛИТРА","price":1300,"category":"vodka","inStock":true,"image":"/photo/39.jpg"},{"id":40,"name":"ВОДКА ABSOLUT 0,75 ЛИТРА","price":3229,"category":"vodka","inStock":true,"image":"/photo/40.jpg"},{"id":41,"name":"ВОДКА 5 ОЗЕР 0,5 ЛИТРА","price":929,"category":"vodka","inStock":true,"image":"/photo/41.jpg"},{"id":42,"name":"ВОДКА ABSOLUT 0.5 ЛИТРА","price":2599,"category":"vodka","inStock":true,"image":"/photo/42.jpg"},{"id":43,"name":"ВОДКА РУССКИЙ СТАНДАРТ 0,7 ЛИТРА","price":1749,"category":"vodka","inStock":true,"image":"/photo/43.jpg"},{"id":44,"name":"ВОДКА РУССКИЙ СТАНДАРТ 0,5 ЛИТРА","price":1290,"category":"vodka","inStock":true,"image":"/photo/44.jpg"},{"id":45,"name":"ВОДКА ЖУРАВЛИ 0,5 ЛИТРА","price":979,"category":"vodka","inStock":true,"image":"/photo/45.jpg"},{"id":46,"name":"ВОДКА ЗЕЛЕНАЯ МАРКА 0,5 ЛИТРА","price":990,"category":"vodka","inStock":true,"image":"/photo/46.jpg"},{"id":47,"name":"ВОДКА ТАЛКА 0,5 ЛИТРА","price":949,"category":"vodka","inStock":true,"image":"/photo/47.jpg"},{"id":48,"name":"ВОДКА NEMIROFF 0,5 ЛИТРА","price":749,"category":"vodka","inStock":true,"image":"/photo/48.jpg"},{"id":49,"name":"ВОДКА ХОРТИЦА 0,7 ЛИТРА","price":1249,"category":"vodka","inStock":true,"image":"/photo/49.jpg"},{"id":50,"name":"ВОДКА ХОРТИЦА 0,5 ЛИТРА","price":949,"category":"vodka","inStock":true,"image":"/photo/50.jpg"},{"id":51,"name":"ВОДКА NEMIROFF ПЕРЕЦ 0,5 ЛИТРА","price":799,"category":"vodka","inStock":true,"image":"/photo/51.jpg"},{"id":52,"name":"ВОДКА ЦАРСКАЯ 0,5 ЛИТРА","price":1249,"category":"vodka","inStock":true,"image":"/photo/52.jpg"},{"id":53,"name":"ВОДКА ЦАРСКАЯ 0,7 ЛИТРА","price":1629,"category":"vodka","inStock":true,"image":"/photo/53.jpg"},{"id":54,"name":"НАСТОЙКА NEMIROFF КЛЮКВА 0,5 ЛИТРА","price":749,"category":"vodka","inStock":true,"image":"/photo/54.jpg"},{"id":55,"name":"ДЖИН BEEFEATER 0,7 ЛИТРА","price":3890,"category":"dzhin","inStock":true,"image":"/photo/55.jpg"},{"id":56,"name":"ДЖИН GORDON’S 0,7 ЛИТРА","price":3149,"category":"dzhin","inStock":false,"image":"/photo/56.jpg"},{"id":57,"name":"ДЖИН TANQUERAY LONDON DRY 1,0 ЛИТРА","price":3749,"category":"dzhin","inStock":true,"image":"/photo/57.jpg"},{"id":58,"name":"КОНЬЯК СТАРЫЙ КЕНИНГСБЕРГ 4 года 0,5 ЛИТРА","price":1499,"category":"konyak","inStock":true,"image":"/photo/58.jpg"},{"id":59,"name":"КОНЬЯК Дару-Бенд 5 лет 0,5 ЛИТРА","price":1290,"category":"konyak","inStock":true,"image":"/photo/59.jpg"},{"id":60,"name":"КОНЬЯК DAVID IVERELI 7 лет 0,5 ЛИТРА","price":1790,"category":"konyak","inStock":false,"image":"/photo/60.jpg"},{"id":61,"name":"КОНЬЯК КОЧАРИ 3 года 0,5 ЛИТРА","price":1099,"category":"konyak","inStock":true,"image":"/photo/61.jpg"},{"id":62,"name":"КОНЬЯК АРАРАТ 3 года 0,5 ЛИТРА","price":2190,"category":"konyak","inStock":true,"image":"/photo/62.jpg"},{"id":63,"name":"КОНЬЯК АРАРАТ 3 года 0,7 ЛИТРА","price":2590,"category":"konyak","inStock":true,"image":"/photo/63.jpg"},{"id":64,"name":"КОНЬЯК НОЙ 3 ГОДА 0,5 ЛИТРА","price":1950,"category":"konyak","inStock":true,"image":"/photo/64.jpg"},{"id":65,"name":"КОНЬЯК A. DE FUSSIGNY SELECTION 0,5 ЛИТРА","price":2990,"category":"konyak","inStock":true,"image":"/photo/65.jpg"},{"id":66,"name":"Коньяк Кочари 5 лет 0,5 л","price":1390,"category":"konyak","inStock":true,"image":"/photo/66.jpg"},{"id":67,"name":"КОНЬЯК АРАРАТ 5 ЗВЕЗД 0,5 ЛИТРА","price":2489,"category":"konyak","inStock":true,"image":"/photo/67.jpg"},{"id":68,"name":"КОНЬЯК АРАРАТ 5 звезд 0,7 ЛИТРА","price":3090,"category":"konyak","inStock":true,"image":"/photo/68.jpg"},{"id":69,"name":"КОНЬЯК HENNESSY VS 0,7 ЛИТРА","price":7990,"category":"konyak","inStock":true,"image":"/photo/69.jpg"},{"id":70,"name":"КОНЬЯК COURVOISIER VS 0,7 ЛИТРА","price":8390,"category":"konyak","inStock":true,"image":"/photo/70.jpg"},{"id":71,"name":"КОНЬЯК HENNESSY VSOP 0,7 ЛИТРА","price":12990,"category":"konyak","inStock":false,"image":"/photo/71.jpg"},{"id":72,"name":"КОНЬЯК REMY MARTIN SUPERIEUR VS 0,7 ЛИТРА","price":9290,"category":"konyak","inStock":true,"image":"/photo/72.jpg"},{"id":73,"name":"КОНЬЯК COURVOISIER VSOP 0,7 ЛИТРА","price":9190,"category":"konyak","inStock":true,"image":"/photo/73.jpg"},{"id":74,"name":"ЛИКЕР JAGERMEISTERP 0,7 ЛИТРА","price":3549,"category":"liker","inStock":true,"image":"/photo/74.jpg"},{"id":75,"name":"ЛИКЕР ЛИМОНЧЕЛЛО 0,5 ЛИТРА","price":1249,"category":"liker","inStock":true,"image":"/photo/75.jpg"},{"id":76,"name":"ЛИКЕР BAILEYS 0,7 ЛИТРА","price":3149,"category":"liker","inStock":true,"image":"/photo/76.jpg"},{"id":77,"name":"ЛИКЕР КСУ-КСУ XUXU 0,7 ЛИТРА","price":1990,"category":"liker","inStock":true,"image":"/photo/77.jpg"},{"id":78,"name":"Aperol 1,0 ЛИТР","price":3290,"category":"liker","inStock":true,"image":"/photo/78.jpg"},{"id":79,"name":"ЛИКЕР SHERIDAN’S 0,5 ЛИТРА","price":3429,"category":"liker","inStock":true,"image":"/photo/79.jpg"},{"id":80,"name":"ЛИКЕР SAMBUCA 0,5 ЛИТРА","price":1549,"category":"liker","inStock":true,"image":"/photo/80.jpg"},{"id":81,"name":"ЛИКЕР BECHEROVKA 0,7 ЛИТРА","price":3129,"category":"liker","inStock":true,"image":"/photo/81.jpg"},{"id":82,"name":"ЛИКЕР COINTREAU 0,7 ЛИТРА","price":3549,"category":"liker","inStock":true,"image":"/photo/82.jpg"},{"id":83,"name":"ПИВО BUD 0,45 ЛИТРА","price":169,"category":"pivo","inStock":true,"image":"/photo/83.jpg"},{"id":84,"name":"ПИВО KRUSOVICE 0,5 ЛИТРА","price":169,"category":"pivo","inStock":true,"image":"/photo/84.jpg"},{"id":85,"name":"ПИВО ОХОТА КРЕПКОЕ 0,45 ЛИТРА","price":149,"category":"pivo","inStock":true,"image":"/photo/85.jpg"},{"id":86,"name":"ПИВО Tuborg green 0,5 ЛИТРА","price":169,"category":"pivo","inStock":true,"image":"/photo/86.jpg"},{"id":87,"name":"ПИВО KOZEL СВЕТЛОЕ 0,45 ЛИТРА","price":169,"category":"pivo","inStock":true,"image":"/photo/87.jpg"},{"id":88,"name":"ПИВО CORONA EXTRA 0,33 ЛИТРА","price":289,"category":"pivo","inStock":true,"image":"/photo/88.jpg"},{"id":89,"name":"ПИВО ШПАТЕН 0,45 ЛИТРА","price":299,"category":"pivo","inStock":true,"image":"/photo/89.jpg"},{"id":90,"name":"ПИВО HOEGAARDEN 0,5 ЛИТРА","price":239,"category":"pivo","inStock":true,"image":"/photo/90.jpg"},{"id":91,"name":"ПИВO KOZEL ТЕМНОЕ 0,45 ЛИТРА","price":169,"category":"pivo","inStock":true,"image":"/photo/91.jpg"},{"id":92,"name":"ПИВО КРОНЕНБУРГ 1664 Blanco 0,5 ЛИТРА","price":199,"category":"pivo","inStock":true,"image":"/photo/92.jpg"},{"id":93,"name":"ПИВО MILLER 0,45 ЛИТРА","price":199,"category":"pivo","inStock":true,"image":"/photo/93.jpg"},{"id":94,"name":"ПИВО REDD’S яблочный 0,33 ЛИТРА","price":179,"category":"pivo","inStock":true,"image":"/photo/94.jpg"},{"id":95,"name":"РОМ CAPITAN MORGAN SPICED GOLD 0,5 ЛИТРА","price":2190,"category":"rom","inStock":false,"image":"/photo/95.jpg"},{"id":96,"name":"РОМ BACARDI черный 0,5 ЛИТРА","price":2599,"category":"rom","inStock":false,"image":"/photo/96.jpg"},{"id":97,"name":"РОМ BACARDI белый 0,7 ЛИТРА","price":2999,"category":"rom","inStock":false,"image":"/photo/97.jpg"},{"id":98,"name":"РОМ BACARDI белый 0,5 ЛИТРА","price":2499,"category":"rom","inStock":true,"image":"/photo/98.jpg"},{"id":99,"name":"Barcelo Dorado 0.7","price":2790,"category":"rom","inStock":true,"image":"/photo/99.jpg"},{"id":100,"name":"РОМ HAVANA CLUB ANEJO ESPECIAL 3 года 0,7 ЛИТРА","price":3390,"category":"rom","inStock":true,"image":"/photo/100.jpg"},{"id":101,"name":"Barcelo Gran Anejo Dark 0.7","price":2790,"category":"rom","inStock":false,"image":"/photo/101.jpg"},{"id":102,"name":"РОМ CAPITAN MORGAN WHITE 0,5 ЛИТРА","price":2190,"category":"rom","inStock":true,"image":"/photo/102.jpg"},{"id":103,"name":"РОМ CAPITAN MORGAN SPICED GOLD 0,7 ЛИТРА","price":3900,"category":"rom","inStock":true,"image":"/photo/103.jpg"},{"id":104,"name":"Barcelo Blanco 0,7 л","price":2790,"category":"rom","inStock":true,"image":"/photo/104.jpg"},{"id":105,"name":"СИГАРЕТЫ ПАРЛАМЕНТ PARLAMENT АQUA BLUE","price":450,"category":"sigarety","inStock":true,"image":"/photo/105.jpg"},{"id":106,"name":"СИГАРЕТЫ MARLBORO с кнопкой","price":400,"category":"sigarety","inStock":true,"image":"/photo/106.jpg"},{"id":107,"name":"СИГАРЕТЫ КРАСНЫЕ MARLBORO RED","price":420,"category":"sigarety","inStock":true,"image":"/photo/107.jpg"},{"id":108,"name":"СИГАРЕТЫ КЕНТ KENT BLUE FUTURA","price":400,"category":"sigarety","inStock":true,"image":"/photo/108.jpg"},{"id":109,"name":"СИГАРЕТЫ КЕНТ KENT NANO SILVER","price":400,"category":"sigarety","inStock":true,"image":"/photo/109.jpg"},{"id":110,"name":"СИГАРЕТЫ ВОГ VOGUE MENTHE","price":360,"category":"sigarety","inStock":true,"image":"/photo/110.jpg"},{"id":111,"name":"ВОДА КОКА-КОЛА COCA-COLA 2 ЛИТРА","price":360,"category":"sigarety","inStock":true,"image":"/photo/111.jpg"},{"id":112,"name":"СИГАРЕТЫ ВИНСТОН WINSTON X-STYLE BLU","price":360,"category":"sigarety","inStock":true,"image":"/photo/112.jpg"},{"id":113,"name":"СИГАРЕТЫ ВИНСТОН WINSTON BLUE","price":360,"category":"sigarety","inStock":true,"image":"/photo/113.jpg"},{"id":114,"name":"СИГАРЕТЫ КЕНТ KENT SILVER NEO 4","price":400,"category":"sigarety","inStock":true,"image":"/photo/114.jpg"},{"id":115,"name":"ВОДА АКВА AQUA MINERALE с газом 0,5 ЛИТРА","price":120,"category":"sigarety","inStock":true,"image":"/photo/115.jpg"},{"id":116,"name":"ВОДА BORJOMI 0,5 ЛИТРА","price":220,"category":"sigarety","inStock":true,"image":"/photo/116.jpg"},{"id":117,"name":"ВОДА АКВА AQUA MINERALE негаз. 0,5 ЛИТРА","price":120,"category":"sigarety","inStock":true,"image":"/photo/117.jpg"},{"id":118,"name":"ВОДА SCHWEPPES INDIAN TONIC 1 ЛИТРА","price":250,"category":"sigarety","inStock":true,"image":"/photo/118.jpg"},{"id":119,"name":"ЗАЖИГАЛКА","price":100,"category":"sigarety","inStock":true,"image":"/photo/119.jpg"},{"id":120,"name":"СОК RICH Яблоко 1,0 ЛИТРА","price":350,"category":"sigarety","inStock":true,"image":"/photo/120.jpg"},{"id":121,"name":"ТЕКИЛА SAUZA BLANCO 0,7 ЛИТРА","price":2590,"category":"tekila","inStock":true,"image":"/photo/121.jpg"},{"id":122,"name":"ТЕКИЛА OLMECA GOLD 0,7 ЛИТРА","price":2890,"category":"tekila","inStock":true,"image":"/photo/122.jpg"},{"id":123,"name":"ТЕКИЛА JOSE CUERVO ESPECIAL REPOSADO 0,7 ЛИТРА","price":3190,"category":"tekila","inStock":true,"image":"/photo/123.jpg"},{"id":124,"name":"ШАМПАНСКОЕ ABRAU DURSO BRUT (РОССИЯ) 0,75 ЛИТРА","price":1290,"category":"shampanskoe","inStock":true,"image":"/photo/124.jpg"},{"id":125,"name":"ШАМПАНСКОЕ РОССИЙСКОЕ белое полусладкое (РОССИЯ) 0,75 ЛИТРА","price":790,"category":"shampanskoe","inStock":true,"image":"/photo/125.jpg"},{"id":126,"name":"Вино игристое Риондо Просекко Фризанте белое сухое 0,75 л","price":1690,"category":"shampanskoe","inStock":true,"image":"/photo/126.jpg"},{"id":127,"name":"ШАМПАНСКОЕ Gancia Prosecco (ИТАЛИЯ) 0,7 ЛИТРА","price":2390,"category":"shampanskoe","inStock":true,"image":"/photo/127.jpg"},{"id":128,"name":"ВИНО ИГРИСТОЕ INKERMAN ROSE полусладкое 0,75 ЛИТРА","price":1490,"category":"shampanskoe","inStock":true,"image":"/photo/128.jpg"},{"id":129,"name":"ШАМПАНСКОЕ ASTI MONDORO DOCG белое сладкое (ИТАЛИЯ) 0,75 ЛИТРА","price":2390,"category":"shampanskoe","inStock":true,"image":"/photo/129.jpg"},{"id":130,"name":"ШАМПАНСКОЕ АБРАУ ДЮРСО полусладкое (РОССИЯ) 0,75 ЛИТРА","price":1149,"category":"shampanskoe","inStock":true,"image":"/photo/130.jpg"},{"id":131,"name":"ШАМПАНСКОЕ MONDORO BRUT (ИТАЛИЯ) 0,75 ЛИТРА","price":2390,"category":"shampanskoe","inStock":true,"image":"/photo/131.jpg"},{"id":132,"name":"ВИНО ИГРИСТОЕ INKERMAN белое сухое 0.,75 ЛИТРА","price":1490,"category":"shampanskoe","inStock":true,"image":"/photo/132.jpg"},{"id":133,"name":"ИГРИСТОЕ ВИНО ISSI MALVASIA SPUMANTE белое сладкое 0,75 ЛИТРА","price":1290,"category":"shampanskoe","inStock":true,"image":"/photo/133.jpg"},{"id":134,"name":"ШАМПАНСКОЕ MARTINI ASTI (ИТАЛИЯ) 0,75 ЛИТРА","price":2590,"category":"shampanskoe","inStock":true,"image":"/photo/134.jpg"},{"id":135,"name":"ВИНО MASSIMO VISCONTI LAMBRUSCO белое сладкое 0,75 ЛИТРА","price":1099,"category":"shampanskoe","inStock":true,"image":"/photo/135.jpg"},{"id":136,"name":"ШАМПАНСКОЕ CINZANO PROSECCO белое сухое (ИТАЛИЯ) 0,75 ЛИТРА","price":2549,"category":"shampanskoe","inStock":true,"image":"/photo/136.jpg"},{"id":137,"name":"ВИНО ИГРИСТОЕ MASSIMO VISCONTI LAMBRUSCO ROSSO DOLCE красное сладкое 0,75 ЛИТРА","price":1099,"category":"shampanskoe","inStock":true,"image":"/photo/137.jpg"},{"id":138,"name":"ШАМПАНСКОЕ BOSCAбелое полу-сладкое (ЛИТВА) 0,75 ЛИТРА","price":1290,"category":"shampanskoe","inStock":true,"image":"/photo/138.jpg"},{"id":139,"name":"ШАМПАНСКОЕ ABRAU Light полусладкое (РОССИЯ) 0,75 ЛИТРА","price":1090,"category":"shampanskoe","inStock":true,"image":"/photo/139.jpg"}];</script><script src="/assets/home-popular.js"></script><script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"АлкоДоставка24","url":"https://alkodostavka24.vercel.app","telephone":"+7-999-786-39-67","sameAs":["https://t.me/alkodostavka","https://wa.me/79997863967"]}</script>
+      <div class="mobile-callbar-right">
+        <a href="tel:+79997863967" class="mobile-callbar-tel"><span class="mobile-callbar-icon" aria-hidden="true">☎</span><span class="mobile-callbar-num">+7 (999) 786-39-67</span></a>
+        <a href="tel:+79997863967" class="mobile-callbar-cta">Позвонить</a>
+      </div>
+    </div>
+    <div class="header-commercial-strip">
+      <div class="container header-commercial-inner">
+        <span class="strip-item"><strong>Москва</strong> и МО</span>
+        <span class="strip-item">Приём <strong>24/7</strong></span>
+        <span class="strip-item">Часто <strong>20–40 мин</strong></span>
+        <span class="strip-item">Заказ от <strong>1000 ₽</strong></span>
+        <span class="strip-item">МКАД от <strong>650 ₽</strong></span>
+        <span class="strip-item strip-18"><strong>18+</strong></span>
+        <span class="strip-item strip-trust">Повторные заказы и отзывы — в мессенджере после доставки; без навязанных «звёзд» на сайте</span>
+      </div>
+    </div>
+    <div class="container header-main-row">
+      <a href="/" class="logo">АлкоДоставка 24</a>
+      <div class="nav-backdrop" id="nav-backdrop" hidden aria-hidden="true"></div>
+      <nav class="main-nav" id="site-nav" aria-label="Основное меню">
+        <div class="nav-inner-scroll">
+          <ul class="nav-list-main nav-desktop-only">
+            <li><a href="/" class="nav-link active">Главная</a></li>
+            <li><a href="/catalog.html" class="nav-link">Ассортимент</a></li>
+            <li><a href="/rayony.html" class="nav-link">Районы</a></li>
+            <li><a href="/metro/" class="nav-link">Метро</a></li>
+            <li class="has-dropdown">
+              <a href="/kategoria/" class="nav-link nav-link-dropdown">Категории</a>
+              <div class="dropdown-mega"><a href="/kategoria/vodka/">Водка</a>
+<a href="/kategoria/viski/">Виски</a>
+<a href="/kategoria/konyak/">Коньяк и бренди</a>
+<a href="/kategoria/vino/">Вино</a>
+<a href="/kategoria/igristoe/">Игристое и шампанское</a>
+<a href="/kategoria/pivo/">Пиво и сидр</a>
+<a href="/kategoria/zakuski/">Закуски</a>
+<a href="/catalog.html">Полный каталог</a></div>
+            </li>
+            <li><a href="/povod/" class="nav-link">Повод</a></li>
+            <li><a href="/dostavka-nochyu-moskva.html" class="nav-link">Ночью 24/7</a></li>
+            <li><a href="/faq.html" class="nav-link">FAQ</a></li>
+            <li><a href="/contacts.html" class="nav-link">Контакты</a></li>
+          </ul>
+          <div class="nav-mobile-premium">
+        <p class="nav-mp-kicker">Меню</p>
+        <section class="nav-mp-section" aria-label="Каталог">
+          <h3 class="nav-mp-heading">Каталог</h3>
+          <a href="/catalog.html" class="nav-mp-row nav-mp-row--lead">Ассортимент</a>
+          <a href="/kategoria/" class="nav-mp-row">Все категории</a>
+          <div class="nav-mp-grid"><a href="/kategoria/vodka/">Водка</a>
+<a href="/kategoria/viski/">Виски</a>
+<a href="/kategoria/konyak/">Коньяк и бренди</a>
+<a href="/kategoria/vino/">Вино</a>
+<a href="/kategoria/igristoe/">Игристое и шампанское</a>
+<a href="/kategoria/pivo/">Пиво и сидр</a>
+<a href="/kategoria/zakuski/">Закуски</a></div>
+        </section>
+        <section class="nav-mp-section" aria-label="Доставка">
+          <h3 class="nav-mp-heading">Доставка</h3>
+          <a href="/rayony.html" class="nav-mp-row">По районам Москвы</a>
+          <a href="/metro/" class="nav-mp-row">У станций метро</a>
+          <a href="/dostavka-chertanovo.html" class="nav-mp-row">Чертаново</a>
+          <a href="/dostavka-butovo.html" class="nav-mp-row">Бутово</a>
+          <p class="nav-mp-micro">Часто ищут метро</p>
+          <div class="nav-mp-chips">
+            <a href="/metro/kievskaya/">Киевская</a>
+            <a href="/metro/taganskaya/">Таганская</a>
+            <a href="/metro/marino/">Марьино</a>
+            <a href="/metro/vyhino/">Выхино</a>
+            <a href="/metro/belorusskaya/">Белорусская</a>
+            <a href="/metro/chertanovskaya/">Чертановская</a>
+          </div>
+        </section>
+        <section class="nav-mp-section" aria-label="Популярное">
+          <h3 class="nav-mp-heading">Акции и поводы</h3>
+          <a href="/povod/srochno/" class="nav-mp-row">Срочная доставка</a>
+          <a href="/povod/premium/" class="nav-mp-row">Премиум</a>
+          <a href="/povod/deshevo/" class="nav-mp-row">Недорого</a>
+          <a href="/podarochnye-nabory.html" class="nav-mp-row">Подарочные наборы</a>
+          <a href="/dostavka-nochyu-moskva.html" class="nav-mp-row">Ночью 24/7</a>
+        </section>
+        <section class="nav-mp-section" aria-label="Помощь">
+          <h3 class="nav-mp-heading">Помощь</h3>
+          <a href="/faq.html" class="nav-mp-row">FAQ</a>
+          <a href="/vopros/" class="nav-mp-row">Вопросы и ответы</a>
+          <a href="/contacts.html" class="nav-mp-row">Контакты</a>
+          <a href="/" class="nav-mp-row">Главная</a>
+        </section>
+        <section class="nav-mp-section nav-mp-section--cta" aria-label="Заказ">
+          <a href="tel:+79997863967" class="nav-mp-btn nav-mp-btn--call">Позвонить</a>
+          <a href="https://wa.me/79648489888?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%97%D0%B0%D0%BA%D0%B0%D0%B7%20%D0%90%D0%9B%D0%9A%D0%9E%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0%2C%20%D0%B0%D0%B4%D1%80%D0%B5%D1%81%3A%20" class="nav-mp-btn nav-mp-btn--wa" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="https://t.me/alkotaxi_bot" class="nav-mp-btn nav-mp-btn--tg" target="_blank" rel="noopener">Telegram</a>
+          <a href="/contacts.html" class="nav-mp-btn nav-mp-btn--form">Заказать за 1 клик</a>
+        </section>
+      </div>
+        </div>
+      </nav>
+      <div class="header-phone-promo">
+        <span class="badge-247">24/7</span>
+        <a href="tel:+79997863967">+7 (999) 786-39-67</a>
+        <span class="phone-sub">Часто 20–40 мин · заказ от 1000 ₽ · МКАД от 650 ₽</span>
+      </div>
+      <div class="header-cta-cluster">
+        <a href="tel:+79997863967" class="btn-header-pill btn-header-call" title="Позвонить">☎ Позвонить</a>
+        <a href="https://wa.me/79648489888?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%97%D0%B0%D0%BA%D0%B0%D0%B7%20%D0%90%D0%9B%D0%9A%D0%9E%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0%2C%20%D0%B0%D0%B4%D1%80%D0%B5%D1%81%3A%20" class="btn-header-pill btn-header-wa" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://t.me/alkotaxi_bot" class="btn-header-pill btn-header-tg" target="_blank" rel="noopener">Telegram</a>
+        <a href="/contacts.html" class="btn-header-pill btn-header-1click">Заказ 1 клик</a>
+      </div>
+      <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav"><span class="burger-line" aria-hidden="true"></span><span class="burger-line" aria-hidden="true"></span><span class="burger-line" aria-hidden="true"></span></button>
+    </div>
+</header>
+<a href="tel:+79997863967" class="mobile-tel-fab mobile-tel-fab--secondary" title="Позвонить" aria-label="Позвонить в АлкоДоставка 24"><span class="visually-hidden">Телефон</span>☎</a>
+<div class="floating-messengers">
+    <a href="https://t.me/alkotaxi_bot" target="_blank" rel="noopener" class="messenger-btn telegram" title="Telegram">📱</a>
+    <a href="https://wa.me/79648489888?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%97%D0%B0%D0%BA%D0%B0%D0%B7%20%D0%90%D0%9B%D0%9A%D0%9E%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0%2C%20%D0%B0%D0%B4%D1%80%D0%B5%D1%81%3A%20" target="_blank" rel="noopener" class="messenger-btn whatsapp" title="WhatsApp">💬</a>
+</div>
+
+    <main>
+        <!-- Герой -->
+        <section class="hero">
+            <div class="container">
+                <h1>Алкоголь на дом в Москве — круглосуточно</h1>
+                <p class="hero-subtitle">Быстрый заказ по телефону, в WhatsApp или Telegram: крепкий алкоголь, вино, пиво, игристое и закуски. По Москве часто 20–40 минут после подтверждения; в пиковые часы окно может быть шире. Передача заказа только 18+, при получении может потребоваться документ.</p>
+                <p class="trust-bar"><span>Ответ за минуты</span><span>МКАД от 650 ₽</span><span>Заказ от 1000 ₽</span><span>Наличные / СБП</span></p>
+                <div class="hero-buttons">
+                    <a href="tel:+79997863967" class="btn btn-large">Позвонить сейчас</a>
+                    <a href="/catalog.html" class="btn btn-large">Смотреть каталог</a>
+                    <a href="/contacts.html" class="btn btn-large btn-outline">Оставить заявку</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="trust-panel" aria-labelledby="trust-heading">
+            <div class="container">
+                <h2 id="trust-heading">Почему нам доверяют в Москве</h2>
+                <div class="trust-grid">
+                    <div class="trust-card">
+                        <h3>Понятные сроки</h3>
+                        <p>Не обещаем «всем за 15 минут». Ориентир 20–40 минут в обычной ситуации; если логистика упирается в пробки или ночную смену — озвучим реальное окно.</p>
+                    </div>
+                    <div class="trust-card">
+                        <h3>Живой контакт</h3>
+                        <p>Заказ по телефону, WhatsApp или Telegram — менеджер уточнит адрес, состав и оплату. Форма на сайте для тех, кто предпочитает перезвон.</p>
+                    </div>
+                    <div class="trust-card">
+                        <h3>Легальный ассортимент</h3>
+                        <p>Работаем с легальной продукцией; при вопросах по происхождению позиции уточняйте у оператора. Алкоголь не передаём несовершеннолетним.</p>
+                    </div>
+                </div>
+                <p class="nap-inline">Связь: <a href="tel:+79997863967">+7 (999) 786-39-67</a> круглосуточно · <a href="mailto:info@alkovoz.online">info@alkovoz.online</a> · <a href="/rayony.html">районы</a> · <a href="/metro/">метро</a> · <a href="/vopros/">вопросы</a></p>
+            </div>
+        </section>
+
+        <!-- Инструкция: как заказать -->
+        <section class="how-to-order">
+            <div class="container">
+                <h2>Как заказать доставку алкоголя на дом</h2>
+                <div class="steps">
+                    <div class="step">
+                        <span class="step-icon">📞</span>
+                        <h3>Позвоните</h3>
+                        <p><a href="tel:+79997863967">+7 (999) 786-39-67</a><br>Круглосуточно, без выходных</p>
+                    </div>
+                    <div class="step">
+                        <span class="step-icon">💬</span>
+                        <h3>Напишите в мессенджер</h3>
+                        <p><a href="https://wa.me/79648489888" target="_blank">WhatsApp</a> или <a href="https://t.me/alkotaxi_bot" target="_blank">Telegram</a></p>
+                    </div>
+                    <div class="step">
+                        <span class="step-icon">📝</span>
+                        <h3>Оставьте заявку</h3>
+                        <p>Заполните форму в разделе <a href="/contacts.html">Контакты</a>, мы перезвоним за 5 минут</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Преимущества -->
+        <section class="features">
+            <div class="container">
+                <div class="feature-item">
+                    <span class="feature-icon">🚀</span>
+                    <h3>Круглосуточный приём заявок</h3>
+                    <p>Обрабатываем обращения 24/7 по телефону и в мессенджерах, без выходных.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🥇</span>
+                    <h3>Каталог популярных напитков и закусок</h3>
+                    <p>В одном заказе можно собрать крепкий алкоголь, вино, пиво, игристое и снеки.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🕒</span>
+                    <h3>Доставка по районам и метро</h3>
+                    <p>Работаем по Москве и согласовываем адреса в МО; есть отдельные страницы по географии.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🔞</span>
+                    <h3>Проверка возраста 18+</h3>
+                    <p>Передача заказа только совершеннолетним, при получении может потребоваться документ.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Популярные категории (кратко) -->
+        <section class="popular-categories">
+            <div class="container">
+                <h2>Популярные категории</h2>
+                <div class="category-grid">
+                    <a href="/catalog.html#strong" class="category-card">
+                        <span class="category-icon">🥃</span>
+                        <h3>Крепкий алкоголь</h3>
+                        <p>Водка, виски, коньяк</p>
+                    </a>
+                    <a href="/catalog.html#beer" class="category-card">
+                        <span class="category-icon">🍺</span>
+                        <h3>Пиво</h3>
+                        <p>Светлое, тёмное, живое</p>
+                    </a>
+                    <a href="/catalog.html#snacks" class="category-card">
+                        <span class="category-icon">🐟</span>
+                        <h3>Закуски к пиву</h3>
+                        <p>Рыба, сухарики, орехи</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== БОЛЬШОЙ SEO-ТЕКСТ ========== -->
+        <section class="seo-block">
+            <div class="container">
+                <h2>АлкоДоставка 24 — ваш надёжный партнёр в мире алкоголя и закусок</h2>
+                <p>Компания АлкоДоставка 24 работает на рынке доставки алкоголя в Москве с 2015 года. За это время мы помогли тысячам москвичей организовать праздники, романтические вечера и дружеские посиделки. Наш ассортимент насчитывает более 2000 наименований: от повседневных продуктов до эксклюзивных коллекционных напитков. Почему клиенты выбирают нас? Всё просто: мы гарантируем качество, предлагаем честные цены и доставляем заказы максимально быстро.</p>
+
+                <h3>Почему важно покупать алкоголь в проверенном месте?</h3>
+                <p>Спиртные напитки – частые гости на любом торжестве. Но некачественный алкоголь может не только испортить вкус вечера, но и нанести вред здоровью. В нашем магазине вы можете быть уверены: каждая бутылка имеет сертификат происхождения, а условия хранения строго соблюдаются. Мы сотрудничаем только с легальными поставщиками и крупными дистрибьюторами, поэтому риск подделки исключён.</p>
+
+                <h3>Водка – душа России</h3>
+                <p>Водка – самый популярный крепкий напиток в нашей стране. Мы предлагаем водку различных ценовых категорий: от демократичных брендов до премиальных. «Березка» – классическая водка на спирте «Люкс», мягкая и чистая, пьётся легко, оставляя приятное послевкусие. «Русский стандарт» Platinum – эталон премиальной водки, созданной по уникальной рецептуре; она отличается кристальной прозрачностью и мягкостью, идеальна для чистой подачи. «Хортица» Мягкая – водка тройной фильтрации, идеальный баланс вкуса и крепости, не обжигает. «Nemiroff» Медовая с перцем – оригинальная украинская водка с пикантными нотками мёда и перца, отлично согревает и подходит для закуски. «Пять озер» – сибирская водка на чистейшей воде из пяти озёр, мягкая, с лёгким сладковатым оттенком. «Мягков» Silver – водка серебряной очистки, очень мягкая, без спиртового запаха. «Finlandia» Classic – финская водка мирового уровня, чистая, с лёгким привкусом ледниковой воды. «Beluga» Allure – элитная водка с добавлением экстрактов трав и мёда, выдержанная не менее 30 суток, отличается невероятной мягкостью и сложным букетом. «Зеленая марка» Кедровая – водка с настоем кедровых орехов, аромат тайги. «Талка» Люкс – водка из отборного зерна, мягкая с едва уловимыми нотками ржи. Все эти водки можно заказать с доставкой на дом.</p>
+
+                <h3>Виски – выбор ценителей</h3>
+                <p>Виски – благородный напиток, который пьют не спеша, смакуя каждый глоток. В нашем каталоге представлены основные типы виски: шотландский (Scotch), ирландский (Irish), американский (Bourbon, Tennessee). Jack Daniel’s Old No.7 – легендарный виски из Теннесси, проходящий угольную фильтрацию, с характерным дымным вкусом и ароматом ванили. Jameson – мягкий ирландский купажированный виски, один из самых продаваемых в мире, пьётся легко, с нотами ванили и древесины. Johnnie Walker Black Label – шотландский купаж, выдержанный не менее 12 лет, с насыщенным дымным вкусом и долгим послевкусием. Chivas Regal 12 yo – ещё один знаменитый шотландский купаж с богатым медово-фруктовым букетом. Для тех, кто ищет что-то особенное, у нас есть односолодовые виски: Macallan, Laphroaig, Glenfiddich, Glenmorangie и другие. Бурбон представлен такими марками, как Jim Beam, Maker’s Mark, Wild Turkey. Виски идеально сочетается с сигарой, мясными закусками, сырами и шоколадом. Закажите виски с доставкой и наслаждайтесь вечером в хорошей компании.</p>
+
+                <h3>Коньяк – символ роскоши</h3>
+                <p>Коньяк – это виноградный бренди, произведённый во французском регионе Коньяк по строгим правилам. Лучшие дома: Hennessy, Martell, Rémy Martin. Hennessy VSOP – выдержанный коньяк с богатым вкусом и ароматом спелого винограда, дуба и пряностей, отлично подойдёт для подарка или особого случая. Армянский коньяк – отдельная гордость. «Арарат» 5 лет – мягкий, с фруктовыми нотами, классика. «Ной» – ещё один популярный армянский бренд. Российский коньяк «Старейшина» 7 лет – достойный вариант по доступной цене. Мы также предлагаем коньяки с выдержкой XO (Extra Old) для настоящих гурманов. Коньяк принято подавать после еды, с кофе или десертом. Он хорошо сочетается с тёмным шоколадом, сырами с плесенью, орехами. Закажите коньяк у нас – мы доставим его быстро и с соблюдением температурного режима.</p>
+
+                <h3>Пиво – на любой вкус</h3>
+                <p>Пиво – самый популярный слабоалкогольный напиток. В нашем ассортименте вы найдёте пиво на любой вкус: светлое, тёмное, нефильтрованное, живое, крафтовое. Российские сорта: «Жигулёвское» – классика, знакомая с детства, светлое, с лёгкой горчинкой. «Балтика» – разнообразие сортов (№3 светлое, №7 экспортное, №9 крепкое). «Клинское» – лёгкое пиво для освежения. «Хамовники» Пильзенское – крафтовое пиво в стиле пильзнер, золотистое, с насыщенным солодовым вкусом. «Охота» – крепкое пиво для любителей погорячее. Чешское пиво: Velkopopovický Kozel – мягкий сбалансированный лагер; Staropramen – ещё один популярный чешский бренд; Krušovice – королевское пиво с богатой историей; Budweiser Budvar – оригинальный чешский лагер с защищённым географическим указанием. Немецкое пиво: Paulaner Weissbier – пшеничное нефильтрованное, мутное, с бананово-гвоздичным ароматом; Franziskaner – классический хефевайцен; Spaten – мюнхенский лагер. Бельгийское пиво: Hoegaarden – пшеничное с кориандром и апельсиновой цедрой, очень освежающее; Leffe Blonde – аббатское пиво с насыщенным фруктовым ароматом; Stella Artois – светлый лагер. Английское пиво: Guinness Original – знаменитый сухой стаут, плотный, с кофейными нотками. Также у нас есть сидр (яблочный, грушевый) и медовуха. Живое нефильтрованное пиво – это особая категория: оно не пастеризовано, хранится недолго, но обладает полным вкусом и ароматом. Мы доставляем его в специальных термопакетах.</p>
+
+                <h3>Закуски к пиву – полный набор</h3>
+                <p>Настоящий пивной вечер невозможен без хорошей закуски. Мы предлагаем широкий выбор традиционных и оригинальных закусок. Рыба: лещ, вобла, тарань, плотва – отборные, вяленые по классическим рецептам. Вся рыба средней соли, не пересушенная, идеально подходит к светлому и тёмному пиву. Морепродукты: сушёные кольца кальмара – упругая закуска с лёгким морским привкусом; сушёные креветки – маленькие, но очень вкусные; варёно-мороженые раки – крупные, уже сваренные, достаточно разморозить. Раки – отличная закуска к пиву, особенно в компании. Сухарики: «Кириешки» со вкусом бекона, сыра, холодца; «Воронцовские» с чесноком и зеленью; «Три корочки» с сыром, беконом; ржаные гренки. Орехи: арахис жареный солёный – классика; фисташки – отборные, слегка подсоленные; кешью – нежные орехи; миндаль, фундук. Чипсы: Lays (соль, сыр, бекон, краб), Pringles (оригинальные, паприка, сметана и лук), а также чипсы из толстовского картофеля. Оливки и маслины: зелёные с косточкой, чёрные, фаршированные анчоусом или лимоном. Мясные снеки: колбаски, вяленое мясо, бекон, джерки (вяленое мясо с пряностями). Всё это вы можете заказать вместе с пивом или крепким алкоголем.</p>
+
+                <h3>Доставка по Москве – быстро и удобно</h3>
+                <p>Мы осуществляем <strong>доставку алкоголя на дом в Москве</strong> ежедневно 24/7. Стоимость доставки в пределах МКАД — <strong>от 650 ₽</strong> (акции и точные условия — у оператора). По времени во многих заказах получается <strong>20–40 минут</strong> после подтверждения; в пик, ночью и при плохой погоде — ближе к часу, без скрытых сюрпризов. Курьер передаёт заказ лично и проверяет возраст (<strong>только 18+</strong>). Оплата: наличные или СБП. <a href="/dostavka-nochyu-moskva.html">Ночная доставка</a> — в отдельном разделе.</p>
+                <p><strong>Мы доставляем алкоголь во все районы Москвы и Московской области:</strong> Чертаново (Северное, Южное), Бутово (Северное, Южное), Царицыно, Нагатинская, Ясенево, Тёплый Стан, Коньково, Беляево, Черёмушки, Зюзино, Бирюлёво Восточное и Западное, Орехово-Борисово Северное и Южное, Москворечье-Сабурово, Люблино, Марьино, Братеево, Капотня, Кузьминки, Текстильщики, Выхино-Жулебино, Рязанский, Нижегородский, Лефортово, Соколиная Гора, а также города Подмосковья: Химки, Мытищи, Люберцы, Красногорск, Одинцово, Балашиха, Реутов, Долгопрудный и другие. Уточняйте возможность доставки по телефону.</p>
+
+                <h3>Как оформить заказ?</h3>
+                <p>Вы можете:</p>
+                <ol>
+                    <li>Позвонить нам по телефону <a href="tel:+79997863967">+7 (999) 786-39-67</a> (круглосуточно).</li>
+                    <li>Оставить заявку на сайте в разделе <a href="/contacts.html">Контакты</a> – мы перезвоним в течение 5 минут.</li>
+                    <li>Написать в мессенджеры (Telegram, WhatsApp) – иконки справа внизу.</li>
+                </ol>
+
+                <!-- Блок часто задаваемых вопросов в виде аккордеона -->
+                <div class="faq-accordion">
+                    <h3>Популярные вопросы о доставке алкоголя</h3>
+                    <div class="accordion-item">
+                        <div class="accordion-header">Как заказать доставку алкоголя на дом?</div>
+                        <div class="accordion-content">
+                            <p>Чтобы <strong>заказать доставку алкоголя на дом</strong>, вы можете позвонить нам по телефону <a href="tel:+79997863967">+7 (999) 786-39-67</a>, написать в WhatsApp или Telegram, либо оставить заявку на сайте. Мы принимаем заказы <strong>круглосуточно</strong>; ориентир по времени доставки по Москве — <strong>20–60 минут</strong> (уточняет оператор).</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">Работаете ли вы круглосуточно?</div>
+                        <div class="accordion-content">
+                            <p>Да, мы обеспечиваем <strong>круглосуточную доставку алкоголя 24/7</strong>. Вы можете заказать алкоголь в любое время дня и ночи, включая выходные и праздничные дни. Наша служба доставки работает без перерывов.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">Доставляете ли вы алкоголь ночью?</div>
+                        <div class="accordion-content">
+                            <p>Да, <strong>доставка алкоголя ночью</strong> — наша специализация. Мы понимаем, что потребность в алкоголе может возникнуть в любое время, поэтому мы всегда на связи и готовы привезти заказ даже глубокой ночью.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">В какие районы Москвы и Московской области вы доставляете?</div>
+                        <div class="accordion-content">
+                            <p>Мы осуществляем <strong>доставку алкоголя по Москве</strong> в пределах МКАД и за его пределами (Московская область). Полный список районов и городов приведён выше. Если вашего населённого пункта нет в списке, позвоните нам — мы обязательно найдём способ доставить заказ.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">Можно ли заказать алкоголь с доставкой через ваш сайт?</div>
+                        <div class="accordion-content">
+                            <p>Да, вы можете <strong>заказать алкоголь с доставкой</strong> через форму на странице <a href="/contacts.html">Контакты</a>. Заполните поля с именем, телефоном и комментарием, и мы свяжемся с вами в ближайшее время для подтверждения заказа.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">Какая минимальная сумма заказа?</div>
+                        <div class="accordion-content">
+                            <p>Минимальная сумма заказа для <strong>доставки алкоголя на дом</strong> составляет 1000 рублей. При заказе от 10000 рублей доставка в пределах МКАД осуществляется бесплатно.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">Как быстро привезут заказ?</div>
+                        <div class="accordion-content">
+                            <p>Мы предлагаем <strong>срочную доставку алкоголя</strong>. Ориентир по Москве — 20–60 минут. В часы пик и при неблагоприятной погоде срок может быть больше — сообщим при заказе.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">Можно ли оплатить заказ картой курьеру?</div>
+                        <div class="accordion-content">
+                            <p>Да, вы можете оплатить заказ наличными курьеру или переводом на карту СБП. Оплата банковской картой курьеру также доступна (уточняйте при оформлении).</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header">Какие документы подтверждают качество алкоголя?</div>
+                        <div class="accordion-content">
+                            <p>Вся продукция сертифицирована. По требованию клиента курьер может предоставить копии сертификатов соответствия. Мы гарантируем, что вы получаете <strong>только оригинальный алкоголь</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Отзывы наших клиентов</h3>
+                <div class="reviews">
+                    <div class="review-item">«Заказывали виски и сыры на день рождения. Привезли быстро, всё свежее, виски просто божественное. Спасибо!» – Анна, Чертаново</div>
+                    <div class="review-item">«Постоянно беру здесь водку и рыбу. Цены приятные, доставка всегда вовремя в Бутово. Рекомендую.» – Дмитрий</div>
+                    <div class="review-item">«Удобно, что можно заказать и пиво, и сухарики. Всё в одном заказе. Спасибо! Доставили в Царицыно за час.» – Елена</div>
+                </div>
+
+                <h3>Доставляем во все районы Москвы и Подмосковья</h3>
+                <ul class="district-list" style="columns: 3; list-style: none; padding: 0;">
+                    <li>Чертаново Северное</li>
+                    <li>Чертаново Южное</li>
+                    <li>Бутово Северное</li>
+                    <li>Бутово Южное</li>
+                    <li>Царицыно</li>
+                    <li>Нагатинская</li>
+                    <li>Ясенево</li>
+                    <li>Тёплый Стан</li>
+                    <li>Коньково</li>
+                    <li>Беляево</li>
+                    <li>Черёмушки</li>
+                    <li>Зюзино</li>
+                    <li>Бирюлёво Восточное</li>
+                    <li>Бирюлёво Западное</li>
+                    <li>Орехово-Борисово Северное</li>
+                    <li>Орехово-Борисово Южное</li>
+                    <li>Москворечье-Сабурово</li>
+                    <li>Люблино</li>
+                    <li>Марьино</li>
+                    <li>Братеево</li>
+                    <li>Капотня</li>
+                    <li>Кузьминки</li>
+                    <li>Текстильщики</li>
+                    <li>Выхино-Жулебино</li>
+                    <li>Рязанский</li>
+                    <li>Нижегородский</li>
+                    <li>Лефортово</li>
+                    <li>Соколиная Гора</li>
+                    <li>Печатники</li>
+                    <li>Нагатино-Садовники</li>
+                    <li>ЕСЛИ НЕ НАШЛИ СВОЙ РАЙОН ЗВОНИТЕ, ДОСТАВИМ!</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Призыв к действию -->
+        <section class="cta">
+            <div class="container">
+                <h3>Готовы сделать заказ?</h3>
+                <p>Переходите в каталог или свяжитесь с нами любым удобным способом. Быстрая доставка алкоголя в любой район Москвы 24/7.</p>
+                <div class="cta-buttons">
+                    <a href="/catalog.html" class="btn btn-large">Перейти в каталог</a>
+                    <a href="/contacts.html" class="btn btn-large btn-outline">Оставить заявку</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="seo-related-block" aria-labelledby="home-hub" style="padding: 48px 0 32px;">
+            <div class="container">
+                <h2 id="home-hub">Быстрые переходы</h2>
+                <div class="seo-related-grid">
+                    <div class="seo-related-card">
+                        <h3>География</h3>
+                        <p class="related-links-row"><a href="/rayony.html">Районы</a> · <a href="/metro/">Метро</a> · <a href="/dostavka-chertanovo.html">Чертаново</a> · <a href="/dostavka-butovo.html">Бутово</a></p>
+                    </div>
+                    <div class="seo-related-card">
+                        <h3>Каталог и повод</h3>
+                        <p class="related-links-row"><a href="/catalog.html">Ассортимент</a> · <a href="/kategoria/">Категории</a> · <a href="/povod/srochno/">Срочно</a> · <a href="/povod/premium/">Премиум</a></p>
+                    </div>
+                    <div class="seo-related-card">
+                        <h3>Ответы и заказ</h3>
+                        <p class="related-links-row"><a href="/faq.html">FAQ</a> · <a href="/vopros/">Вопросы</a> · <a href="/contacts.html">Контакты</a> · <a href="tel:+79997863967">Позвонить</a></p>
+                    </div>
+                </div>
+                <div class="recent-pages-widget" data-recent-widget data-label="Вы недавно смотрели" hidden></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 АлкоДоставка 24. Доставка алкоголя и закусок в Москве. 18+</p>
+            <p class="footer-links">
+                <a href="/">Главная</a> |
+                <a href="/catalog.html">Ассортимент</a> |
+                <a href="/rayony.html">Районы</a> |
+                <a href="/metro/">Метро</a> |
+                <a href="/kategoria/">Категории</a> |
+                <a href="/povod/">Повод</a> |
+                <a href="/vopros/">Вопросы</a> |
+                <a href="/faq.html">FAQ</a> |
+                <a href="/korporativ.html">Корпоратив</a> |
+                <a href="/contacts.html">Контакты</a> |
+                <a href="/privacy.html">Политика конфиденциальности</a>
+            </p>
+        </div>
+    </footer>
+
+    <div class="sticky-cta-bar" role="navigation" aria-label="Быстрый заказ">
+        <a href="tel:+79997863967" class="sticky-cta-item sticky-cta-call">Позвонить</a>
+        <a href="https://wa.me/79648489888?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%97%D0%B0%D0%BA%D0%B0%D0%B7%20%D0%90%D0%9B%D0%9A%D0%9E%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0%2C%20%D0%B0%D0%B4%D1%80%D0%B5%D1%81%3A%20" class="sticky-cta-item sticky-cta-wa" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://t.me/alkotaxi_bot" class="sticky-cta-item sticky-cta-tg" target="_blank" rel="noopener">Telegram</a>
+        <a href="/contacts.html" class="sticky-cta-item sticky-cta-form">Заявка</a>
+    </div>
+    <script>
+        (function (m, e, t, r, i, k, a) {
+            m[i] =
+                m[i] ||
+                function () {
+                    (m[i].a = m[i].a || []).push(arguments);
+                };
+            m[i].l = 1 * new Date();
+            for (var j = 0; j < document.scripts.length; j++) {
+                if (document.scripts[j].src === r) return;
+            }
+            (k = e.createElement(t)),
+                (a = e.getElementsByTagName(t)[0]),
+                (k.async = 1),
+                (k.src = r),
+                a.parentNode.insertBefore(k, a);
+        })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=107712343', 'ym');
+        ym(107712343, 'init', {
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true,
+            webvisor: true,
+        });
+    </script>
+    <noscript>
+        <div>
+            <img src="https://mc.yandex.ru/watch/107712343" style="position:absolute;left:-9999px" width="1" height="1" alt="" />
+        </div>
+    </noscript>
+    <script src="/script.js" defer></script>
 </body>
 </html>
+
+
