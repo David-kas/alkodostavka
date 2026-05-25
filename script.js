@@ -281,9 +281,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('.accordion-header').forEach(function (header) {
         header.addEventListener('click', function () {
-            const parentItem = header.parentElement;
-            if (parentItem) parentItem.classList.toggle('active');
+            const parentItem = header.closest('.accordion-item');
+            if (!parentItem) return;
+            const content = parentItem.querySelector('.accordion-content');
+            const isOpening = !parentItem.classList.contains('active');
+            parentItem.classList.toggle('active');
+            if (header.setAttribute) {
+                header.setAttribute('aria-expanded', isOpening ? 'true' : 'false');
+            }
+            if (content) {
+                if (isOpening) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                } else {
+                    content.style.maxHeight = '0';
+                }
+            }
         });
     });
+
+    window.addEventListener(
+        'resize',
+        function () {
+            const panel = document.getElementById('seo-story-panel');
+            if (!panel || !panel.classList.contains('active')) return;
+            const content = panel.querySelector('.accordion-content');
+            if (content) content.style.maxHeight = content.scrollHeight + 'px';
+        },
+        { passive: true }
+    );
 });
 
