@@ -6,7 +6,7 @@ const domain = "https://alkodostavka24.vercel.app";
 const phone = "+7 (999) 786-39-67";
 const telHref = "tel:+79997863967";
 const tg = "https://t.me/alkotaxi_bot";
-const wa = "https://wa.me/79997863967";
+const wa = "https://wa.me/79626289777";
 const email = "info@alkodostavka.vercel.app";
 
 const source = fs.readFileSync(path.join(root, "products.js"), "utf8");
@@ -234,7 +234,7 @@ function layout({ title, description, h1, canonicalPath, bodyClass = "", content
     ${content}
   </main>
   <div class="quick-actions"><a href="${telHref}">Позвонить</a><a href="${wa}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="${tg}" target="_blank" rel="noopener noreferrer">Telegram</a></div>
-  <aside class="cart"><div class="cart-head"><strong>Корзина</strong><button type="button" class="cart-close">×</button></div><div class="cart-items"></div><div class="cart-total"></div><form class="order"><input required name="name" placeholder="Ваше имя"><input required name="phone" placeholder="Телефон"><button type="submit">Оформить заказ</button></form><div class="order-msg"></div></aside>
+  <aside class="cart"><div class="cart-head"><strong>Корзина</strong><button type="button" class="cart-close">×</button></div><div class="cart-items"></div><div class="cart-total"></div><form class="order"><input required name="name" placeholder="Ваше имя"><input required name="phone" placeholder="Телефон"><input required name="address" placeholder="Адрес доставки"><textarea name="comment" placeholder="Комментарий" rows="2"></textarea><button type="submit">Оформить заказ</button></form><div class="order-msg"></div></aside>
   <div class="overlay"></div>
   <footer class="footer"><div class="wrap"><p>Телефон: <a href="${telHref}">${phone}</a> · Telegram: <a href="${tg}" target="_blank" rel="noopener noreferrer">t.me/alkodostavka</a> · Email: <a href="mailto:${email}">${email}</a></p><p>Только 18+. Информация носит справочный характер.</p></div></footer>
   <script src="/assets/app.js" defer></script>

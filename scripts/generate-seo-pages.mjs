@@ -335,7 +335,7 @@ function mobileNavPremiumBlock() {
       </section>
       <section class="nav-mp-section nav-mp-section--cta" aria-label="Заказ">
         <a href="tel:${PHONE_TEL}" class="nav-mp-btn nav-mp-btn--call">Позвонить</a>
-        <a href="https://wa.me/79648489888?text=${WA_PREFILL}" class="nav-mp-btn nav-mp-btn--wa" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://wa.me/79626289777?text=${WA_PREFILL}" class="nav-mp-btn nav-mp-btn--wa" target="_blank" rel="noopener">WhatsApp</a>
         <a href="https://t.me/alkotaxi_bot" class="nav-mp-btn nav-mp-btn--tg" target="_blank" rel="noopener">Telegram</a>
         <a href="/contacts.html" class="nav-mp-btn nav-mp-btn--form">Заказать за 1 клик</a>
       </section>
@@ -396,7 +396,7 @@ function headerBlock(activeNav) {
     </div>
     <div class="header-cta-cluster">
       <a href="tel:${PHONE_TEL}" class="btn-header-pill btn-header-call" title="Позвонить">☎ Позвонить</a>
-      <a href="https://wa.me/79648489888?text=${WA_PREFILL}" class="btn-header-pill btn-header-wa" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://wa.me/79626289777?text=${WA_PREFILL}" class="btn-header-pill btn-header-wa" target="_blank" rel="noopener">WhatsApp</a>
       <a href="https://t.me/alkotaxi_bot" class="btn-header-pill btn-header-tg" target="_blank" rel="noopener">Telegram</a>
       <a href="/contacts.html" class="btn-header-pill btn-header-1click">Заказ 1 клик</a>
     </div>
@@ -406,7 +406,7 @@ function headerBlock(activeNav) {
 <a href="tel:${PHONE_TEL}" class="mobile-tel-fab mobile-tel-fab--secondary" title="Позвонить" aria-label="Позвонить в АлкоДоставка 24"><span class="visually-hidden">Телефон</span>☎</a>
 <div class="floating-messengers">
   <a href="https://t.me/alkotaxi_bot" target="_blank" rel="noopener" class="messenger-btn telegram" title="Telegram">📱</a>
-  <a href="https://wa.me/79648489888?text=${WA_PREFILL}" target="_blank" rel="noopener" class="messenger-btn whatsapp" title="WhatsApp">💬</a>
+  <a href="https://wa.me/79626289777?text=${WA_PREFILL}" target="_blank" rel="noopener" class="messenger-btn whatsapp" title="WhatsApp">💬</a>
 </div>`;
 }
 
@@ -425,7 +425,7 @@ function footerHtml() {
 function stickyHtml() {
   return `<div class="sticky-cta-bar" role="navigation" aria-label="Быстрый заказ">
     <a href="tel:${PHONE_TEL}" class="sticky-cta-item sticky-cta-call">Позвонить</a>
-    <a href="https://wa.me/79648489888?text=${WA_PREFILL}" class="sticky-cta-item sticky-cta-wa" target="_blank" rel="noopener">WhatsApp</a>
+    <a href="https://wa.me/79626289777?text=${WA_PREFILL}" class="sticky-cta-item sticky-cta-wa" target="_blank" rel="noopener">WhatsApp</a>
     <a href="https://t.me/alkotaxi_bot" class="sticky-cta-item sticky-cta-tg" target="_blank" rel="noopener">Telegram</a>
     <a href="/contacts.html" class="sticky-cta-item sticky-cta-form">Заявка</a>
   </div>`;

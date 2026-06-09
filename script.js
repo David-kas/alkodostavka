@@ -309,5 +309,12 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         { passive: true }
     );
+
+    if (!document.getElementById('cart-panel') && !document.querySelector('aside.cart')) {
+        var cartScript = document.createElement('script');
+        cartScript.src = '/site-cart.js';
+        cartScript.defer = true;
+        document.head.appendChild(cartScript);
+    }
 });
 

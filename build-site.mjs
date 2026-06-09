@@ -6,7 +6,7 @@ const domain = "https://alkodostavka24.vercel.app";
 const phone = "+7 (999) 786-39-67";
 const telHref = "tel:+79997863967";
 const tg = "https://t.me/alkodostavka";
-const wa = "https://wa.me/79997863967";
+const wa = "https://wa.me/79626289777";
 const email = "info@alkodostavka.vercel.app";
 
 const source = fs.readFileSync(path.join(root, "products.js"), "utf8");

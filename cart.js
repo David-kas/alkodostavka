@@ -24,11 +24,70 @@ async function sendTelegramMessage(text, retries) {
     return { success: false, error: 'Max retries exceeded' };
 }
 
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const CART_STORAGE_KEY = 'alko_cart_v1';
+
+function formatOrderMessage(data) {
+    const lines = [
+        'Новый заказ',
+        '',
+        'Имя: ' + data.name,
+        'Телефон: ' + data.phone,
+        'Адрес: ' + data.address,
+        'Комментарий: ' + (data.comment || '—'),
+        '',
+        'Товары:',
+    ];
+    data.items.forEach(function (item) {
+        lines.push(item.name + ' × ' + item.quantity);
+    });
+    lines.push('', 'Итоговая сумма заказа: ' + data.total + ' ₽', '', 'Дата и время заказа: ' + data.datetime);
+    return lines.join('\n');
+}
+
+function injectCartPanelStyles() {
+    if (document.getElementById('cart-panel-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'cart-panel-styles';
+    style.textContent =
+        '.cart-panel{position:fixed;top:0;right:0;width:min(380px,100%);height:100dvh;background:#fff;z-index:1000;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column;box-shadow:-4px 0 20px rgba(0,0,0,.15)}' +
+        '.cart-panel.open{transform:translateX(0)}' +
+        '.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:999;display:none}' +
+        '.overlay.show{display:block}' +
+        '.cart-header{display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid #eee}' +
+        '.cart-items{flex:1;overflow-y:auto;padding:12px 16px}' +
+        '.cart-item{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #f0f0f0}' +
+        '.cart-item-info h4{margin:0 0 4px;font-size:.95rem}' +
+        '.cart-item-qty{display:flex;align-items:center;gap:6px;margin-top:6px}' +
+        '.cart-item-qty button{width:30px;height:30px;border:1px solid #ddd;border-radius:6px;background:#fff;cursor:pointer}' +
+        '.cart-item-remove{background:none;border:0;font-size:1.3rem;cursor:pointer;color:#999}' +
+        '.cart-total{padding:12px 16px;font-weight:700;border-top:1px solid #eee}' +
+        '.cart-form{padding:12px 16px 20px;display:flex;flex-direction:column;gap:10px;border-top:1px solid #eee}' +
+        '.cart-form input,.cart-form textarea{padding:10px;border:1px solid #ddd;border-radius:8px;font-size:1rem;width:100%}' +
+        '.cart-form button[type=submit]{padding:12px;background:#9e2138;color:#fff;border:0;border-radius:8px;font-weight:700;cursor:pointer}';
+    document.head.appendChild(style);
+}
+
+let cart = [];
+try {
+    const stored = localStorage.getItem(CART_STORAGE_KEY) || localStorage.getItem('cart');
+    cart = JSON.parse(stored || '[]');
+    if (!Array.isArray(cart)) cart = [];
+    cart = cart.map(function (item) {
+        return {
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity || item.qty || 1,
+        };
+    });
+} catch (e) {
+    cart = [];
+}
 
 let cartPanel, overlay, cartItemsDiv, cartTotalSpan, orderForm;
 
 document.addEventListener('DOMContentLoaded', function() {
+    injectCartPanelStyles();
     cartPanel = document.getElementById('cart-panel');
     overlay = document.getElementById('overlay');
     cartItemsDiv = document.getElementById('cart-items');
@@ -109,6 +168,12 @@ function attachDelegatedClickHandlers() {
         if (rm) {
             e.preventDefault();
             removeFromCart(parseInt(rm.dataset.id, 10));
+            return;
+        }
+        const qtyBtn = e.target.closest('.cart-qty-btn');
+        if (qtyBtn) {
+            e.preventDefault();
+            changeQuantity(parseInt(qtyBtn.dataset.id, 10), parseInt(qtyBtn.dataset.delta, 10));
         }
     });
 }
@@ -171,14 +236,20 @@ async function submitCartOrder() {
         return;
     }
 
-    let itemsList = '';
     let total = 0;
     cart.forEach(function(item) {
-        itemsList += `${item.name} x ${item.quantity} = ${item.price * item.quantity} ₽\n`;
         total += item.price * item.quantity;
     });
 
-    const message = `🛒 НОВЫЙ ЗАКАЗ\n\nИмя: ${name}\nТелефон: ${phone}\nАдрес: ${address}\nКомментарий: ${comment || 'нет'}\n\nТовары:\n${itemsList}\nИтого: ${total} ₽`;
+    const message = formatOrderMessage({
+        name: name,
+        phone: phone,
+        address: address,
+        comment: comment,
+        items: cart,
+        total: total,
+        datetime: new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' }),
+    });
 
     const submitBtn = document.getElementById('submit-order');
     if (submitBtn) {
@@ -229,8 +300,21 @@ function removeFromCart(productId) {
     updateCartUI();
 }
 
+function changeQuantity(productId, delta) {
+    const item = cart.find(function(i) { return i.id === productId; });
+    if (!item) return;
+    item.quantity += delta;
+    if (item.quantity <= 0) {
+        removeFromCart(productId);
+        return;
+    }
+    saveCart();
+    updateCartUI();
+}
+
 function saveCart() {
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    try { localStorage.removeItem('cart'); } catch (e) { /* ignore */ }
     setCartBadges(cart.reduce(function(acc, item) { return acc + item.quantity; }, 0));
 }
 
@@ -251,7 +335,12 @@ function updateCartUI() {
             <div class="cart-item" data-id="${item.id}">
                 <div class="cart-item-info">
                     <h4>${escapeHtml(item.name)}</h4>
-                    <div>${item.price} ₽ × ${item.quantity}</div>
+                    <div>${item.price} ₽</div>
+                    <div class="cart-item-qty">
+                        <button type="button" class="cart-qty-btn" data-id="${item.id}" data-delta="-1" aria-label="Уменьшить">−</button>
+                        <span>${item.quantity}</span>
+                        <button type="button" class="cart-qty-btn" data-id="${item.id}" data-delta="1" aria-label="Увеличить">+</button>
+                    </div>
                 </div>
                 <button type="button" class="cart-item-remove" data-id="${item.id}" aria-label="Удалить">×</button>
             </div>
