@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/telegram/:path*",
+      "destination": "/",
+      "statusCode": 404
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
