@@ -1,9 +1,0 @@
-{
-  "name": "alko-dostavka-static",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "generate:seo": "node scripts/generate-seo-pages.mjs",
-    "apply:headers": "node scripts/apply-manual-headers.mjs"
-  }
-}
