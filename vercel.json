@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/korporativ.html",
+      "destination": "/povod/korporativ/",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

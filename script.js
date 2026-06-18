@@ -233,24 +233,33 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    const form = document.getElementById('feedback-form');
-    if (form) {
+    const forms = document.querySelectorAll('#order-form, form[data-telegram-form]');
+    forms.forEach(function (form) {
+        if (form.tagName !== 'FORM') return;
         form.addEventListener('submit', async function (e) {
             e.preventDefault();
-            const statusDiv = document.getElementById('order-status');
+            const statusDiv =
+                form.querySelector('[data-order-status]') ||
+                document.getElementById('order-status');
             if (!statusDiv) return;
             statusDiv.innerHTML = '⏳ Отправка...';
             statusDiv.style.color = '#333';
 
-            const name = document.getElementById('name').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const comment = document.getElementById('comment').value.trim();
+            const nameEl = form.querySelector('[name="name"], #name');
+            const phoneEl = form.querySelector('[name="phone"], #phone');
+            const commentEl = form.querySelector('[name="comment"], #comment');
+
+            const name = nameEl ? nameEl.value.trim() : '';
+            const phone = phoneEl ? phoneEl.value.trim() : '';
+            const comment = commentEl ? commentEl.value.trim() : '';
 
             const data = {
                 name: name,
                 phone: phone,
                 comment: comment,
-                source: 'Сайт АЛКОдоставка',
+                source: form.getAttribute('data-source') || 'Сайт АЛКОдоставка',
+                orderType: form.getAttribute('data-order-type') || 'Заявка с сайта',
+                pageUrl: window.location.href,
             };
 
             try {
@@ -260,24 +269,36 @@ document.addEventListener('DOMContentLoaded', function () {
                     body: JSON.stringify(data),
                 });
 
-                const result = await response.json();
+                let result = {};
+                try {
+                    result = await response.json();
+                } catch (parseErr) {
+                    result = { error: 'Некорректный ответ сервера' };
+                }
 
-                if (result.success) {
+                if (response.ok && result.success) {
                     statusDiv.innerHTML =
                         '✅ Спасибо! Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.';
                     statusDiv.style.color = '#2e7d32';
                     form.reset();
+                } else if (result.code === 'TELEGRAM_NOT_CONFIGURED') {
+                    statusDiv.innerHTML =
+                        '⚠️ Форма временно недоступна. Позвоните <a href="tel:+79997863967">+7 (999) 786-39-67</a> или напишите в WhatsApp / Telegram — кнопки на экране.';
+                    statusDiv.style.color = '#e65100';
                 } else {
-                    statusDiv.innerHTML = '❌ Ошибка: ' + (result.error || 'Неизвестная ошибка');
+                    statusDiv.innerHTML =
+                        '❌ Ошибка: ' +
+                        (result.error || 'Не удалось отправить заявку') +
+                        '. Позвоните <a href="tel:+79997863967">+7 (999) 786-39-67</a> или используйте мессенджеры.';
                     statusDiv.style.color = '#d32f2f';
                 }
             } catch (err) {
                 statusDiv.innerHTML =
-                    '❌ Ошибка соединения. Позвоните +7 (999) 786-39-67 или напишите в мессенджер.';
+                    '❌ Ошибка соединения. Позвоните <a href="tel:+79997863967">+7 (999) 786-39-67</a> или напишите в WhatsApp / Telegram.';
                 statusDiv.style.color = '#d32f2f';
             }
         });
-    }
+    });
 
     document.querySelectorAll('.accordion-header').forEach(function (header) {
         header.addEventListener('click', function () {

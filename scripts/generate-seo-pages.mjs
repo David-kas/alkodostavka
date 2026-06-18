@@ -9,10 +9,12 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
-const BASE = 'https://dostavka-alkogolya-24.vercel.app';
+const BASE = 'https://alkodostavka24.vercel.app';
 
-const PHONE_DISPLAY = '+7 (999) 786-39-67';
-const PHONE_TEL = '+79997863967';
+const CALL_TEL = '+79997863967';
+const CALL_DISPLAY = '+7 (999) 786-39-67';
+const WA_PHONE = '79626289777';
+const SEO_CONTACT = 'телефон, WhatsApp, Telegram или форма заявки';
 const LASTMOD = new Date().toISOString().slice(0, 10);
 const WA_PREFILL = encodeURIComponent('Здравствуйте! Заказ АЛКОдоставка, адрес: ');
 
@@ -263,14 +265,14 @@ function internalLinksSection({ metros = [], raions = [], extraLine = '' }) {
       <div class="seo-related-card">
         <h3>Повод, праздники и наборы</h3>
         <p class="related-links-row">${scen}</p>
-        <p><a href="/povod/">Все поводы</a> · <a href="/podarochnye-nabory.html">Подарочные наборы</a> · <a href="/korporativ.html">Корпоратив</a></p>
+        <p><a href="/povod/">Все поводы</a> · <a href="/podarochnye-nabory.html">Подарочные наборы</a> · <a href="/povod/korporativ/">Корпоратив</a></p>
       </div>
       <div class="seo-related-card">
         <h3>FAQ и заказ</h3>
         <p class="related-links-row">${fq}</p>
         <h4 class="related-sub">Перейти к ответу</h4>
         <p class="related-links-row">${faqJump}</p>
-        <p><a href="/vopros/">Раздел «Вопросы»</a> · <a href="/contacts.html">Контакты и заявка</a> · <a href="tel:${PHONE_TEL}">${PHONE_DISPLAY}</a></p>
+        <p><a href="/vopros/">Раздел «Вопросы»</a> · <a href="/contacts.html">Контакты и заявка</a></p>
       </div>
       <div class="seo-related-card">
         <h3>Районы рядом</h3>
@@ -332,8 +334,8 @@ function mobileNavPremiumBlock() {
         <a href="/" class="nav-mp-row">Главная</a>
       </section>
       <section class="nav-mp-section nav-mp-section--cta" aria-label="Заказ">
-        <a href="tel:${PHONE_TEL}" class="nav-mp-btn nav-mp-btn--call">Позвонить</a>
-        <a href="https://wa.me/79648489888?text=${WA_PREFILL}" class="nav-mp-btn nav-mp-btn--wa" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="tel:${CALL_TEL}" class="nav-mp-btn nav-mp-btn--call">Позвонить</a>
+        <a href="https://wa.me/${WA_PHONE}?text=${WA_PREFILL}" class="nav-mp-btn nav-mp-btn--wa" target="_blank" rel="noopener">WhatsApp</a>
         <a href="https://t.me/alkotaxi_bot" class="nav-mp-btn nav-mp-btn--tg" target="_blank" rel="noopener">Telegram</a>
         <a href="/contacts.html" class="nav-mp-btn nav-mp-btn--form">Заказать за 1 клик</a>
       </section>
@@ -350,8 +352,7 @@ function headerBlock(activeNav) {
       <span class="mobile-callbar-age">18+</span>
     </div>
     <div class="mobile-callbar-right">
-      <a href="tel:${PHONE_TEL}" class="mobile-callbar-tel"><span class="mobile-callbar-icon" aria-hidden="true">☎</span><span class="mobile-callbar-num">${PHONE_DISPLAY}</span></a>
-      <a href="tel:${PHONE_TEL}" class="mobile-callbar-cta">Позвонить</a>
+      <a href="tel:${CALL_TEL}" class="mobile-callbar-tel"><span class="mobile-callbar-icon" aria-hidden="true">☎</span><span class="mobile-callbar-num">${CALL_DISPLAY}</span></a>
     </div>
   </div>
   <div class="header-commercial-strip">
@@ -389,28 +390,29 @@ function headerBlock(activeNav) {
     </nav>
     <div class="header-phone-promo">
       <span class="badge-247">24/7</span>
-      <a href="tel:${PHONE_TEL}">${PHONE_DISPLAY}</a>
+      <a href="tel:+79997863967">+7 (999) 786-39-67</a>
       <span class="phone-sub">Часто 20–40 мин · заказ от 1000 ₽ · МКАД от 650 ₽</span>
     </div>
     <div class="header-cta-cluster">
-      <a href="tel:${PHONE_TEL}" class="btn-header-pill btn-header-call" title="Позвонить">☎ Позвонить</a>
-      <a href="https://wa.me/79648489888?text=${WA_PREFILL}" class="btn-header-pill btn-header-wa" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="tel:${CALL_TEL}" class="btn-header-pill btn-header-call" title="Позвонить">☎ Позвонить</a>
+      <a href="https://wa.me/${WA_PHONE}?text=${WA_PREFILL}" class="btn-header-pill btn-header-wa" target="_blank" rel="noopener">WhatsApp</a>
       <a href="https://t.me/alkotaxi_bot" class="btn-header-pill btn-header-tg" target="_blank" rel="noopener">Telegram</a>
       <a href="/contacts.html" class="btn-header-pill btn-header-1click">Заказ 1 клик</a>
     </div>
     <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav"><span class="burger-line" aria-hidden="true"></span><span class="burger-line" aria-hidden="true"></span><span class="burger-line" aria-hidden="true"></span></button>
   </div>
 </header>
-<a href="tel:${PHONE_TEL}" class="mobile-tel-fab mobile-tel-fab--secondary" title="Позвонить" aria-label="Позвонить в АЛКОдоставка"><span class="visually-hidden">Телефон</span>☎</a>
+<a href="tel:${CALL_TEL}" class="mobile-tel-fab mobile-tel-fab--secondary" title="Позвонить" aria-label="Позвонить в АЛКОдоставка"><span class="visually-hidden">Телефон</span>☎</a>
 <div class="floating-messengers">
   <a href="https://t.me/alkotaxi_bot" target="_blank" rel="noopener" class="messenger-btn telegram" title="Telegram">📱</a>
-  <a href="https://wa.me/79648489888?text=${WA_PREFILL}" target="_blank" rel="noopener" class="messenger-btn whatsapp" title="WhatsApp">💬</a>
+  <a href="https://wa.me/${WA_PHONE}?text=${WA_PREFILL}" target="_blank" rel="noopener" class="messenger-btn whatsapp" title="WhatsApp">💬</a>
 </div>`;
 }
 
 function footerHtml() {
   return `<footer class="footer"><div class="container">
     <p>© 2026 АЛКОдоставка. Доставка алкоголя в Москве. <strong>18+</strong></p>
+    <p class="footer-phone">Телефон: <a href="tel:${CALL_TEL}">${CALL_DISPLAY}</a></p>
     <p class="footer-links">
       <a href="/">Главная</a> | <a href="/catalog.html">Каталог</a> | <a href="/rayony.html">Районы</a> |
       <a href="/metro/">Метро</a> | <a href="/kategoria/">Категории</a> | <a href="/povod/">Повод</a> |
@@ -422,8 +424,8 @@ function footerHtml() {
 
 function stickyHtml() {
   return `<div class="sticky-cta-bar" role="navigation" aria-label="Быстрый заказ">
-    <a href="tel:${PHONE_TEL}" class="sticky-cta-item sticky-cta-call">Позвонить</a>
-    <a href="https://wa.me/79648489888?text=${WA_PREFILL}" class="sticky-cta-item sticky-cta-wa" target="_blank" rel="noopener">WhatsApp</a>
+    <a href="tel:${CALL_TEL}" class="sticky-cta-item sticky-cta-call">Позвонить</a>
+    <a href="https://wa.me/${WA_PHONE}?text=${WA_PREFILL}" class="sticky-cta-item sticky-cta-wa" target="_blank" rel="noopener">WhatsApp</a>
     <a href="https://t.me/alkotaxi_bot" class="sticky-cta-item sticky-cta-tg" target="_blank" rel="noopener">Telegram</a>
     <a href="/contacts.html" class="sticky-cta-item sticky-cta-form">Заявка</a>
   </div>`;
@@ -507,7 +509,7 @@ function main() {
     ['/rayony.html', '0.9', 'weekly'],
     ['/dostavka-chertanovo.html', '0.85', 'monthly'],
     ['/dostavka-butovo.html', '0.85', 'monthly'],
-    ['/korporativ.html', '0.8', 'monthly'],
+    ['/povod/korporativ/', '0.8', 'monthly'],
     ['/podarochnye-nabory.html', '0.8', 'monthly'],
     ['/faq.html', '0.85', 'monthly'],
     ['/privacy.html', '0.4', 'yearly'],
@@ -538,8 +540,8 @@ function main() {
 
   for (const { name, slug } of raionEntries) {
     const p = `/raion/${slug}/`;
-    const title = `Доставка алкоголя ${name}, Москва — 24/7, часто 20–40 мин ☎ ${PHONE_DISPLAY} | 18+`;
-    const description = `${name}, Москва: алкоголь и закуски на дом. ${SLA_SHORT} Заказ от 1000 ₽, доставка МКАД от 650 ₽, ночью 24/7. Отзывы о сервисе — в чате после заказа. Звоните ${PHONE_DISPLAY}. 18+.`;
+    const title = `Доставка алкоголя ${name}, Москва — 24/7, часто 20–40 мин | 18+`;
+    const description = `${name}, Москва: алкоголь и закуски на дом. ${SLA_SHORT} Заказ от 1000 ₽, доставка МКАД от 650 ₽, ночью 24/7. ${SEO_CONTACT}. 18+.`;
     const others = raionEntries.filter((e) => e.slug !== slug);
     const related = pickRotated(others, slug, 3).map((e) => `<a href="/raion/${e.slug}/">${escapeHtml(e.name)}</a>`).join(' · ');
     const metroPick = pickRotated(metroEntries, slug + 'mx', 4);
@@ -563,7 +565,7 @@ function main() {
       <h1>Доставка алкоголя в район ${escapeHtml(name)}</h1>
       <p class="section-subtitle">${intro} ${SLA_LONG}</p>
       <div class="hero-buttons" style="margin:20px 0">
-        <a href="tel:${PHONE_TEL}" class="btn btn-large">Позвонить</a>
+        <a href="tel:${CALL_TEL}" class="btn btn-large">Позвонить</a>
         <a href="/contacts.html" class="btn btn-large btn-outline">Заявка на сайте</a>
         <a href="/catalog.html" class="btn btn-large btn-outline">Каталог</a>
       </div>
@@ -588,8 +590,8 @@ function main() {
   for (const { name, slug, lineName } of metroEntries) {
     const p = `/metro/${slug}/`;
     const lineBit = lineName ? ` Линия: ${lineName}.` : '';
-    const title = `Доставка алкоголя у метро «${name}», Москва — 24/7, часто 20–40 мин ☎ ${PHONE_DISPLAY} | 18+`;
-    const description = `У метро «${name}» в Москве: алкоголь и закуски.${lineBit} ${SLA_SHORT} Заказ от 1000 ₽, МКАД от 650 ₽, ночью 24/7. ${PHONE_DISPLAY}. 18+.`;
+    const title = `Доставка алкоголя у метро «${name}», Москва — 24/7, часто 20–40 мин | 18+`;
+    const description = `У метро «${name}» в Москве: алкоголь и закуски.${lineBit} ${SLA_SHORT} Заказ от 1000 ₽, МКАД от 650 ₽, ночью 24/7. ${SEO_CONTACT}. 18+.`;
     const jsonLd = JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'WebPage',
@@ -610,7 +612,7 @@ function main() {
       <h1>Доставка алкоголя у метро ${escapeHtml(name)}</h1>
       <p class="section-subtitle">${mIntro} ${SLA_LONG}</p>
       <div class="hero-buttons" style="margin:20px 0">
-        <a href="tel:${PHONE_TEL}" class="btn btn-large">Заказать</a>
+        <a href="tel:${CALL_TEL}" class="btn btn-large">Заказать</a>
         <a href="/catalog.html" class="btn btn-large btn-outline">Каталог</a>
       </div>
       <div class="seo-block">
@@ -625,7 +627,7 @@ function main() {
         raions: raionPick,
         extraLine:
           'Связь без ожидания: <a href="tel:' +
-          PHONE_TEL +
+          CALL_TEL +
           '">позвонить</a> или <a href="/contacts.html">форма заявки</a>.',
       })}
     </main>`;
@@ -636,8 +638,8 @@ function main() {
   /** Категории */
   for (const k of KATEGORII) {
     const p = `/kategoria/${k.slug}/`;
-    const title = `${k.name} с доставкой, Москва 24/7 — часто 20–40 мин ☎ ${PHONE_DISPLAY} | 18+`;
-    const description = `${k.name} на дом по Москве: ${k.hint}. ${SLA_SHORT} Заказ от 1000 ₽, доставка МКАД от 650 ₽, ночью. ${PHONE_DISPLAY}. 18+.`;
+    const title = `${k.name} с доставкой, Москва 24/7 — часто 20–40 мин | 18+`;
+    const description = `${k.name} на дом по Москве: ${k.hint}. ${SLA_SHORT} Заказ от 1000 ₽, доставка МКАД от 650 ₽, ночью. ${SEO_CONTACT}. 18+.`;
     const jsonLd = JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
@@ -651,7 +653,7 @@ function main() {
       <h1>${escapeHtml(k.name)} с доставкой по Москве</h1>
       <p class="section-subtitle">${escapeHtml(k.hint)}. Подберём позиции под бюджет: звонок или WhatsApp — менеджер предложит варианты по наличию.</p>
       <div class="hero-buttons" style="margin:20px 0">
-        <a href="tel:${PHONE_TEL}" class="btn btn-large">Позвонить</a>
+        <a href="tel:${CALL_TEL}" class="btn btn-large">Позвонить</a>
         <a href="/catalog.html" class="btn btn-large">Смотреть каталог</a>
       </div>
       <div class="seo-block">
@@ -674,8 +676,8 @@ function main() {
   /** Поводы */
   for (const pv of POVODY) {
     const p = `/povod/${pv.slug}/`;
-    const title = `Алкоголь на ${pv.name}, Москва 24/7 — 20–40 мин ☎ ${PHONE_DISPLAY} | 18+`;
-    const description = `${pv.name}, Москва: ${pv.kw || pv.hint || 'доставка алкоголя'}. ${SLA_SHORT} Заказ от 1000 ₽, МКАД от 650 ₽, ночью. ${PHONE_DISPLAY}. 18+.`;
+    const title = `Алкоголь на ${pv.name}, Москва 24/7 — 20–40 мин | 18+`;
+    const description = `${pv.name}, Москва: ${pv.kw || pv.hint || 'доставка алкоголя'}. ${SLA_SHORT} Заказ от 1000 ₽, МКАД от 650 ₽, ночью. ${SEO_CONTACT}. 18+.`;
     const jsonLd = JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'WebPage',
@@ -695,11 +697,11 @@ function main() {
       <h1>Алкоголь на ${escapeHtml(pv.name)} с доставкой</h1>
       <p class="section-subtitle">Соберём корзину под ваш сценарий: от бюджетных позиций до премиум-сегмента. ${SLA_LONG} Ночью и в праздники — как обычно, без отдельной «ночной наценки» в ущерб честности (финальную цену скажет оператор).</p>
       <div class="hero-buttons" style="margin:20px 0">
-        <a href="tel:${PHONE_TEL}" class="btn btn-large">Обсудить заказ</a>
+        <a href="tel:${CALL_TEL}" class="btn btn-large">Обсудить заказ</a>
         <a href="/podarochnye-nabory.html" class="btn btn-large btn-outline">Подарочные наборы</a>
       </div>
       <div class="seo-block">
-        <p><a href="/kategoria/">Категории</a> · <a href="/korporativ.html">Корпоратив</a> · <a href="/faq.html">FAQ</a> · <a href="/contacts.html">Контакты</a> · <a href="/catalog.html">Каталог</a></p>
+        <p><a href="/kategoria/">Категории</a> · <a href="/povod/korporativ/">Корпоратив</a> · <a href="/faq.html">FAQ</a> · <a href="/contacts.html">Контакты</a> · <a href="/catalog.html">Каталог</a></p>
         <div class="legal-box"><strong>18+</strong> Умеренное потребление. Не продаём несовершеннолетним.</div>
       </div>
       ${internalLinksSection({ metros: metroPick, raions: raionPick, extraLine: extraPremium })}
@@ -711,8 +713,8 @@ function main() {
   /** FAQ intent pages */
   for (const v of VOPROSY) {
     const p = `/vopros/${v.slug}/`;
-    const title = `${v.q} — Москва 24/7, 20–40 мин ☎ ${PHONE_DISPLAY} | АЛКОдоставка`;
-    const description = `${v.a.slice(0, 100)}… ${SLA_SHORT} ${PHONE_DISPLAY}. 18+.`;
+    const title = `${v.q} — Москва 24/7, 20–40 мин | АЛКОдоставка`;
+    const description = `${v.a.slice(0, 100)}… ${SLA_SHORT} ${SEO_CONTACT}. 18+.`;
     const jsonLd = JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
@@ -734,14 +736,14 @@ function main() {
       <h1>${escapeHtml(v.q)}</h1>
       <div class="seo-block">
         <p class="lead-answer">${escapeHtml(v.a)}</p>
-        <p>Если ситуация нестандартная (корпоратив, МО, очень крупный заказ), <a href="tel:${PHONE_TEL}">позвоните</a> — подстроим условия.</p>
+        <p>Если ситуация нестандартная (корпоратив, МО, очень крупный заказ), <a href="tel:${CALL_TEL}">позвоните</a> — подстроим условия.</p>
         <p><a href="/faq.html">Общий FAQ</a> · <a href="/contacts.html">Контакты</a> · <a href="/dostavka-nochyu-moskva.html">Ночью</a> · <a href="/catalog.html">Каталог</a> · <a href="/rayony.html">Районы</a></p>
         <div class="legal-box"><strong>18+</strong></div>
       </div>
       ${internalLinksSection({
         metros: metroPick,
         raions: raionPick,
-        extraLine: 'Оформить заказ: <a href="tel:' + PHONE_TEL + '">' + PHONE_DISPLAY + '</a> или <a href="/contacts.html">заявка на сайте</a>.',
+        extraLine: 'Оформить заказ: <a href="/contacts.html">заявка на сайте</a> или <a href="https://wa.me/' + WA_PHONE + '">WhatsApp</a>.',
       })}
     </main>`;
     writeFile(path.join(ROOT, 'vopros', v.slug, 'index.html'), wrapPage({ title, description, canonicalPath: p, jsonLd, bodyMain: body, activeNav: 'faq' }));
@@ -765,8 +767,8 @@ function main() {
   writeFile(
     path.join(ROOT, 'metro', 'index.html'),
     wrapPage({
-      title: 'Доставка алкоголя у метро Москвы 24/7 — 20–40 мин ☎ ' + PHONE_DISPLAY + ' | 18+',
-      description: `Все станции: алкоголь и закуски. ${SLA_SHORT} Заказ от 1000 ₽, МКАД от 650 ₽, ночью. ${PHONE_DISPLAY}. 18+.`,
+      title: 'Доставка алкоголя у метро Москвы 24/7 — 20–40 мин | 18+',
+      description: `Все станции: алкоголь и закуски. ${SLA_SHORT} Заказ от 1000 ₽, МКАД от 650 ₽, ночью. ${SEO_CONTACT}. 18+.`,
       canonicalPath: '/metro/',
       jsonLd: JSON.stringify({
         '@context': 'https://schema.org',
@@ -787,12 +789,12 @@ function main() {
   writeFile(
     path.join(ROOT, 'kategoria', 'index.html'),
     wrapPage({
-      title: 'Категории алкоголя с доставкой Москва 24/7 — 20–40 мин ☎ ' + PHONE_DISPLAY + ' | 18+',
+      title: 'Категории алкоголя с доставкой Москва 24/7 — 20–40 мин | 18+',
       description:
         'Водка, виски, вино, пиво, игристое и закуски с доставкой по Москве. ' +
         SLA_SHORT +
         ' ' +
-        PHONE_DISPLAY +
+        SEO_CONTACT +
         '. 18+.',
       canonicalPath: '/kategoria/',
       bodyMain: `<main class="container" style="padding:40px 20px 60px">
@@ -815,18 +817,18 @@ function main() {
   writeFile(
     path.join(ROOT, 'povod', 'index.html'),
     wrapPage({
-      title: 'Алкоголь на праздник и событие, Москва 24/7 — 20–40 мин ☎ ' + PHONE_DISPLAY + ' | 18+',
+      title: 'Алкоголь на праздник и событие, Москва 24/7 — 20–40 мин | 18+',
       description:
         'Новый год, день рождения, корпоратив, срочно, ночью, премиум и недорого. ' +
         SLA_SHORT +
         ' ' +
-        PHONE_DISPLAY +
+        SEO_CONTACT +
         '. 18+.',
       canonicalPath: '/povod/',
       bodyMain: `<main class="container" style="padding:40px 20px 60px">
         <nav class="breadcrumb-mini" aria-label="Навигация"><a href="/">Главная</a> · <span>Повод</span></nav>
         <h1>Алкоголь с доставкой на повод</h1>
-        <p class="section-subtitle"><a href="/podarochnye-nabory.html">Подарочные наборы</a> · <a href="/korporativ.html">корпоратив</a> · <a href="/faq.html">FAQ</a></p>
+        <p class="section-subtitle"><a href="/podarochnye-nabory.html">Подарочные наборы</a> · <a href="/povod/korporativ/">корпоратив</a> · <a href="/faq.html">FAQ</a></p>
         <div class="landing-links">${povHub}</div>
         ${internalLinksSection({ metros: hubM3, raions: hubR3 })}
       </main>`,
@@ -842,8 +844,8 @@ function main() {
   writeFile(
     path.join(ROOT, 'vopros', 'index.html'),
     wrapPage({
-      title: 'Вопросы о доставке алкоголя Москва 24/7 ☎ ' + PHONE_DISPLAY + ' | АЛКОдоставка',
-      description: 'Ответы по срокам, сумме, оплате и ночной доставке. ' + SLA_SHORT + ' ' + PHONE_DISPLAY + '. 18+.',
+      title: 'Вопросы о доставке алкоголя Москва 24/7 | АЛКОдоставка',
+      description: 'Ответы по срокам, сумме, оплате и ночной доставке. ' + SLA_SHORT + ' ' + SEO_CONTACT + '. 18+.',
       canonicalPath: '/vopros/',
       bodyMain: `<main class="container" style="padding:40px 20px 60px">
         <nav class="breadcrumb-mini" aria-label="Навигация"><a href="/">Главная</a> · <span>Вопросы</span></nav>
@@ -853,7 +855,7 @@ function main() {
         ${internalLinksSection({
           metros: hubM4,
           raions: hubR4,
-          extraLine: 'Заказ: <a href="tel:' + PHONE_TEL + '">' + PHONE_DISPLAY + '</a> · <a href="/dostavka-nochyu-moskva.html">ночью</a> · <a href="/rayony.html">районы</a>.',
+          extraLine: 'Заказ: <a href="/contacts.html">форма заявки</a> · <a href="/dostavka-nochyu-moskva.html">ночью</a> · <a href="/rayony.html">районы</a>.',
         })}
       </main>`,
       activeNav: 'faq',
@@ -867,8 +869,8 @@ function main() {
   const hubM5 = pickRotated(metroEntries, 'hubm5', 5);
   const hubR5 = pickRotated(raionEntries, 'hubr5', 5);
   const rayonyPage = wrapPage({
-    title: 'Доставка алкоголя по районам Москвы 24/7 — 20–40 мин ☎ ' + PHONE_DISPLAY + ' | 18+',
-    description: `Районы Москвы: алкоголь и закуски на дом. ${SLA_SHORT} Заказ от 1000 ₽, МКАД от 650 ₽. ${PHONE_DISPLAY}. 18+.`,
+    title: 'Доставка алкоголя по районам Москвы 24/7 — 20–40 мин | 18+',
+    description: `Районы Москвы: алкоголь и закуски на дом. ${SLA_SHORT} Заказ от 1000 ₽, МКАД от 650 ₽. ${SEO_CONTACT}. 18+.`,
     canonicalPath: '/rayony.html',
     jsonLd: JSON.stringify({
       '@context': 'https://schema.org',

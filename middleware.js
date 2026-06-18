@@ -11,6 +11,10 @@ export default function middleware(request) {
     return fetch(request);
   }
 
+  if (url.pathname.startsWith('/api/')) {
+    return fetch(request);
+  }
+
   const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(userAgent);
 
   const isBot = /Googlebot|Google-InspectionTool|YandexBot|YandexMobileBot|YandexVideo|YandexImages|YandexAccessibilityBot|YandexDirect|YandexBlogs|YandexMirrorDetector|YandexMedia|YandexWebmaster|Bingbot|Baiduspider/i.test(userAgent);

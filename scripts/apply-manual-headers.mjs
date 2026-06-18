@@ -87,7 +87,6 @@ const JOBS = [
   ['dostavka-nochyu-moskva.html', 'night'],
   ['dostavka-chertanovo.html', 'rayony'],
   ['dostavka-butovo.html', 'rayony'],
-  ['korporativ.html', 'povod'],
   ['podarochnye-nabory.html', 'povod'],
   ['privacy.html', null],
 ];

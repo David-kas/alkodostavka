@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "generate:seo": "node scripts/generate-seo-pages.mjs",
-    "apply:headers": "node scripts/apply-manual-headers.mjs"
+    "fix:seo": "node scripts/fix-site-seo.mjs",
+    "apply:headers": "node scripts/apply-manual-headers.mjs",
+    "seo:all": "node scripts/generate-seo-pages.mjs && node scripts/fix-site-seo.mjs && node scripts/apply-manual-headers.mjs"
   }
 }

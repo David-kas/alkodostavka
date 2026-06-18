@@ -1,0 +1,21 @@
+RewriteEngine On
+
+# Разрешаем API отправки заказа в Telegram
+RewriteCond %{REQUEST_URI} ^/api/(send-telegram|telegram)/?$ [NC]
+RewriteRule ^ - [E=ALLOW_ACCESS:1]
+RewriteCond %{REQUEST_URI} ^/send-telegram\.php$ [NC]
+RewriteRule ^ - [E=ALLOW_ACCESS:1]
+
+# Прокси API → PHP (для хостинга без serverless)
+RewriteRule ^api/send-telegram/?$ send-telegram.php [L,QSA]
+RewriteRule ^api/telegram/?$ send-telegram.php [L,QSA]
+
+# Разрешаем поисковых ботов
+RewriteCond %{HTTP_USER_AGENT} (Googlebot|YandexBot|YandexMobileBot|Bingbot|Baiduspider|DuckDuckBot|Applebot|SemrushBot|AhrefsBot|MJ12bot) [NC,OR]
+# Разрешаем мобильные устройства
+RewriteCond %{HTTP_USER_AGENT} (Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera\ Mini|Mobile) [NC]
+RewriteRule ^ - [E=ALLOW_ACCESS:1]
+
+# Блокируем все остальное (включая обычные ПК)
+RewriteCond %{ENV:ALLOW_ACCESS} !1
+RewriteRule ^ - [F,L]

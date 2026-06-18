@@ -1,20 +1,22 @@
-function sanitizeForTelegram(text) {
-  if (text == null || text === '') return '—';
-  return String(text).replace(/[\u0000-\u001F\\]/g, ' ').slice(0, 2000);
-}
+import {
+  buildOrderMessage,
+  getTelegramCredentials,
+  sendTelegramMessage,
+} from '../telegram/send.js';
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  res.setHeader('Cache-Control', 'no-store');
+
+  if (req.method === 'GET') {
+    const { token, chatId } = getTelegramCredentials();
+    return res.status(200).json({
+      ok: Boolean(token && chatId),
+      configured: Boolean(token && chatId),
+    });
   }
 
-  const botToken = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-
-  if (!botToken || !chatId) {
-    return res.status(500).json({
-      error: 'Сервер не настроен: задайте TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID в Vercel',
-    });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   let body = req.body;
@@ -22,48 +24,34 @@ export default async function handler(req, res) {
     try {
       body = JSON.parse(body || '{}');
     } catch {
-      return res.status(400).json({ error: 'Некорректный JSON' });
+      return res.status(400).json({ error: 'Некорректный JSON', code: 'INVALID_JSON' });
     }
   }
-  const { name, phone, comment, source = 'Сайт' } = body || {};
+
+  const { name, phone, comment, source = 'Сайт', orderType = 'Заявка', pageUrl } = body || {};
 
   if (!name || !phone) {
-    return res.status(400).json({ error: 'Имя и телефон обязательны' });
+    return res.status(400).json({ error: 'Имя и телефон обязательны', code: 'VALIDATION' });
   }
 
-  const safeName = sanitizeForTelegram(name);
-  const safePhone = sanitizeForTelegram(phone);
-  const safeComment = sanitizeForTelegram(comment);
-  const safeSource = sanitizeForTelegram(source);
+  const result = await sendTelegramMessage(
+    buildOrderMessage({
+      name,
+      phone,
+      comment,
+      source,
+      orderType,
+      pageUrl: pageUrl || req.headers.referer || '',
+    }),
+  );
 
-  const message =
-    `Новая заявка с сайта АЛКОдоставка\n\n` +
-    `Имя: ${safeName}\n` +
-    `Телефон: ${safePhone}\n` +
-    `Комментарий: ${safeComment}\n` +
-    `Время: ${new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' })}\n` +
-    `Источник: ${safeSource}`;
-
-  const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-        disable_web_page_preview: true,
-      }),
-    });
-
-    const data = await response.json();
-    if (data.ok) {
-      res.status(200).json({ success: true });
-    } else {
-      res.status(500).json({ error: data.description || 'Telegram API error' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  if (result.ok) {
+    return res.status(200).json({ success: true });
   }
+
+  const status = result.code === 'TELEGRAM_NOT_CONFIGURED' ? 503 : 502;
+  return res.status(status).json({
+    error: result.error,
+    code: result.code || 'TELEGRAM_ERROR',
+  });
 }
