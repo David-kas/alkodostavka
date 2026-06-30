@@ -182,6 +182,11 @@ const SLA_SHORT = 'Часто по Москве 20–40 мин от подтве
 const SLA_LONG =
   'По Москве во многих заказах получается уложиться в 20–40 минут после подтверждения. В часы пик, ночью или при сложной погоде время может увеличиться — оператор назовёт честное окно, без обещаний «ровно за 15 минут всем».';
 
+const YANDEX_GEO_META = `<meta name="geo.region" content="RU-MOW">
+  <meta name="geo.placename" content="Москва">
+  <meta name="geo.position" content="55.755826;37.617300">
+  <meta name="ICBM" content="55.755826, 37.617300">`;
+
 function raionIntro(name, slug) {
   const v = variantIndex(slug, 4);
   const n = escapeHtml(name);
@@ -451,8 +456,10 @@ function wrapPage({ title, description, canonicalPath, jsonLd, bodyMain, activeN
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
+  ${YANDEX_GEO_META}
   <link rel="canonical" href="${escapeHtml(canonical)}">
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
   <meta property="og:url" content="${escapeHtml(canonical)}">
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">

@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Доставка алкоголя Москва 24/7 за 20–40 мин | заказ от 1000 ₽, 18+</title>
-    <meta name="description" content="Алкоголь и закуски на дом по Москве и МО. Приём заказов круглосуточно. Ориентир по времени часто 20–40 мин, до ~60 мин в пик. Доставка МКАД от 650 ₽, заказ от 1000 ₽. Только 18+.">
+    <title>Доставка алкоголя в Москве на дом 24/7 — заказать с доставкой | АЛКОдоставка 18+</title>
+    <meta name="description" content="Заказать алкоголь с доставкой на дом в Москве и МО. Водка от 990 ₽, виски, вино, пиво, закуски. Приём 24/7, часто 20–40 мин. МКАД от 650 ₽, заказ от 1000 ₽. 18+.">
     <meta name="author" content="АЛКОдоставка">
+    <meta name="geo.region" content="RU-MOW">
+    <meta name="geo.placename" content="Москва">
+    <meta name="geo.position" content="55.755826;37.617300">
+    <meta name="ICBM" content="55.755826, 37.617300">
     <link rel="canonical" href="https://alkodostavka24.vercel.app/">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ru_RU">
     <meta property="og:url" content="https://alkodostavka24.vercel.app/">
-    <meta property="og:title" content="АЛКОдоставка — Москва 24/7, 20–40 мин, от 650 ₽ доставка | 18+">
-    <meta property="og:description" content="Крепкий алкоголь, вино, пиво, закуски. Часто 20–40 мин по Москве. 18+.">
+    <meta property="og:title" content="Доставка алкоголя в Москве 24/7 — АЛКОдоставка | 18+">
+    <meta property="og:description" content="Заказать алкоголь с доставкой на дом по Москве. Каталог 2000+ позиций, часто 20–40 мин. 18+.">
     <meta property="og:image" content="https://alkodostavka24.vercel.app/favicon.svg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="АЛКОдоставка — доставка алкоголя 24/7 по Москве">
@@ -32,23 +36,48 @@
                 "url": "https://alkodostavka24.vercel.app/",
                 "name": "АЛКОдоставка",
                 "inLanguage": "ru-RU",
-                "publisher": { "@id": "https://alkodostavka24.vercel.app/#business" }
+                "publisher": { "@id": "https://alkodostavka24.vercel.app/#business" },
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://alkodostavka24.vercel.app/catalog.html?q={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                }
             },
             {
-                "@type": "LocalBusiness",
+                "@type": ["LocalBusiness", "DeliveryService"],
                 "@id": "https://alkodostavka24.vercel.app/#business",
                 "name": "АЛКОдоставка",
                 "image": "https://alkodostavka24.vercel.app/favicon.svg",
                 "url": "https://alkodostavka24.vercel.app/",
                 "telephone": "+79997863967",
                 "priceRange": "₽₽",
-                "areaServed": { "@type": "City", "name": "Москва" },
+                "description": "Круглосуточная доставка алкоголя и закусок на дом по Москве и Московской области",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Москва",
+                    "addressRegion": "Москва",
+                    "addressCountry": "RU"
+                },
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": 55.755826,
+                    "longitude": 37.617300
+                },
+                "areaServed": [
+                    { "@type": "City", "name": "Москва" },
+                    { "@type": "AdministrativeArea", "name": "Московская область" }
+                ],
                 "openingHoursSpecification": [{
                     "@type": "OpeningHoursSpecification",
                     "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
                     "opens": "00:00",
                     "closes": "23:59"
-                }]
+                }],
+                "hasOfferCatalog": {
+                    "@type": "OfferCatalog",
+                    "name": "Каталог алкоголя",
+                    "url": "https://alkodostavka24.vercel.app/catalog.html"
+                }
             },
             {
                 "@type": "FAQPage",
@@ -227,7 +256,7 @@
         <!-- Герой -->
         <section class="hero">
             <div class="container">
-                <h1>Круглосуточная доставка алкоголя на дом в Москве</h1>
+                <h1>Доставка алкоголя в Москве на дом — круглосуточно 24/7</h1>
                 <p class="hero-subtitle">Крепкий алкоголь, вино, пиво, игристое и закуски — привезём домой или в офис. По Москве <strong>часто 20–40 минут</strong> после подтверждения; в пик и ночью может быть до ~60 мин — скажем честно заранее. <strong>24/7</strong> приём заказов. <strong>18+</strong> при вручении.</p>
                 <p class="trust-bar"><span>Ответ за минуты</span><span>МКАД от 650 ₽</span><span>Заказ от 1000 ₽</span><span>Наличные / СБП</span></p>
                 <div class="hero-buttons">

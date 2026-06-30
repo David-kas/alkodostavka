@@ -814,7 +814,151 @@ body.nav-open .mobile-menu-btn .burger-line:nth-child(3) {
     font-weight: 700;
     color: #d32f2f;
     display: block;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+}
+
+.btn-add-cart {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    margin-top: 4px;
+}
+
+.btn-header-cart {
+    position: relative;
+}
+
+.cart-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    margin-left: 4px;
+    border-radius: 999px;
+    background: #fff;
+    color: #d32f2f;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.cart-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1200;
+}
+
+.cart-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(420px, 100vw);
+    height: 100%;
+    z-index: 1201;
+    background: #fff;
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.12);
+    overflow-y: auto;
+}
+
+.cart-panel-inner {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 100%;
+}
+
+.cart-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cart-panel-head h2 {
+    margin: 0;
+    font-size: 1.35rem;
+}
+
+.cart-panel-close {
+    border: none;
+    background: transparent;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #666;
+}
+
+.cart-items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+}
+
+.cart-item,
+.cart-empty {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px 12px;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item-name {
+    grid-column: 1 / -1;
+    font-weight: 600;
+    color: #333;
+}
+
+.cart-item-price {
+    color: #d32f2f;
+    font-weight: 700;
+}
+
+.cart-item-qty {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cart-qty-btn,
+.cart-remove {
+    border: 1px solid #ddd;
+    background: #fafafa;
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.cart-remove {
+    color: #999;
+}
+
+.cart-total {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.cart-panel-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+@media (max-width: 768px) {
+    .cart-btn-label {
+        display: none;
+    }
+
+    .btn-header-cart {
+        min-width: auto;
+        padding-inline: 10px;
+    }
 }
 
 .contacts-grid {
