@@ -6,6 +6,8 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { CART_PANEL_HTML } from './cart-panel-html.mjs';
+import { ONECLICK_MODAL_HTML } from './oneclick-modal-html.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
@@ -342,9 +344,21 @@ function mobileNavPremiumBlock() {
         <a href="tel:${CALL_TEL}" class="nav-mp-btn nav-mp-btn--call">Позвонить</a>
         <a href="https://wa.me/${WA_PHONE}?text=${WA_PREFILL}" class="nav-mp-btn nav-mp-btn--wa" target="_blank" rel="noopener">WhatsApp</a>
         <a href="https://t.me/alkotaxi_bot" class="nav-mp-btn nav-mp-btn--tg" target="_blank" rel="noopener">Telegram</a>
-        <a href="/contacts.html" class="nav-mp-btn nav-mp-btn--form">Заказать за 1 клик</a>
+        <button type="button" class="nav-mp-btn nav-mp-btn--form js-oneclick-open">Заказать за 1 клик</button>
       </section>
     </div>`;
+}
+
+function cartHeaderHtml() {
+  return `<button type="button" class="header-cart-btn" id="site-cart-btn" aria-label="Корзина">
+      <span class="header-cart-icon" aria-hidden="true">🛒</span>
+      <span class="header-cart-label cart-btn-label">Корзина</span>
+      <span class="cart-count" id="cart-count">0</span>
+    </button>`;
+}
+
+function cartPanelHtml() {
+  return CART_PANEL_HTML;
 }
 
 function headerBlock(activeNav) {
@@ -402,16 +416,14 @@ function headerBlock(activeNav) {
       <a href="tel:${CALL_TEL}" class="btn-header-pill btn-header-call" title="Позвонить">☎ Позвонить</a>
       <a href="https://wa.me/${WA_PHONE}?text=${WA_PREFILL}" class="btn-header-pill btn-header-wa" target="_blank" rel="noopener">WhatsApp</a>
       <a href="https://t.me/alkotaxi_bot" class="btn-header-pill btn-header-tg" target="_blank" rel="noopener">Telegram</a>
-      <a href="/contacts.html" class="btn-header-pill btn-header-1click">Заказ 1 клик</a>
+      <button type="button" class="btn-header-pill btn-header-1click js-oneclick-open">Заказ 1 клик</button>
     </div>
+    ${cartHeaderHtml()}
     <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav"><span class="burger-line" aria-hidden="true"></span><span class="burger-line" aria-hidden="true"></span><span class="burger-line" aria-hidden="true"></span></button>
   </div>
 </header>
-<a href="tel:${CALL_TEL}" class="mobile-tel-fab mobile-tel-fab--secondary" title="Позвонить" aria-label="Позвонить в АЛКОдоставка"><span class="visually-hidden">Телефон</span>☎</a>
-<div class="floating-messengers">
-  <a href="https://t.me/alkotaxi_bot" target="_blank" rel="noopener" class="messenger-btn telegram" title="Telegram">📱</a>
-  <a href="https://wa.me/${WA_PHONE}?text=${WA_PREFILL}" target="_blank" rel="noopener" class="messenger-btn whatsapp" title="WhatsApp">💬</a>
-</div>`;
+${cartPanelHtml()}
+<a href="tel:${CALL_TEL}" class="mobile-tel-fab mobile-tel-fab--secondary" title="Позвонить" aria-label="Позвонить в АЛКОдоставка"><span class="visually-hidden">Телефон</span>☎</a>`;
 }
 
 function footerHtml() {
@@ -432,7 +444,7 @@ function stickyHtml() {
     <a href="tel:${CALL_TEL}" class="sticky-cta-item sticky-cta-call">Позвонить</a>
     <a href="https://wa.me/${WA_PHONE}?text=${WA_PREFILL}" class="sticky-cta-item sticky-cta-wa" target="_blank" rel="noopener">WhatsApp</a>
     <a href="https://t.me/alkotaxi_bot" class="sticky-cta-item sticky-cta-tg" target="_blank" rel="noopener">Telegram</a>
-    <a href="/contacts.html" class="sticky-cta-item sticky-cta-form">Заявка</a>
+    <button type="button" class="sticky-cta-item sticky-cta-form js-oneclick-open">Заявка</button>
   </div>`;
 }
 
@@ -477,6 +489,7 @@ function wrapPage({ title, description, canonicalPath, jsonLd, bodyMain, activeN
   ${footerHtml()}
   ${stickyHtml()}
   ${metrikaHtml()}
+  ${ONECLICK_MODAL_HTML}
   <script src="/script.js" defer></script>
 </body>
 </html>`;

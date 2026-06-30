@@ -28,17 +28,39 @@ export default async function handler(req, res) {
     }
   }
 
-  const { name, phone, comment, source = 'Сайт', orderType = 'Заявка', pageUrl } = body || {};
+  const {
+    name,
+    phone,
+    comment,
+    address,
+    cart,
+    source = 'Сайт',
+    orderType = 'Заявка',
+    pageUrl,
+  } = body || {};
 
   if (!name || !phone) {
     return res.status(400).json({ error: 'Имя и телефон обязательны', code: 'VALIDATION' });
   }
+
+  const cartItems = Array.isArray(cart)
+    ? cart
+        .filter((it) => it && it.name)
+        .map((it) => ({
+          name: String(it.name).slice(0, 200),
+          price: Number(it.price) || 0,
+          qty: Math.max(1, Number(it.qty) || 1),
+          image: it.image ? String(it.image).slice(0, 500) : '',
+        }))
+    : [];
 
   const result = await sendTelegramMessage(
     buildOrderMessage({
       name,
       phone,
       comment,
+      address,
+      cart: cartItems,
       source,
       orderType,
       pageUrl: pageUrl || req.headers.referer || '',

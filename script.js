@@ -233,70 +233,145 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    const forms = document.querySelectorAll('#order-form, form[data-telegram-form]');
+    const forms = document.querySelectorAll('#order-form, #cart-order-form, form[data-telegram-form]');
+
+    function readCartItems() {
+        try {
+            var raw = JSON.parse(localStorage.getItem('alko_cart_v1') || '[]');
+            if (!Array.isArray(raw)) return [];
+            return raw
+                .map(function (it) {
+                    if (!it || !it.name) return null;
+                    return {
+                        name: String(it.name).trim(),
+                        price: Math.max(0, parseInt(it.price, 10) || 0),
+                        qty: Math.max(1, parseInt(it.qty, 10) || 1),
+                        image: it.image ? String(it.image) : '',
+                    };
+                })
+                .filter(Boolean);
+        } catch (e) {
+            return [];
+        }
+    }
+
+    async function submitTelegramOrder(form, statusDiv) {
+        if (!statusDiv) return;
+
+        const nameEl = form.querySelector('[name="name"], #name, #cart-name, #oneclick-name');
+        const phoneEl = form.querySelector('[name="phone"], #phone, #cart-phone, #oneclick-phone');
+        const commentEl = form.querySelector('[name="comment"], #comment, #cart-comment');
+        const addressEl = form.querySelector('[name="address"], #cart-address');
+
+        const name = nameEl ? nameEl.value.trim() : '';
+        const phone = phoneEl ? phoneEl.value.trim() : '';
+        const comment = commentEl ? commentEl.value.trim() : '';
+        const address = addressEl ? addressEl.value.trim() : '';
+        const cart = readCartItems();
+
+        if (form.id === 'cart-order-form' && !cart.length) {
+            statusDiv.innerHTML = '⚠️ Добавьте товары в корзину из <a href="/catalog.html">каталога</a>';
+            statusDiv.style.color = '#e65100';
+            return;
+        }
+
+        statusDiv.innerHTML = '⏳ Отправка заказа...';
+        statusDiv.style.color = '#333';
+
+        const data = {
+            name: name,
+            phone: phone,
+            comment: comment,
+            address: address,
+            cart: cart,
+            source: form.getAttribute('data-source') || 'Сайт АЛКОдоставка',
+            orderType: form.getAttribute('data-order-type') || 'Заявка с сайта',
+            pageUrl: window.location.href,
+        };
+
+        try {
+            const apiUrl =
+                (document.documentElement.getAttribute('data-api-base') || '').replace(/\/$/, '') +
+                '/api/telegram';
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+
+            const contentType = response.headers.get('content-type') || '';
+            let result = {};
+            const rawText = await response.text();
+
+            if (contentType.includes('application/json')) {
+                try {
+                    result = JSON.parse(rawText || '{}');
+                } catch (parseErr) {
+                    result = { error: 'Некорректный ответ сервера' };
+                }
+            } else if (rawText.trim().startsWith('{')) {
+                try {
+                    result = JSON.parse(rawText);
+                } catch (parseErr) {
+                    result = { error: 'Некорректный ответ сервера' };
+                }
+            } else {
+                result = {
+                    error: 'API недоступен на этом сервере',
+                    code: 'API_UNAVAILABLE',
+                    hint: 'local',
+                };
+            }
+
+            if (response.ok && result.success) {
+                statusDiv.innerHTML =
+                    '✅ Заказ отправлен! Мы перезвоним в ближайшее время для подтверждения.';
+                statusDiv.style.color = '#2e7d32';
+                form.reset();
+                if (form.id === 'cart-order-form') {
+                    writeCart([]);
+                    if (typeof closeCartPanel === 'function') closeCartPanel();
+                }
+                if (form.id === 'oneclick-order-form' && typeof closeOneClickModal === 'function') {
+                    window.setTimeout(closeOneClickModal, 2500);
+                }
+            } else if (result.code === 'TELEGRAM_NOT_CONFIGURED') {
+                statusDiv.innerHTML =
+                    '⚠️ Оформление временно недоступно. Позвоните <a href="tel:+79997863967">+7 (999) 786-39-67</a> или напишите в WhatsApp / Telegram.';
+                statusDiv.style.color = '#e65100';
+            } else if (result.code === 'API_UNAVAILABLE') {
+                statusDiv.innerHTML =
+                    '⚠️ Заказ через сайт работает на <strong>alkodostavka24.vercel.app</strong> или через <code>npm run dev</code> (порт 3000). Сейчас: Live Server без API. Позвоните <a href="tel:+79997863967">+7 (999) 786-39-67</a>.';
+                statusDiv.style.color = '#e65100';
+            } else if (result.code === 'TELEGRAM_NETWORK') {
+                statusDiv.innerHTML =
+                    '⚠️ Не удалось отправить в Telegram (сеть). Позвоните <a href="tel:+79997863967">+7 (999) 786-39-67</a> или напишите в WhatsApp / Telegram.';
+                statusDiv.style.color = '#e65100';
+            } else {
+                statusDiv.innerHTML =
+                    '❌ Ошибка: ' +
+                    (result.error || 'Не удалось отправить заказ') +
+                    '. Позвоните <a href="tel:+79997863967">+7 (999) 786-39-67</a>.';
+                statusDiv.style.color = '#d32f2f';
+            }
+        } catch (err) {
+            statusDiv.innerHTML =
+                '❌ Ошибка соединения. Позвоните <a href="tel:+79997863967">+7 (999) 786-39-67</a> или напишите в WhatsApp / Telegram.';
+            statusDiv.style.color = '#d32f2f';
+        }
+    }
+
     forms.forEach(function (form) {
         if (form.tagName !== 'FORM') return;
         form.addEventListener('submit', async function (e) {
             e.preventDefault();
             const statusDiv =
                 form.querySelector('[data-order-status]') ||
-                document.getElementById('order-status');
-            if (!statusDiv) return;
-            statusDiv.innerHTML = '⏳ Отправка...';
-            statusDiv.style.color = '#333';
-
-            const nameEl = form.querySelector('[name="name"], #name');
-            const phoneEl = form.querySelector('[name="phone"], #phone');
-            const commentEl = form.querySelector('[name="comment"], #comment');
-
-            const name = nameEl ? nameEl.value.trim() : '';
-            const phone = phoneEl ? phoneEl.value.trim() : '';
-            const comment = commentEl ? commentEl.value.trim() : '';
-
-            const data = {
-                name: name,
-                phone: phone,
-                comment: comment,
-                source: form.getAttribute('data-source') || 'Сайт АЛКОдоставка',
-                orderType: form.getAttribute('data-order-type') || 'Заявка с сайта',
-                pageUrl: window.location.href,
-            };
-
-            try {
-                const response = await fetch('/api/telegram', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data),
-                });
-
-                let result = {};
-                try {
-                    result = await response.json();
-                } catch (parseErr) {
-                    result = { error: 'Некорректный ответ сервера' };
-                }
-
-                if (response.ok && result.success) {
-                    statusDiv.innerHTML =
-                        '✅ Спасибо! Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.';
-                    statusDiv.style.color = '#2e7d32';
-                    form.reset();
-                } else if (result.code === 'TELEGRAM_NOT_CONFIGURED') {
-                    statusDiv.innerHTML =
-                        '⚠️ Форма временно недоступна. Позвоните <a href="tel:+79997863967">+7 (999) 786-39-67</a> или напишите в WhatsApp / Telegram — кнопки на экране.';
-                    statusDiv.style.color = '#e65100';
-                } else {
-                    statusDiv.innerHTML =
-                        '❌ Ошибка: ' +
-                        (result.error || 'Не удалось отправить заявку') +
-                        '. Позвоните <a href="tel:+79997863967">+7 (999) 786-39-67</a> или используйте мессенджеры.';
-                    statusDiv.style.color = '#d32f2f';
-                }
-            } catch (err) {
-                statusDiv.innerHTML =
-                    '❌ Ошибка соединения. Позвоните <a href="tel:+79997863967">+7 (999) 786-39-67</a> или напишите в WhatsApp / Telegram.';
-                statusDiv.style.color = '#d32f2f';
-            }
+                document.getElementById('order-status') ||
+                document.getElementById('cart-order-status') ||
+                document.getElementById('oneclick-status');
+            await submitTelegramOrder(form, statusDiv);
         });
     });
 
@@ -307,16 +382,55 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    /* ===== Корзина (localStorage, не меняет структуру order-form) ===== */
+    /* ===== Заказ в один клик ===== */
+    var closeOneClickModal = function () {};
+
+    (function initOneClickOrder() {
+        var backdrop = document.getElementById('oneclick-backdrop');
+        var modal = document.getElementById('oneclick-modal');
+        if (!modal || !backdrop) return;
+
+        function openOneClickModal() {
+            backdrop.hidden = false;
+            modal.hidden = false;
+            document.body.classList.add('oneclick-open');
+            var status = document.getElementById('oneclick-status');
+            if (status) status.textContent = '';
+            var nameInput = document.getElementById('oneclick-name');
+            if (nameInput) window.setTimeout(function () { nameInput.focus(); }, 80);
+        }
+
+        closeOneClickModal = function () {
+            backdrop.hidden = true;
+            modal.hidden = true;
+            document.body.classList.remove('oneclick-open');
+        };
+
+        document.querySelectorAll('.js-oneclick-open').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                openOneClickModal();
+            });
+        });
+
+        var closeBtn = document.getElementById('oneclick-close');
+        if (closeBtn) closeBtn.addEventListener('click', closeOneClickModal);
+        backdrop.addEventListener('click', closeOneClickModal);
+
+        if (!document.documentElement.dataset.oneclickEscBound) {
+            document.documentElement.dataset.oneclickEscBound = '1';
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && !modal.hidden) closeOneClickModal();
+            });
+        }
+    })();
+
+    /* ===== Корзина ===== */
     var CART_KEY = 'alko_cart_v1';
+    var closeCartPanel = function () {};
 
     function readCart() {
-        try {
-            var raw = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-            return Array.isArray(raw) ? raw : [];
-        } catch (e) {
-            return [];
-        }
+        return readCartItems();
     }
 
     function writeCart(items) {
@@ -329,7 +443,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function formatRub(n) {
-        return n.toLocaleString('ru-RU') + ' ₽';
+        return (Number(n) || 0).toLocaleString('ru-RU') + ' ₽';
     }
 
     function cartSummaryText(items) {
@@ -344,7 +458,15 @@ document.addEventListener('DOMContentLoaded', function () {
         return lines.join('\n');
     }
 
-    function addToCart(name, price) {
+    function escapeHtml(str) {
+        return String(str || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function addToCart(name, price, image) {
         if (!name || !price) return;
         var items = readCart();
         var found = items.find(function (it) {
@@ -353,9 +475,19 @@ document.addEventListener('DOMContentLoaded', function () {
         if (found) {
             found.qty += 1;
         } else {
-            items.push({ name: name, price: price, qty: 1 });
+            items.push({ name: name, price: price, qty: 1, image: image || '' });
         }
         writeCart(items);
+        pulseCartBadge();
+    }
+
+    function pulseCartBadge() {
+        var btn = document.getElementById('site-cart-btn');
+        if (!btn) return;
+        btn.classList.add('cart-pulse');
+        window.setTimeout(function () {
+            btn.classList.remove('cart-pulse');
+        }, 450);
     }
 
     function removeFromCart(name) {
@@ -379,109 +511,138 @@ document.addEventListener('DOMContentLoaded', function () {
         writeCart(items);
     }
 
-    function ensureCartUi() {
-        if (document.getElementById('site-cart-btn')) return;
+    function initCart() {
+        var btn = document.getElementById('site-cart-btn');
+        var panel = document.getElementById('cart-panel');
+        var backdrop = document.getElementById('cart-backdrop');
 
-        var btn = document.createElement('button');
-        btn.type = 'button';
-        btn.id = 'site-cart-btn';
-        btn.className = 'btn-header-pill btn-header-cart';
-        btn.setAttribute('aria-label', 'Корзина');
-        btn.innerHTML = '🛒 <span class="cart-btn-label">Корзина</span> <span class="cart-count" id="cart-count">0</span>';
+        if (!panel || !backdrop) return;
 
-        var cluster = document.querySelector('.header-cta-cluster');
-        if (cluster) {
-            cluster.insertBefore(btn, cluster.firstChild);
-        }
-
-        var panel = document.createElement('div');
-        panel.id = 'cart-panel';
-        panel.className = 'cart-panel';
-        panel.hidden = true;
-        panel.setAttribute('role', 'dialog');
-        panel.setAttribute('aria-label', 'Корзина заказа');
-        panel.innerHTML =
-            '<div class="cart-panel-inner">' +
-            '<div class="cart-panel-head"><h2>Корзина</h2><button type="button" class="cart-panel-close" id="cart-panel-close" aria-label="Закрыть">×</button></div>' +
-            '<ul class="cart-items" id="cart-items"></ul>' +
-            '<p class="cart-total" id="cart-total">0 ₽</p>' +
-            '<div class="cart-panel-actions">' +
-            '<a href="/contacts.html#feedback-form" class="btn btn-large" id="cart-checkout">Оформить заявку</a>' +
-            '<button type="button" class="btn btn-large btn-outline" id="cart-clear">Очистить</button>' +
-            '</div></div>';
-        document.body.appendChild(panel);
-
-        var backdrop = document.createElement('div');
-        backdrop.id = 'cart-backdrop';
-        backdrop.className = 'cart-backdrop';
-        backdrop.hidden = true;
-        document.body.appendChild(backdrop);
-
-        btn.addEventListener('click', function () {
+        function openCart() {
             panel.hidden = false;
             backdrop.hidden = false;
+            body.classList.add('cart-open');
             body.style.overflow = 'hidden';
-        });
-
-        function closeCart() {
-            panel.hidden = true;
-            backdrop.hidden = true;
-            if (!body.classList.contains('nav-open')) body.style.overflow = '';
+            updateCartUi();
         }
 
-        document.getElementById('cart-panel-close').addEventListener('click', closeCart);
-        backdrop.addEventListener('click', closeCart);
-        document.getElementById('cart-clear').addEventListener('click', function () {
-            writeCart([]);
-        });
+        closeCartPanel = function () {
+            panel.hidden = true;
+            backdrop.hidden = true;
+            body.classList.remove('cart-open');
+            if (!body.classList.contains('nav-open')) body.style.overflow = '';
+        };
 
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && !panel.hidden) closeCart();
-        });
+        if (btn && !btn.dataset.cartBound) {
+            btn.dataset.cartBound = '1';
+            btn.addEventListener('click', openCart);
+        }
+
+        var closeBtn = document.getElementById('cart-panel-close');
+        if (closeBtn && !closeBtn.dataset.cartBound) {
+            closeBtn.dataset.cartBound = '1';
+            closeBtn.addEventListener('click', closeCartPanel);
+        }
+
+        if (!backdrop.dataset.cartBound) {
+            backdrop.dataset.cartBound = '1';
+            backdrop.addEventListener('click', closeCartPanel);
+        }
+
+        var clearBtn = document.getElementById('cart-clear');
+        if (clearBtn && !clearBtn.dataset.cartBound) {
+            clearBtn.dataset.cartBound = '1';
+            clearBtn.addEventListener('click', function () {
+                writeCart([]);
+            });
+        }
+
+        if (!document.documentElement.dataset.cartEscBound) {
+            document.documentElement.dataset.cartEscBound = '1';
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && panel && !panel.hidden) closeCartPanel();
+            });
+        }
+
+        updateCartUi();
     }
 
     function renderCartPanel(items) {
         var list = document.getElementById('cart-items');
         var totalEl = document.getElementById('cart-total');
+        var countEl = document.getElementById('cart-items-count');
+        var emptyState = document.getElementById('cart-empty-state');
+        var footer = document.getElementById('cart-panel-footer');
         if (!list || !totalEl) return;
 
-        list.innerHTML = '';
         var total = 0;
+        var count = 0;
+        list.innerHTML = '';
+
+        items.forEach(function (it) {
+            var qty = Math.max(1, parseInt(it.qty, 10) || 1);
+            var price = Math.max(0, parseInt(it.price, 10) || 0);
+            total += price * qty;
+            count += qty;
+        });
+
         if (!items.length) {
-            var empty = document.createElement('li');
-            empty.className = 'cart-empty';
-            empty.textContent = 'Корзина пуста — добавьте товары из каталога';
-            list.appendChild(empty);
+            if (emptyState) emptyState.hidden = false;
+            if (footer) footer.classList.add('cart-panel-footer--empty');
         } else {
+            if (emptyState) emptyState.hidden = true;
+            if (footer) footer.classList.remove('cart-panel-footer--empty');
             items.forEach(function (it) {
-                total += it.price * it.qty;
+                var qty = Math.max(1, parseInt(it.qty, 10) || 1);
+                var price = Math.max(0, parseInt(it.price, 10) || 0);
                 var li = document.createElement('li');
                 li.className = 'cart-item';
+                var thumb = it.image
+                    ? '<img src="' + escapeHtml(it.image) + '" alt="" loading="lazy" decoding="async" width="64" height="64">'
+                    : '<span class="cart-item-thumb-fallback" aria-hidden="true">🍾</span>';
                 li.innerHTML =
-                    '<span class="cart-item-name">' +
-                    it.name +
-                    '</span>' +
-                    '<span class="cart-item-price">' +
-                    formatRub(it.price * it.qty) +
-                    '</span>' +
-                    '<span class="cart-item-qty">' +
+                    '<div class="cart-item-thumb">' +
+                    thumb +
+                    '</div>' +
+                    '<div class="cart-item-body">' +
+                    '<p class="cart-item-name">' +
+                    escapeHtml(it.name) +
+                    '</p>' +
+                    '<p class="cart-item-unit">' +
+                    formatRub(price) +
+                    ' / шт.</p>' +
+                    '<div class="cart-item-controls">' +
+                    '<div class="cart-item-qty">' +
                     '<button type="button" class="cart-qty-btn" data-cart-minus="' +
                     encodeURIComponent(it.name) +
-                    '">−</button>' +
-                    '<span>' +
-                    it.qty +
+                    '" aria-label="Уменьшить">−</button>' +
+                    '<span class="cart-qty-value">' +
+                    qty +
                     '</span>' +
                     '<button type="button" class="cart-qty-btn" data-cart-plus="' +
                     encodeURIComponent(it.name) +
-                    '">+</button>' +
+                    '" aria-label="Увеличить">+</button>' +
+                    '</div>' +
+                    '<span class="cart-item-price">' +
+                    formatRub(price * qty) +
                     '</span>' +
+                    '</div>' +
+                    '</div>' +
                     '<button type="button" class="cart-remove" data-cart-remove="' +
                     encodeURIComponent(it.name) +
                     '" aria-label="Удалить">×</button>';
                 list.appendChild(li);
             });
         }
-        totalEl.textContent = 'Итого: ' + formatRub(total);
+
+        totalEl.textContent = formatRub(total);
+        if (countEl) countEl.textContent = String(count);
+
+        var badge = document.getElementById('cart-count');
+        if (badge) {
+            badge.textContent = String(count || 0);
+            badge.hidden = !count;
+        }
 
         list.querySelectorAll('[data-cart-minus]').forEach(function (b) {
             b.addEventListener('click', function () {
@@ -501,40 +662,36 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updateCartUi() {
-        var items = readCart();
-        var count = items.reduce(function (s, it) {
-            return s + it.qty;
-        }, 0);
-        var countEl = document.getElementById('cart-count');
-        if (countEl) countEl.textContent = String(count);
-        renderCartPanel(items);
+        renderCartPanel(readCart());
     }
 
-    ensureCartUi();
-    updateCartUi();
+    initCart();
 
     document.querySelectorAll('.product-card').forEach(function (card) {
         if (card.querySelector('.btn-add-cart')) return;
         var nameEl = card.querySelector('h3');
         var priceEl = card.querySelector('.product-price');
+        var imgEl = card.querySelector('.product-image img');
         if (!nameEl || !priceEl) return;
         var name = nameEl.textContent.trim();
         var price = parsePrice(priceEl.textContent);
+        var image = imgEl ? imgEl.getAttribute('src') || '' : '';
         var btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'btn btn-add-cart';
-        btn.textContent = 'В корзину';
+        btn.innerHTML = '<span class="btn-add-cart-icon" aria-hidden="true">+</span> В корзину';
         btn.addEventListener('click', function () {
-            addToCart(name, price);
-            btn.textContent = 'Добавлено ✓';
+            addToCart(name, price, image);
+            btn.classList.add('btn-add-cart--added');
+            btn.innerHTML = '<span aria-hidden="true">✓</span> Добавлено';
             window.setTimeout(function () {
-                btn.textContent = 'В корзину';
-            }, 1200);
+                btn.classList.remove('btn-add-cart--added');
+                btn.innerHTML = '<span class="btn-add-cart-icon" aria-hidden="true">+</span> В корзину';
+            }, 1400);
         });
         card.appendChild(btn);
     });
 
-    /* Подстановка корзины в поле комментария заявки (order-form не меняется) */
     var commentField = document.querySelector('#order-form [name="comment"], #comment');
     if (commentField && !commentField.value.trim()) {
         var cartItems = readCart();

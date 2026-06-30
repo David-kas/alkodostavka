@@ -44,7 +44,7 @@
                 "@type": "ItemList",
                 "name": "Популярные позиции каталога",
                 "url": "https://alkodostavka24.vercel.app/catalog.html",
-                "numberOfItems": 8,
+                "numberOfItems": 20,
                 "itemListElement": [
                     { "@type": "ListItem", "position": 1, "item": { "@type": "Product", "name": "Водка Finlandia Classic 0.7 л", "offers": { "@type": "Offer", "price": "2890", "priceCurrency": "RUB", "availability": "https://schema.org/InStock", "areaServed": "Москва" } } },
                     { "@type": "ListItem", "position": 2, "item": { "@type": "Product", "name": "Виски Jack Daniel's Old No.7 0.7 л", "offers": { "@type": "Offer", "price": "4590", "priceCurrency": "RUB", "availability": "https://schema.org/InStock", "areaServed": "Москва" } } },
@@ -158,7 +158,7 @@
           <a href="tel:+79997863967" class="nav-mp-btn nav-mp-btn--call">Позвонить</a>
           <a href="https://wa.me/79626289777?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%97%D0%B0%D0%BA%D0%B0%D0%B7%20%D0%90%D0%9B%D0%9A%D0%9E%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0%2C%20%D0%B0%D0%B4%D1%80%D0%B5%D1%81%3A%20" class="nav-mp-btn nav-mp-btn--wa" target="_blank" rel="noopener">WhatsApp</a>
           <a href="https://t.me/alkotaxi_bot" class="nav-mp-btn nav-mp-btn--tg" target="_blank" rel="noopener">Telegram</a>
-          <a href="/contacts.html" class="nav-mp-btn nav-mp-btn--form">Заказать за 1 клик</a>
+          <button type="button" class="nav-mp-btn nav-mp-btn--form js-oneclick-open">Заказать за 1 клик</button>
         </section>
       </div>
         </div>
@@ -172,29 +172,71 @@
         <a href="tel:+79997863967" class="btn-header-pill btn-header-call" title="Позвонить">☎ Позвонить</a>
         <a href="https://wa.me/79626289777?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%97%D0%B0%D0%BA%D0%B0%D0%B7%20%D0%90%D0%9B%D0%9A%D0%9E%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0%2C%20%D0%B0%D0%B4%D1%80%D0%B5%D1%81%3A%20" class="btn-header-pill btn-header-wa" target="_blank" rel="noopener">WhatsApp</a>
         <a href="https://t.me/alkotaxi_bot" class="btn-header-pill btn-header-tg" target="_blank" rel="noopener">Telegram</a>
-        <a href="/contacts.html" class="btn-header-pill btn-header-1click">Заказ 1 клик</a>
+        <button type="button" class="btn-header-pill btn-header-1click js-oneclick-open">Заказ 1 клик</button>
       </div>
-      <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav"><span class="burger-line" aria-hidden="true"></span><span class="burger-line" aria-hidden="true"></span><span class="burger-line" aria-hidden="true"></span></button>
+      
+    <button type="button" class="header-cart-btn" id="site-cart-btn" aria-label="Корзина">
+      <span class="header-cart-icon" aria-hidden="true">🛒</span>
+      <span class="header-cart-label cart-btn-label">Корзина</span>
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+    <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Открыть меню" aria-expanded="false" aria-controls="site-nav"><span class="burger-line" aria-hidden="true"></span><span class="burger-line" aria-hidden="true"></span><span class="burger-line" aria-hidden="true"></span></button>
     </div>
 </header>
-<a href="tel:+79997863967" class="mobile-tel-fab mobile-tel-fab--secondary" title="Позвонить" aria-label="Позвонить в АЛКОдоставка"><span class="visually-hidden">Телефон</span>☎</a>
-<div class="floating-messengers">
-    <a href="https://t.me/alkotaxi_bot" target="_blank" rel="noopener" class="messenger-btn telegram" title="Telegram">📱</a>
-    <a href="https://wa.me/79626289777?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%97%D0%B0%D0%BA%D0%B0%D0%B7%20%D0%90%D0%9B%D0%9A%D0%9E%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0%2C%20%D0%B0%D0%B4%D1%80%D0%B5%D1%81%3A%20" target="_blank" rel="noopener" class="messenger-btn whatsapp" title="WhatsApp">💬</a>
+<div id="cart-backdrop" class="cart-backdrop" hidden></div>
+<div id="cart-panel" class="cart-panel" hidden role="dialog" aria-label="Корзина заказа" aria-modal="true">
+  <div class="cart-panel-inner">
+    <header class="cart-panel-head">
+      <div class="cart-panel-title-wrap">
+        <span class="cart-panel-icon" aria-hidden="true">🛒</span>
+        <h2>Ваш заказ</h2>
+      </div>
+      <button type="button" class="cart-panel-close" id="cart-panel-close" aria-label="Закрыть">×</button>
+    </header>
+    <div class="cart-panel-body">
+      <div class="cart-empty-state" id="cart-empty-state" hidden>
+        <span class="cart-empty-icon" aria-hidden="true">🍾</span>
+        <p class="cart-empty-title">Корзина пуста</p>
+        <p class="cart-empty-text">Добавьте напитки и закуски из <a href="/catalog.html">каталога</a></p>
+      </div>
+      <ul class="cart-items" id="cart-items"></ul>
+    </div>
+    <footer class="cart-panel-footer" id="cart-panel-footer">
+      <div class="cart-summary">
+        <span class="cart-summary-label">Товаров: <strong id="cart-items-count">0</strong></span>
+        <p class="cart-total" id="cart-total">0 ₽</p>
+      </div>
+      <form id="cart-order-form" class="cart-order-form" data-telegram-form data-source="Корзина на сайте" data-order-type="🛒 Заказ из корзины">
+        <input type="text" name="name" id="cart-name" placeholder="Ваше имя" autocomplete="name" required>
+        <input type="tel" name="phone" id="cart-phone" placeholder="Телефон для связи" autocomplete="tel" required>
+        <textarea name="address" id="cart-address" placeholder="Адрес доставки (улица, дом, подъезд, этаж)" rows="2" required></textarea>
+        <textarea name="comment" id="cart-comment" placeholder="Комментарий (необязательно)" rows="2"></textarea>
+        <button type="submit" class="btn btn-large cart-submit-btn">Оформить заказ</button>
+      </form>
+      <div id="cart-order-status" class="cart-order-status" data-order-status role="status"></div>
+      <button type="button" class="cart-clear-btn" id="cart-clear">Очистить корзину</button>
+      <p class="cart-legal-note">18+ · оплата при получении · часто 20–40 мин по Москве</p>
+    </footer>
+  </div>
 </div>
-    <main>
+
+
+
+<a href="tel:+79997863967" class="mobile-tel-fab mobile-tel-fab--secondary" title="Позвонить" aria-label="Позвонить в АЛКОдоставка"><span class="visually-hidden">Телефон</span>☎</a>
+<main>
         <div class="container">
             <nav class="breadcrumb-mini" aria-label="Навигация"><a href="/">Главная</a> · <span>Каталог</span></nav>
             <h1>Каталог алкоголя с доставкой по Москве</h1>
             <p class="section-subtitle">Более 2000 наименований с актуальными ценами: водка от <strong>990 ₽</strong>, пиво от <strong>150 ₽</strong>. Добавьте в корзину и оформите заявку — или закажите по телефону и в мессенджерах. По Москве <strong>часто 20–40 минут</strong> после подтверждения. <strong>Только 18+.</strong></p>
-            <p class="catalog-cta-top"><a href="tel:+79997863967" class="btn btn-large">Заказать по телефону</a> <a href="/contacts.html" class="btn btn-large btn-outline">Оставить заявку</a></p>
+            <p class="catalog-cta-top"><a href="tel:+79997863967" class="btn btn-large">Заказать по телефону</a> <button type="button" class="btn btn-large btn-outline js-oneclick-open">Оставить заявку</button></p>
 
             <!-- Фильтр категорий -->
-            <div class="catalog-categories">
+                        <div class="catalog-categories">
                 <button class="category-btn active" data-category="all">Все товары</button>
                 <button class="category-btn" data-category="strong">Крепкий алкоголь</button>
+                <button class="category-btn" data-category="wine">Вино и игристое</button>
                 <button class="category-btn" data-category="beer">Пиво</button>
-                <button class="category-btn" data-category="snacks">Закуски к пиву</button>
+                <button class="category-btn" data-category="snacks">Закуски</button>
             </div>
 
             <!-- Сетка товаров -->
@@ -202,374 +244,1181 @@
                 <!-- КРЕПКИЙ АЛКОГОЛЬ -->
                 <div class="product-card" data-category="strong">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/berezka.jpg" alt="Водка Березка Люкс">
+                        <img loading="lazy" decoding="async" src="images/absolut-vodka.jpg" alt="Водка «ABSOLUT» 0.5 л">
                     </div>
-                    <h3>Водка "Березка" Люкс</h3>
-                    <p class="product-desc">0.5 л, мягкая, классическая. Пьётся легко, оставляет приятное тепло.</p>
+                    <h3>Водка «ABSOLUT» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/absolut-vodka.jpg" alt="Водка «ABSOLUT» 0.7 л">
+                    </div>
+                    <h3>Водка «ABSOLUT» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 390 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/beluga.jpg" alt="Водка «BELUGA» Noble 1 л">
+                    </div>
+                    <h3>Водка «BELUGA» Noble 1 л</h3>
+                    <p class="product-desc">Объём 1 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/beluga.jpg" alt="Водка «BELUGA» Transatlantic Racing 0.7 л">
+                    </div>
+                    <h3>Водка «BELUGA» Transatlantic Racing 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/beluga.jpg" alt="Водка «Beluga» Allure 0.7 л">
+                    </div>
+                    <h3>Водка «Beluga» Allure 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/finlandia.jpg" alt="Водка «FINLANDIA» Classic 0.7 л">
+                    </div>
+                    <h3>Водка «FINLANDIA» Classic 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 890 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/finlandia.jpg" alt="Водка «FINLANDIA» клюква 0.7 л">
+                    </div>
+                    <h3>Водка «FINLANDIA» клюква 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 890 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/absolut-vodka.jpg" alt="Водка «Беленькая» 0.5 л">
+                    </div>
+                    <h3>Водка «Беленькая» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
                     <span class="product-price">990 ₽</span>
                 </div>
                 <div class="product-card" data-category="strong">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/russian-standart.jpg" alt="Водка Русский стандарт Platinum">
+                        <img loading="lazy" decoding="async" src="images/berezka.jpg" alt="Водка «Березка» Люкс 0.5 л">
                     </div>
-                    <h3>Водка "Русский стандарт" Platinum</h3>
-                    <p class="product-desc">0.7 л, премиум, кристально чистая, мягкая.</p>
-                    <span class="product-price">1890 ₽</span>
-                </div>
-                <div class="product-card" data-category="strong">
-                    <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/khortytsia.jpg" alt="Водка Хортица Мягкая">
-                    </div>
-                    <h3>Водка "Хортица" Мягкая</h3>
-                    <p class="product-desc">0.5 л, тройная фильтрация, не обжигает.</p>
-                    <span class="product-price">1190 ₽</span>
-                </div>
-                <div class="product-card" data-category="strong">
-                    <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/nemiroff.jpg" alt="Водка Nemiroff Медовая с перцем">
-                    </div>
-                    <h3>Водка "Nemiroff" Медовая с перцем</h3>
-                    <p class="product-desc">0.5 л, согревающий вкус мёда и перца.</p>
-                    <span class="product-price">1190 ₽</span>
-                </div>
-                <div class="product-card" data-category="strong">
-                    <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/5ozerprem.jpg" alt="Водка Пять озер Премиум">
-                    </div>
-                    <h3>Водка "Пять озер" Премиум</h3>
-                    <p class="product-desc">0.5 л, сибирская, мягкая, с лёгким сладковатым оттенком.</p>
+                    <h3>Водка «Березка» Люкс 0.5 л</h3>
+                    <p class="product-desc">Мягкая классическая водка.</p>
                     <span class="product-price">990 ₽</span>
                 </div>
                 <div class="product-card" data-category="strong">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/мягков.jpg" alt="Водка Мягков Silver">
+                        <img loading="lazy" decoding="async" src="images/5ozerprem.jpg" alt="Водка «Пять озер» 0.5 л">
                     </div>
-                    <h3>Водка "Мягков" Silver</h3>
-                    <p class="product-desc">0.5 л, серебряная очистка, без спиртового запаха.</p>
+                    <h3>Водка «Пять озер» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
                     <span class="product-price">990 ₽</span>
                 </div>
                 <div class="product-card" data-category="strong">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/finlandia.jpg" alt="Водка Finlandia Classic">
+                        <img loading="lazy" decoding="async" src="images/5ozerprem.jpg" alt="Водка «Пять озер» Премиум 0.5 л">
                     </div>
-                    <h3>Водка "Finlandia" Classic</h3>
-                    <p class="product-desc">0.7 л, финская, с привкусом ледниковой воды.</p>
-                    <span class="product-price">2890 ₽</span>
-                </div>
-                <div class="product-card" data-category="strong">
-                    <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/beluga.jpg" alt="Водка Beluga Allure">
-                    </div>
-                    <h3>Водка "Beluga" Allure</h3>
-                    <p class="product-desc">0.7 л, премиальная, выдержанная, с экстрактами трав.</p>
-                    <span class="product-price">3590 ₽</span>
-                </div>
-                <div class="product-card" data-category="strong">
-                    <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/зеленаямарка.jpg" alt="Водка Зеленая марка Кедровая">
-                    </div>
-                    <h3>Водка "Зеленая марка" Кедровая</h3>
-                    <p class="product-desc">0.5 л, с настоем кедровых орехов.</p>
+                    <h3>Водка «Пять озер» Премиум 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
                     <span class="product-price">990 ₽</span>
                 </div>
                 <div class="product-card" data-category="strong">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/талка.jpg" alt="Водка Талка Люкс">
+                        <img loading="lazy" decoding="async" src="images/5ozer.jpg" alt="Водка «Пять озер» 0.7 л">
                     </div>
-                    <h3>Водка "Талка" Люкс</h3>
-                    <p class="product-desc">0.5 л, зерновая, с нотками ржи.</p>
+                    <h3>Водка «Пять озер» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 390 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/5ozer.jpg" alt="Водка «Пять озер» 1 л">
+                    </div>
+                    <h3>Водка «Пять озер» 1 л</h3>
+                    <p class="product-desc">Объём 1 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 690 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/russian-standart.jpg" alt="Водка «Русский стандарт» 0.5 л">
+                    </div>
+                    <h3>Водка «Русский стандарт» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 490 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/russian-standart.jpg" alt="Водка «Русский стандарт» Platinum 0.7 л">
+                    </div>
+                    <h3>Водка «Русский стандарт» Platinum 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 890 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/russian-standart.jpg" alt="Водка «Русский стандарт» 1 л">
+                    </div>
+                    <h3>Водка «Русский стандарт» 1 л</h3>
+                    <p class="product-desc">Объём 1 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/%D1%82%D0%B0%D0%BB%D0%BA%D0%B0.jpg" alt="Водка «Талка» Люкс 0.5 л">
+                    </div>
+                    <h3>Водка «Талка» Люкс 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
                     <span class="product-price">990 ₽</span>
                 </div>
                 <div class="product-card" data-category="strong">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/виски джек.jpg" alt="Виски Jack Daniel's Old No.7">
+                        <img loading="lazy" decoding="async" src="images/khortytsia.jpg" alt="Водка «Хортица» Платинум 0.5 л">
                     </div>
-                    <h3>Виски "Jack Daniel's" Old No.7</h3>
-                    <p class="product-desc">0.7 л, Теннесси, с дымным вкусом и ванилью.</p>
-                    <span class="product-price">4590 ₽</span>
+                    <h3>Водка «Хортица» Платинум 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 190 ₽</span>
                 </div>
                 <div class="product-card" data-category="strong">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/джеймсон.jpg" alt="Виски Jameson Irish">
+                        <img loading="lazy" decoding="async" src="images/khortytsia.jpg" alt="Водка «Хортица» Мягкая 0.5 л">
                     </div>
-                    <h3>Виски "Jameson" Irish</h3>
-                    <p class="product-desc">0.7 л, ирландский, мягкий, с нотами ванили.</p>
-                    <span class="product-price">4990 ₽</span>
+                    <h3>Водка «Хортица» Мягкая 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 190 ₽</span>
                 </div>
                 <div class="product-card" data-category="strong">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/blacklabel.jpg" alt="Виски Johnnie Walker Black Label">
+                        <img loading="lazy" decoding="async" src="images/khortytsia.jpg" alt="Водка «Хортица» Платинум 0.7 л">
                     </div>
-                    <h3>Виски "Johnnie Walker" Black Label</h3>
-                    <p class="product-desc">0.7 л, шотландский, 12 лет, дымный.</p>
-                    <span class="product-price">5590 ₽</span>
+                    <h3>Водка «Хортица» Платинум 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 490 ₽</span>
                 </div>
                 <div class="product-card" data-category="strong">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/Chivas Regal 12 yo.jpg" alt="Виски Chivas Regal 12 yo">
+                        <img loading="lazy" decoding="async" src="images/nemiroff.jpg" alt="Водка «Nemiroff» Медовая с перцем 0.5 л">
                     </div>
-                    <h3>Виски "Chivas Regal" 12 yo</h3>
-                    <p class="product-desc">0.7 л, медово-фруктовый букет.</p>
-                    <span class="product-price">9190 ₽</span>
+                    <h3>Водка «Nemiroff» Медовая с перцем 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 190 ₽</span>
                 </div>
                 <div class="product-card" data-category="strong">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/КоньякHennessyVSOP.jpg" alt="Коньяк Hennessy VSOP">
+                        <img loading="lazy" decoding="async" src="images/%D0%BC%D1%8F%D0%B3%D0%BA%D0%BE%D0%B2.jpg" alt="Водка «Мягков» Silver 0.5 л">
                     </div>
-                    <h3>Коньяк "Hennessy" VSOP</h3>
-                    <p class="product-desc">0.5 л, Франция, выдержанный.</p>
-                    <span class="product-price">8990 ₽</span>
+                    <h3>Водка «Мягков» Silver 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">990 ₽</span>
                 </div>
                 <div class="product-card" data-category="strong">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/арарат.jpeg" alt="Коньяк Арарат 5 лет">
+                        <img loading="lazy" decoding="async" src="images/%D0%B7%D0%B5%D0%BB%D0%B5%D0%BD%D0%B0%D1%8F%D0%BC%D0%B0%D1%80%D0%BA%D0%B0.jpg" alt="Водка «Зеленая марка» Кедровая 0.5 л">
                     </div>
-                    <h3>Коньяк "Арарат" 5 лет</h3>
-                    <p class="product-desc">0.5 л, Армения, фруктовый.</p>
-                    <span class="product-price">2490 ₽</span>
+                    <h3>Водка «Зеленая марка» Кедровая 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">990 ₽</span>
                 </div>
                 <div class="product-card" data-category="strong">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/старейшина12.jpg" alt="Коньяк Старейшина 7 лет">
+                        <img loading="lazy" decoding="async" src="images/ballantines.webp" alt="Виски «Ballantine's» 0.5 л">
                     </div>
-                    <h3>Коньяк "Старейшина" 7 лет</h3>
-                    <p class="product-desc">0.5 л, Россия, доступная цена.</p>
-                    <span class="product-price">1790 ₽</span>
+                    <h3>Виски «Ballantine's» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 390 ₽</span>
                 </div>
-
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/ballantines.webp" alt="Виски «Ballantine's» 0.7 л">
+                    </div>
+                    <h3>Виски «Ballantine's» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/ballantines.webp" alt="Виски «Ballantine's» 1 л">
+                    </div>
+                    <h3>Виски «Ballantine's» 1 л</h3>
+                    <p class="product-desc">Объём 1 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">4 390 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/bells-whisky.png" alt="Виски «Bell's» 0.5 л">
+                    </div>
+                    <h3>Виски «Bell's» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 390 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/bells-whisky.png" alt="Виски «Bell's» 0.7 л">
+                    </div>
+                    <h3>Виски «Bell's» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/bells-whisky.png" alt="Виски «Bell's» 1 л">
+                    </div>
+                    <h3>Виски «Bell's» 1 л</h3>
+                    <p class="product-desc">Объём 1 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/Chivas%20Regal%2012%20yo.jpg" alt="Виски «Chivas Regal» 12 yo 0.5 л">
+                    </div>
+                    <h3>Виски «Chivas Regal» 12 yo 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">8 190 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/Chivas%20Regal%2012%20yo.jpg" alt="Виски «Chivas Regal» 12 yo 0.7 л">
+                    </div>
+                    <h3>Виски «Chivas Regal» 12 yo 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">9 190 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/glenfiddich-12.jpg" alt="Виски «Glenfiddich» 0.5 л">
+                    </div>
+                    <h3>Виски «Glenfiddich» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">7 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/%D0%B2%D0%B8%D1%81%D0%BA%D0%B8%20%D0%B4%D0%B6%D0%B5%D0%BA.jpg" alt="Виски «Jack Daniel's» Old No.7 0.5 л">
+                    </div>
+                    <h3>Виски «Jack Daniel's» Old No.7 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 890 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/%D0%B2%D0%B8%D1%81%D0%BA%D0%B8%20%D0%B4%D0%B6%D0%B5%D0%BA.jpg" alt="Виски «Jack Daniel's» Old No.7 0.7 л">
+                    </div>
+                    <h3>Виски «Jack Daniel's» Old No.7 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">4 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/%D0%B4%D0%B6%D0%B5%D0%B9%D0%BC%D1%81%D0%BE%D0%BD.jpg" alt="Виски «Jameson» Irish 0.5 л">
+                    </div>
+                    <h3>Виски «Jameson» Irish 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">4 290 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/%D0%B4%D0%B6%D0%B5%D0%B9%D0%BC%D1%81%D0%BE%D0%BD.jpg" alt="Виски «Jameson» Irish 0.7 л">
+                    </div>
+                    <h3>Виски «Jameson» Irish 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">4 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/blacklabel.jpg" alt="Виски «Johnnie Walker» Black Label 0.7 л">
+                    </div>
+                    <h3>Виски «Johnnie Walker» Black Label 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">5 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/glenfiddich-12.jpg" alt="Виски «Macallan» 12 лет 0.7 л">
+                    </div>
+                    <h3>Виски «Macallan» 12 лет 0.7 л</h3>
+                    <p class="product-desc">Объём 12 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">17 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/ballantines.webp" alt="Виски «William Lawson's» 0.5 л">
+                    </div>
+                    <h3>Виски «William Lawson's» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 890 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/ballantines.webp" alt="Виски «William Lawson's» 0.7 л">
+                    </div>
+                    <h3>Виски «William Lawson's» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 290 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/remy-martin-vs.jpg" alt="Коньяк «Remy Martin» VS 0.7 л">
+                    </div>
+                    <h3>Коньяк «Remy Martin» VS 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">10 390 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/%D0%9A%D0%BE%D0%BD%D1%8C%D1%8F%D0%BAHennessyVSOP.jpg" alt="Коньяк «Hennessy» VS 0.7 л">
+                    </div>
+                    <h3>Коньяк «Hennessy» VS 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">8 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/%D0%9A%D0%BE%D0%BD%D1%8C%D1%8F%D0%BAHennessyVSOP.jpg" alt="Коньяк «Hennessy» VSOP 0.5 л">
+                    </div>
+                    <h3>Коньяк «Hennessy» VSOP 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">8 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/%D0%B0%D1%80%D0%B0%D1%80%D0%B0%D1%82.jpeg" alt="Коньяк «Арарат» 5 звёзд 0.5 л">
+                    </div>
+                    <h3>Коньяк «Арарат» 5 звёзд 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 490 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/%D0%B0%D1%80%D0%B0%D1%80%D0%B0%D1%82.jpeg" alt="Коньяк «Арарат» 5 звёзд 0.7 л">
+                    </div>
+                    <h3>Коньяк «Арарат» 5 звёзд 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 290 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/lezginka.png" alt="Коньяк «Лезгинка» 0.5 л">
+                    </div>
+                    <h3>Коньяк «Лезгинка» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/%D1%81%D1%82%D0%B0%D1%80%D0%B5%D0%B9%D1%88%D0%B8%D0%BD%D0%B012.jpg" alt="Коньяк «Старейшина» 5 лет 0.5 л">
+                    </div>
+                    <h3>Коньяк «Старейшина» 5 лет 0.5 л</h3>
+                    <p class="product-desc">Объём 5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/%D1%81%D1%82%D0%B0%D1%80%D0%B5%D0%B9%D1%88%D0%B8%D0%BD%D0%B012.jpg" alt="Коньяк «Старейшина» 7 лет 0.5 л">
+                    </div>
+                    <h3>Коньяк «Старейшина» 7 лет 0.5 л</h3>
+                    <p class="product-desc">Объём 7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/kenigsberg-5.png" alt="Коньяк «Старый Кенигсберг» 5-летний 0.5 л">
+                    </div>
+                    <h3>Коньяк «Старый Кенигсберг» 5-летний 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/kenigsberg-4.png" alt="Коньяк «Старый Кенигсберг» 4-летний 0.5 л">
+                    </div>
+                    <h3>Коньяк «Старый Кенигсберг» 4-летний 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/lezginka.png" alt="Коньяк David Iverieli «Варцихе» 7 лет 0.5 л">
+                    </div>
+                    <h3>Коньяк David Iverieli «Варцихе» 7 лет 0.5 л</h3>
+                    <p class="product-desc">Объём 7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/becherovka.png" alt="Джин «Beefeater» 0.7 л">
+                    </div>
+                    <h3>Джин «Beefeater» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/cointreau.jpg" alt="Джин «Bombay Sapphire» 0.7 л">
+                    </div>
+                    <h3>Джин «Bombay Sapphire» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/becherovka.png" alt="Джин «Gordon's» 0.7 л">
+                    </div>
+                    <h3>Джин «Gordon's» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/barcelo-blanco-07.png" alt="Ром Barcelo Blanco 0.5 л">
+                    </div>
+                    <h3>Ром Barcelo Blanco 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/barcelo-blanco-07.png" alt="Ром Barcelo Blanco 0.7 л">
+                    </div>
+                    <h3>Ром Barcelo Blanco 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 190 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/barcelo-blanco-1l.png" alt="Ром Barcelo Blanco 1 л">
+                    </div>
+                    <h3>Ром Barcelo Blanco 1 л</h3>
+                    <p class="product-desc">Объём 1 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/barcelo-blanco-07.png" alt="Ром Havana Club Anejo Especial 3 года 0.7 л">
+                    </div>
+                    <h3>Ром Havana Club Anejo Especial 3 года 0.7 л</h3>
+                    <p class="product-desc">Объём 3 г. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 400 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/captain-morgan.jpg" alt="Ром «Капитан Морган» Золотой 0.5 л">
+                    </div>
+                    <h3>Ром «Капитан Морган» Золотой 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 500 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/captain-morgan.jpg" alt="Ром «Капитан Морган» Золотой 0.7 л">
+                    </div>
+                    <h3>Ром «Капитан Морган» Золотой 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/olmeca.jpg" alt="Текила «Olmeca» 0.5 л">
+                    </div>
+                    <h3>Текила «Olmeca» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 490 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/olmeca.jpg" alt="Текила «Olmeca» 0.7 л">
+                    </div>
+                    <h3>Текила «Olmeca» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/sauza-gold.jpg" alt="Текила «Sauza Gold» 0.5 л">
+                    </div>
+                    <h3>Текила «Sauza Gold» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 490 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/sauza-gold.jpg" alt="Текила «Sauza Gold» 0.7 л">
+                    </div>
+                    <h3>Текила «Sauza Gold» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/sauza-silver.jpg" alt="Текила «Sauza Silver» 0.5 л">
+                    </div>
+                    <h3>Текила «Sauza Silver» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 490 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/sauza-silver.jpg" alt="Текила «Sauza Silver» 0.7 л">
+                    </div>
+                    <h3>Текила «Sauza Silver» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/becherovka.png" alt="Ликёр «Becherovka» 0.7 л">
+                    </div>
+                    <h3>Ликёр «Becherovka» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/baileys.jpg" alt="Ликёр Baileys 0.7 л">
+                    </div>
+                    <h3>Ликёр Baileys 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/sambuca.jpg" alt="Ликёр Sambuca Extra 0.5 л">
+                    </div>
+                    <h3>Ликёр Sambuca Extra 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 690 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/cointreau.jpg" alt="Ликёр Cointreau 0.7 л">
+                    </div>
+                    <h3>Ликёр Cointreau 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/jagermeister.jpg" alt="Ликёр Limoncello 0.5 л">
+                    </div>
+                    <h3>Ликёр Limoncello 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/baileys.jpg" alt="Ликёр Sheridan's 0.5 л">
+                    </div>
+                    <h3>Ликёр Sheridan's 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 690 ₽</span>
+                </div>
+                <div class="product-card" data-category="strong">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/jagermeister.jpg" alt="Ликёр Jägermeister 0.7 л">
+                    </div>
+                    <h3>Ликёр Jägermeister 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">3 890 ₽</span>
+                </div>
+                <!-- ВИНО И ИГРИСТОЕ -->
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/villa-francesca-bianco.png" alt="ВИЛЛА ФРАНЧЕСКА 0.75 л, белое полусладкое">
+                    </div>
+                    <h3>ВИЛЛА ФРАНЧЕСКА 0.75 л, белое полусладкое</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/villa-francesca-bianco.png" alt="ВИЛЛА ФРАНЧЕСКА 0.75 л, белое сухое">
+                    </div>
+                    <h3>ВИЛЛА ФРАНЧЕСКА 0.75 л, белое сухое</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/villa-francesca-rosso.png" alt="ВИЛЛА ФРАНЧЕСКА 0.75 л, красное полусладкое">
+                    </div>
+                    <h3>ВИЛЛА ФРАНЧЕСКА 0.75 л, красное полусладкое</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/villa-francesca-rosso.png" alt="ВИЛЛА ФРАНЧЕСКА 0.75 л, красное сухое">
+                    </div>
+                    <h3>ВИЛЛА ФРАНЧЕСКА 0.75 л, красное сухое</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/mancura-red.png" alt="Вино «Mancura Cabernet Sauvignon» 0.7 л">
+                    </div>
+                    <h3>Вино «Mancura Cabernet Sauvignon» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 690 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/mancura-chardonnay.png" alt="Вино «Mancura Chardonnay» 0.7 л">
+                    </div>
+                    <h3>Вино «Mancura Chardonnay» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 690 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/mancura-red.png" alt="Вино «Mancura Merlot» 0.7 л">
+                    </div>
+                    <h3>Вино «Mancura Merlot» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 690 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/mancura-moscato.png" alt="Вино «Mancura Moscato» 0.7 л">
+                    </div>
+                    <h3>Вино «Mancura Moscato» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/mancura-red.png" alt="Вино «Mancura Carmenere» 0.7 л">
+                    </div>
+                    <h3>Вино «Mancura Carmenere» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 690 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/pinot-grigio.png" alt="Вино «Petit Chablis» 0.7 л">
+                    </div>
+                    <h3>Вино «Petit Chablis» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">4 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/pinot-grigio.png" alt="Вино «Pinot Grigio» 0.7 л">
+                    </div>
+                    <h3>Вино «Pinot Grigio» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/torre-de-rejas.png" alt="Вино «Torre De Rejas Semisweet» 0.7 л">
+                    </div>
+                    <h3>Вино «Torre De Rejas Semisweet» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 690 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/muzaradi-saperavi.png" alt="Вино «Музаради Саперави» 0.7 л">
+                    </div>
+                    <h3>Вино «Музаради Саперави» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 690 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/kindzmarauli.png" alt="Вино «Сигнахи Киндзмараули» 0.7 л">
+                    </div>
+                    <h3>Вино «Сигнахи Киндзмараули» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 690 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/chianti-docg.png" alt="Вино Chianti DOCG 0.7 л (Италия)">
+                    </div>
+                    <h3>Вино Chianti DOCG 0.7 л (Италия)</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 890 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/martini-bianco.jpg" alt="Вермут «Cinzano Bianco» 0.7 л">
+                    </div>
+                    <h3>Вермут «Cinzano Bianco» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 190 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/martini-bianco.jpg" alt="Вермут «Cinzano Bianco» 1 л">
+                    </div>
+                    <h3>Вермут «Cinzano Bianco» 1 л</h3>
+                    <p class="product-desc">Объём 1 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 690 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/martini-bianco.jpg" alt="Вермут «Martini Bianco» 0.5 л">
+                    </div>
+                    <h3>Вермут «Martini Bianco» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/martini-bianco.jpg" alt="Вермут «Martini Bianco» 0.7 л">
+                    </div>
+                    <h3>Вермут «Martini Bianco» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 390 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/martini-bianco.jpg" alt="Вермут «Martini Bianco» 1 л">
+                    </div>
+                    <h3>Вермут «Martini Bianco» 1 л</h3>
+                    <p class="product-desc">Объём 1 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/martini-bianco.jpg" alt="Вермут «Martini Extra Dry» 0.5 л">
+                    </div>
+                    <h3>Вермут «Martini Extra Dry» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/martini-bianco.jpg" alt="Вермут «Martini Extra Dry» 0.7 л">
+                    </div>
+                    <h3>Вермут «Martini Extra Dry» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 390 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/martini-bianco.jpg" alt="Вермут «Martini Extra Dry» 1 л">
+                    </div>
+                    <h3>Вермут «Martini Extra Dry» 1 л</h3>
+                    <p class="product-desc">Объём 1 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/martini-fiero.jpg" alt="Вермут «Martini Fiero» 0.5 л">
+                    </div>
+                    <h3>Вермут «Martini Fiero» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/martini-fiero.jpg" alt="Вермут «Martini Fiero» 0.7 л">
+                    </div>
+                    <h3>Вермут «Martini Fiero» 0.7 л</h3>
+                    <p class="product-desc">Объём 0.7 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 290 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/martini-fiero.jpg" alt="Вермут «Martini Fiero» 1 л">
+                    </div>
+                    <h3>Вермут «Martini Fiero» 1 л</h3>
+                    <p class="product-desc">Объём 1 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 790 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/martini-bianco.jpg" alt="Вермут Cinzano Bianco 0.5 л">
+                    </div>
+                    <h3>Вермут Cinzano Bianco 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/atto-primo-prosecco.png" alt="Игристое Atto Primo Prosecco 0.75 л">
+                    </div>
+                    <h3>Игристое Atto Primo Prosecco 0.75 л</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 890 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/gancia-prosecco.jpg" alt="Шампанское «Gancia Prosecco» 0.75 л">
+                    </div>
+                    <h3>Шампанское «Gancia Prosecco» 0.75 л</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 390 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/mondoro-asti.png" alt="Шампанское «Martini Asti» 0.75 л">
+                    </div>
+                    <h3>Шампанское «Martini Asti» 0.75 л</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/martini-prosecco.png" alt="Шампанское «Martini Prosecco» 0.75 л">
+                    </div>
+                    <h3>Шампанское «Martini Prosecco» 0.75 л</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/mondoro-asti.png" alt="Шампанское «Mondoro Asti» 0.75 л">
+                    </div>
+                    <h3>Шампанское «Mondoro Asti» 0.75 л</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/mondoro-prosecco.png" alt="Шампанское «Mondoro Prosecco» 0.75 л">
+                    </div>
+                    <h3>Шампанское «Mondoro Prosecco» 0.75 л</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">2 590 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/riondo-prosecco.png" alt="Шампанское «Riondo Prosecco» 0.75 л">
+                    </div>
+                    <h3>Шампанское «Riondo Prosecco» 0.75 л</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 990 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/abrau-durso-brut.png" alt="Шампанское «Абрау-Дюрсо» Брют 0.75 л">
+                    </div>
+                    <h3>Шампанское «Абрау-Дюрсо» Брют 0.75 л</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 490 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/abrau-durso-brut.png" alt="Шампанское «Абрау-Дюрсо» полусладкое 0.75 л">
+                    </div>
+                    <h3>Шампанское «Абрау-Дюрсо» полусладкое 0.75 л</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 490 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/abrau-durso-brut.png" alt="Шампанское «Абрау-Дюрсо» сладкое 0.75 л">
+                    </div>
+                    <h3>Шампанское «Абрау-Дюрсо» сладкое 0.75 л</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 490 ₽</span>
+                </div>
+                <div class="product-card" data-category="wine">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/faldeo-prosecco.png" alt="Шампанское Faldeo Prosecco 0.75 л">
+                    </div>
+                    <h3>Шампанское Faldeo Prosecco 0.75 л</h3>
+                    <p class="product-desc">Объём 0.75 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 990 ₽</span>
+                </div>
                 <!-- ПИВО -->
                 <div class="product-card" data-category="beer">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/zhig.jpg" alt="Пиво Жигулёвское светлое">
+                        <img loading="lazy" decoding="async" src="images/corona.jpg" alt="Пиво 1664 Blanco 0.5 л">
                     </div>
-                    <h3>Пиво "Жигулёвское" светлое</h3>
-                    <p class="product-desc">4.5%, стекло 0.5 л, классическое, с лёгкой горчинкой.</p>
+                    <h3>Пиво 1664 Blanco 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">200 ₽</span>
+                </div>
+                <div class="product-card" data-category="beer">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/Budweiser.jpg" alt="Пиво Bud 0.45 л">
+                    </div>
+                    <h3>Пиво Bud 0.45 л</h3>
+                    <p class="product-desc">Объём 0.45 л. Доставка по Москве 24/7.</p>
                     <span class="product-price">150 ₽</span>
                 </div>
                 <div class="product-card" data-category="beer">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/baltica3.jpg" alt="Пиво Балтика №3 светлое">
+                        <img loading="lazy" decoding="async" src="images/corona.jpg" alt="Пиво Corona Extra 0.33 л">
                     </div>
-                    <h3>Пиво "Балтика №3" светлое</h3>
-                    <p class="product-desc">4.8%, банка 0.5 л, освежающее.</p>
-                    <span class="product-price">150 ₽</span>
+                    <h3>Пиво Corona Extra 0.33 л</h3>
+                    <p class="product-desc">Объём 0.33 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">300 ₽</span>
                 </div>
                 <div class="product-card" data-category="beer">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/klin.jpg" alt="Пиво Клинское светлое">
+                        <img loading="lazy" decoding="async" src="images/hugarden.jpg" alt="Пиво Hoegaarden 0.5 л">
                     </div>
-                    <h3>Пиво "Клинское" светлое</h3>
-                    <p class="product-desc">4.2%, стекло 0.5 л, лёгкое.</p>
-                    <span class="product-price">150 ₽</span>
-                </div>
-                <div class="product-card" data-category="beer">
-                    <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/hamovniki.jpg" alt="Пиво Хамовники Пильзенское">
-                    </div>
-                    <h3>Пиво "Хамовники" Пильзенское</h3>
-                    <p class="product-desc">5.2%, стекло 0.5 л, крафтовое, насыщенное.</p>
+                    <h3>Пиво Hoegaarden 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
                     <span class="product-price">250 ₽</span>
                 </div>
                 <div class="product-card" data-category="beer">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/Velkopopovický.jpg" alt="Velkopopovický Kozel светлое">
+                        <img loading="lazy" decoding="async" src="images/Velkopopovick%C3%BD.jpg" alt="Пиво Kozel светлое 0.45 л">
                     </div>
-                    <h3>Velkopopovický Kozel светлое</h3>
-                    <p class="product-desc">4.0%, банка 0.5 л, чешское, мягкое.</p>
-                    <span class="product-price">290 ₽</span>
+                    <h3>Пиво Kozel светлое 0.45 л</h3>
+                    <p class="product-desc">Объём 0.45 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">150 ₽</span>
                 </div>
                 <div class="product-card" data-category="beer">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/images.jpg" alt="Staropramen светлое">
+                        <img loading="lazy" decoding="async" src="images/Velkopopovick%C3%BD.jpg" alt="Пиво Kozel тёмное 0.5 л">
                     </div>
-                    <h3>Staropramen светлое</h3>
-                    <p class="product-desc">5.0%, стекло 0.5 л, сбалансированное.</p>
+                    <h3>Пиво Kozel тёмное 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">150 ₽</span>
+                </div>
+                <div class="product-card" data-category="beer">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/Kru%C5%A1ovice.jpg" alt="Пиво Krušovice 0.45 л">
+                    </div>
+                    <h3>Пиво Krušovice 0.45 л</h3>
+                    <p class="product-desc">Объём 0.45 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">150 ₽</span>
+                </div>
+                <div class="product-card" data-category="beer">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/Budweiser.jpg" alt="Пиво Miller 0.5 л">
+                    </div>
+                    <h3>Пиво Miller 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">400 ₽</span>
+                </div>
+                <div class="product-card" data-category="beer">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/guiness.jpg" alt="Пиво Paulaner Weissbier 0.5 л">
+                    </div>
+                    <h3>Пиво Paulaner Weissbier 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">300 ₽</span>
+                </div>
+                <div class="product-card" data-category="beer">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/zhig.jpg" alt="Пиво «Жигулёвское» 0.45 л">
+                    </div>
+                    <h3>Пиво «Жигулёвское» 0.45 л</h3>
+                    <p class="product-desc">Объём 0.45 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">150 ₽</span>
+                </div>
+                <div class="product-card" data-category="beer">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/baltica3.jpg" alt="Пиво «Охота» крепкое 8.1% 0.45 л">
+                    </div>
+                    <h3>Пиво «Охота» крепкое 8.1% 0.45 л</h3>
+                    <p class="product-desc">Объём 0.45 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">150 ₽</span>
+                </div>
+                <div class="product-card" data-category="beer">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/images.jpg" alt="Пиво «Шпатен» 0.5 л">
+                    </div>
+                    <h3>Пиво «Шпатен» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">300 ₽</span>
+                </div>
+                <div class="product-card" data-category="beer">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/baltica3.jpg" alt="Пиво «Балтика №3» 0.5 л">
+                    </div>
+                    <h3>Пиво «Балтика №3» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">150 ₽</span>
+                </div>
+                <div class="product-card" data-category="beer">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/klin.jpg" alt="Пиво «Клинское» 0.5 л">
+                    </div>
+                    <h3>Пиво «Клинское» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">150 ₽</span>
+                </div>
+                <div class="product-card" data-category="beer">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/hamovniki.jpg" alt="Пиво «Хамовники» 0.5 л">
+                    </div>
+                    <h3>Пиво «Хамовники» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
+                    <span class="product-price">250 ₽</span>
+                </div>
+                <div class="product-card" data-category="beer">
+                    <div class="product-image">
+                        <img loading="lazy" decoding="async" src="images/images.jpg" alt="Пиво Staropramen 0.5 л">
+                    </div>
+                    <h3>Пиво Staropramen 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
                     <span class="product-price">330 ₽</span>
                 </div>
                 <div class="product-card" data-category="beer">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/Krušovice.jpg" alt="Krušovice темное">
+                        <img loading="lazy" decoding="async" src="images/images1.jpg" alt="Пиво Leffe Blonde 0.5 л">
                     </div>
-                    <h3>Krušovice темное</h3>
-                    <p class="product-desc">3.8%, банка 0.5 л, карамельное.</p>
-                    <span class="product-price">350 ₽</span>
-                </div>
-                <div class="product-card" data-category="beer">
-                    <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/hugarden.jpg" alt="Hoegaarden белое нефильтрованное">
-                    </div>
-                    <h3>Hoegaarden белое нефильтрованное</h3>
-                    <p class="product-desc">4.9%, стекло 0.5 л, с кориандром, мутное, освежающее.</p>
-                    <span class="product-price">390 ₽</span>
-                </div>
-                <div class="product-card" data-category="beer">
-                    <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/images1.jpg" alt="Leffe Blonde аббатское">
-                    </div>
-                    <h3>Leffe Blonde аббатское</h3>
-                    <p class="product-desc">6.6%, стекло 0.5 л, фруктовое, насыщенное.</p>
+                    <h3>Пиво Leffe Blonde 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
                     <span class="product-price">450 ₽</span>
                 </div>
                 <div class="product-card" data-category="beer">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/guiness.jpg" alt="Guinness Original стаут">
+                        <img loading="lazy" decoding="async" src="images/guiness.jpg" alt="Пиво Guinness Original 0.5 л">
                     </div>
-                    <h3>Guinness Original стаут</h3>
-                    <p class="product-desc">4.2%, банка 0.5 л, кофейное, плотное.</p>
+                    <h3>Пиво Guinness Original 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
                     <span class="product-price">490 ₽</span>
                 </div>
                 <div class="product-card" data-category="beer">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/Budweiser.jpg" alt="Budweiser Budvar">
+                        <img loading="lazy" decoding="async" src="images/Budweiser.jpg" alt="Пиво Budweiser Budvar 0.5 л">
                     </div>
-                    <h3>Budweiser Budvar</h3>
-                    <p class="product-desc">5.0%, стекло 0.5 л, чешский лагер.</p>
+                    <h3>Пиво Budweiser Budvar 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
                     <span class="product-price">290 ₽</span>
                 </div>
                 <div class="product-card" data-category="beer">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/corona.jpg" alt="Corona Extra светлое">
+                        <img loading="lazy" decoding="async" src="images/zhivoe.jpg" alt="Живое «Ермолино» 1 л">
                     </div>
-                    <h3>Corona Extra светлое</h3>
-                    <p class="product-desc">4.5%, стекло 0.355 л, с лаймом.</p>
-                    <span class="product-price">390 ₽</span>
-                </div>
-                <div class="product-card" data-category="beer">
-                    <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/zhivoe.jpg" alt="Живое нефильтрованное Ермолино">
-                    </div>
-                    <h3>Живое нефильтрованное "Ермолино"</h3>
-                    <p class="product-desc">5.0%, ПЭТ 1 л, непастеризованное, полный вкус.</p>
+                    <h3>Живое «Ермолино» 1 л</h3>
+                    <p class="product-desc">Объём 1 л. Доставка по Москве 24/7.</p>
                     <span class="product-price">250 ₽</span>
                 </div>
                 <div class="product-card" data-category="beer">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/sidr.jpg" alt="Сидр яблочный St. Anton">
+                        <img loading="lazy" decoding="async" src="images/sidr.jpg" alt="Сидр «St. Anton» 0.5 л">
                     </div>
-                    <h3>Сидр яблочный "St. Anton"</h3>
-                    <p class="product-desc">4.5%, стекло 0.5 л, сухой, яблочный.</p>
+                    <h3>Сидр «St. Anton» 0.5 л</h3>
+                    <p class="product-desc">Объём 0.5 л. Доставка по Москве 24/7.</p>
                     <span class="product-price">290 ₽</span>
                 </div>
-
-                <!-- ЗАКУСКИ К ПИВУ -->
+                <!-- ЗАКУСКИ -->
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/лещ.webp" alt="Лещ вяленый">
+                        <img loading="lazy" decoding="async" src="images/%D0%BB%D0%B5%D1%89.webp" alt="Лещ вяленый 150 г">
                     </div>
-                    <h3>Лещ вяленый</h3>
-                    <p class="product-desc">150 г, крупный, жирный, идеален к светлому пиву.</p>
+                    <h3>Лещ вяленый 150 г</h3>
+                    <p class="product-desc">Крупный, жирный, к светлому пиву.</p>
                     <span class="product-price">392 ₽</span>
                 </div>
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/вобла.jpg" alt="Вобла вяленая">
+                        <img loading="lazy" decoding="async" src="images/%D0%B2%D0%BE%D0%B1%D0%BB%D0%B0.jpg" alt="Вобла вяленая 100 г">
                     </div>
-                    <h3>Вобла вяленая</h3>
-                    <p class="product-desc">100 г, классическая, сухая, под пиво.</p>
+                    <h3>Вобла вяленая 100 г</h3>
+                    <p class="product-desc">Объём 100 г. Доставка по Москве 24/7.</p>
                     <span class="product-price">266 ₽</span>
                 </div>
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/тарань.webp" alt="Тарань вяленая">
+                        <img loading="lazy" decoding="async" src="images/%D1%82%D0%B0%D1%80%D0%B0%D0%BD%D1%8C.webp" alt="Тарань вяленая 100 г">
                     </div>
-                    <h3>Тарань вяленая</h3>
-                    <p class="product-desc">100 г, небольшая, ароматная.</p>
+                    <h3>Тарань вяленая 100 г</h3>
+                    <p class="product-desc">Объём 100 г. Доставка по Москве 24/7.</p>
                     <span class="product-price">238 ₽</span>
                 </div>
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/кальмар.jpg" alt="Кольца кальмара сушёные">
+                        <img loading="lazy" decoding="async" src="images/%D0%BA%D0%B0%D0%BB%D1%8C%D0%BC%D0%B0%D1%80.jpg" alt="Кольца кальмара сушёные 80 г">
                     </div>
-                    <h3>Кольца кальмара сушёные</h3>
-                    <p class="product-desc">80 г, солёные, упругие.</p>
+                    <h3>Кольца кальмара сушёные 80 г</h3>
+                    <p class="product-desc">Объём 80 г. Доставка по Москве 24/7.</p>
                     <span class="product-price">294 ₽</span>
                 </div>
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/креветки.jpg" alt="Креветки сушёные">
+                        <img loading="lazy" decoding="async" src="images/%D0%BA%D1%80%D0%B5%D0%B2%D0%B5%D1%82%D0%BA%D0%B8.jpg" alt="Креветки сушёные 70 г">
                     </div>
-                    <h3>Креветки сушёные</h3>
-                    <p class="product-desc">70 г, маленькие, солёные.</p>
+                    <h3>Креветки сушёные 70 г</h3>
+                    <p class="product-desc">Объём 70 г. Доставка по Москве 24/7.</p>
                     <span class="product-price">322 ₽</span>
                 </div>
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/раки.webp" alt="Раки варено-мороженые">
+                        <img loading="lazy" decoding="async" src="images/%D1%80%D0%B0%D0%BA%D0%B8.webp" alt="Раки варено-мороженые 500 г">
                     </div>
-                    <h3>Раки варено-мороженые</h3>
-                    <p class="product-desc">500 г, крупные, варёные, достаточно разморозить.</p>
-                    <span class="product-price">1190 ₽</span>
+                    <h3>Раки варено-мороженые 500 г</h3>
+                    <p class="product-desc">Объём 500 г. Доставка по Москве 24/7.</p>
+                    <span class="product-price">1 190 ₽</span>
                 </div>
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/кириешки.webp" alt="Сухарики Кириешки с беконом">
+                        <img loading="lazy" decoding="async" src="images/%D0%BA%D0%B8%D1%80%D0%B8%D0%B5%D1%88%D0%BA%D0%B8.webp" alt="Сухарики «Кириешки» с беконом 90 г">
                     </div>
-                    <h3>Сухарики "Кириешки" с беконом</h3>
-                    <p class="product-desc">90 г, хрустящие.</p>
+                    <h3>Сухарики «Кириешки» с беконом 90 г</h3>
+                    <p class="product-desc">Объём 90 г. Доставка по Москве 24/7.</p>
                     <span class="product-price">91 ₽</span>
                 </div>
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/гренки.webp" alt="Сухарики Воронцовские с чесноком">
+                        <img loading="lazy" decoding="async" src="images/%D0%B3%D1%80%D0%B5%D0%BD%D0%BA%D0%B8.webp" alt="Сухарики «Воронцовские» с чесноком 100 г">
                     </div>
-                    <h3>Сухарики "Воронцовские" с чесноком</h3>
-                    <p class="product-desc">100 г, ржаные.</p>
+                    <h3>Сухарики «Воронцовские» с чесноком 100 г</h3>
+                    <p class="product-desc">Объём 100 г. Доставка по Москве 24/7.</p>
                     <span class="product-price">98 ₽</span>
                 </div>
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/тиркорочкисемга.webp" alt="Сухарики Три корочки с сыром">
+                        <img loading="lazy" decoding="async" src="images/%D1%82%D0%B8%D1%80%D0%BA%D0%BE%D1%80%D0%BE%D1%87%D0%BA%D0%B8%D1%81%D0%B5%D0%BC%D0%B3%D0%B0.webp" alt="Сухарики «Три корочки» с сыром 90 г">
                     </div>
-                    <h3>Сухарики "Три корочки" с сыром</h3>
-                    <p class="product-desc">90 г, пшеничные.</p>
+                    <h3>Сухарики «Три корочки» с сыром 90 г</h3>
+                    <p class="product-desc">Объём 90 г. Доставка по Москве 24/7.</p>
                     <span class="product-price">95 ₽</span>
                 </div>
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/арахисжаренный.webp" alt="Арахис жареный солёный">
+                        <img loading="lazy" decoding="async" src="images/%D0%B0%D1%80%D0%B0%D1%85%D0%B8%D1%81%D0%B6%D0%B0%D1%80%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9.webp" alt="Арахис жареный солёный 150 г">
                     </div>
-                    <h3>Арахис жареный солёный</h3>
-                    <p class="product-desc">150 г, классика.</p>
+                    <h3>Арахис жареный солёный 150 г</h3>
+                    <p class="product-desc">Объём 150 г. Доставка по Москве 24/7.</p>
                     <span class="product-price">168 ₽</span>
                 </div>
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/фисташки.webp" alt="Фисташки солёные">
+                        <img loading="lazy" decoding="async" src="images/%D1%84%D0%B8%D1%81%D1%82%D0%B0%D1%88%D0%BA%D0%B8.webp" alt="Фисташки солёные 100 г">
                     </div>
-                    <h3>Фисташки солёные</h3>
-                    <p class="product-desc">100 г, отборные.</p>
+                    <h3>Фисташки солёные 100 г</h3>
+                    <p class="product-desc">Объём 100 г. Доставка по Москве 24/7.</p>
                     <span class="product-price">392 ₽</span>
                 </div>
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/кешью.webp" alt="Кешью жареный с солью">
+                        <img loading="lazy" decoding="async" src="images/%D0%BA%D0%B5%D1%88%D1%8C%D1%8E.webp" alt="Кешью жареный с солью 100 г">
                     </div>
-                    <h3>Кешью жареный с солью</h3>
-                    <p class="product-desc">100 г, нежные.</p>
+                    <h3>Кешью жареный с солью 100 г</h3>
+                    <p class="product-desc">Объём 100 г. Доставка по Москве 24/7.</p>
                     <span class="product-price">448 ₽</span>
                 </div>
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/лейс.webp" alt="Чипсы Lays с солью">
+                        <img loading="lazy" decoding="async" src="images/%D0%BB%D0%B5%D0%B9%D1%81.webp" alt="Чипсы Lays с солью 150 г">
                     </div>
-                    <h3>Чипсы Lays с солью</h3>
-                    <p class="product-desc">150 г, хрустящие.</p>
+                    <h3>Чипсы Lays с солью 150 г</h3>
+                    <p class="product-desc">Объём 150 г. Доставка по Москве 24/7.</p>
                     <span class="product-price">252 ₽</span>
                 </div>
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/принглс.jpg" alt="Чипсы Pringles Original">
+                        <img loading="lazy" decoding="async" src="images/%D0%BF%D1%80%D0%B8%D0%BD%D0%B3%D0%BB%D1%81.jpg" alt="Чипсы Pringles Original 165 г">
                     </div>
-                    <h3>Чипсы Pringles Original</h3>
-                    <p class="product-desc">165 г, в банке.</p>
+                    <h3>Чипсы Pringles Original 165 г</h3>
+                    <p class="product-desc">Объём 165 г. Доставка по Москве 24/7.</p>
                     <span class="product-price">476 ₽</span>
                 </div>
                 <div class="product-card" data-category="snacks">
                     <div class="product-image">
-                        <img loading="lazy" decoding="async" width="280" height="150" src="images/оливки.jpg" alt="Оливки зелёные с косточкой">
+                        <img loading="lazy" decoding="async" src="images/%D0%BE%D0%BB%D0%B8%D0%B2%D0%BA%D0%B8.jpg" alt="Оливки зелёные с косточкой 300 г">
                     </div>
-                    <h3>Оливки зелёные с косточкой</h3>
-                    <p class="product-desc">300 г, крупные.</p>
+                    <h3>Оливки зелёные с косточкой 300 г</h3>
+                    <p class="product-desc">Объём 300 г. Доставка по Москве 24/7.</p>
                     <span class="product-price">350 ₽</span>
                 </div>
             </div>
@@ -623,7 +1472,7 @@
         <a href="tel:+79997863967" class="sticky-cta-item sticky-cta-call">Позвонить</a>
         <a href="https://wa.me/79626289777?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%97%D0%B0%D0%BA%D0%B0%D0%B7%20%D0%B8%D0%B7%20%D0%BA%D0%B0%D1%82%D0%B0%D0%BB%D0%BE%D0%B3%D0%B0%20%D0%90%D0%9B%D0%9A%D0%9E%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B0%3A%20" class="sticky-cta-item sticky-cta-wa" target="_blank" rel="noopener">WhatsApp</a>
         <a href="https://t.me/alkotaxi_bot" class="sticky-cta-item sticky-cta-tg" target="_blank" rel="noopener">Telegram</a>
-        <a href="/contacts.html" class="sticky-cta-item sticky-cta-form">Заявка</a>
+        <button type="button" class="sticky-cta-item sticky-cta-form js-oneclick-open">Заявка</button>
     </div>
     <script>
         (function (m, e, t, r, i, k, a) {
@@ -635,6 +1484,27 @@
         ym(107712343, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true });
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/107712343" style="position:absolute;left:-9999px" width="1" height="1" alt="" /></div></noscript>
-    <script src="/script.js" defer></script>
+    <div id="oneclick-backdrop" class="oneclick-backdrop" hidden></div>
+<div id="oneclick-modal" class="oneclick-modal" hidden role="dialog" aria-labelledby="oneclick-title" aria-modal="true">
+  <div class="oneclick-modal-inner">
+    <button type="button" class="oneclick-close" id="oneclick-close" aria-label="Закрыть">×</button>
+    <h2 id="oneclick-title">Заказ в один клик</h2>
+    <p class="oneclick-lead">Укажите имя и телефон — менеджер перезвонит в течение нескольких минут.</p>
+    <form id="oneclick-order-form" class="oneclick-form" data-telegram-form data-source="Заказ 1 клик на сайте" data-order-type="⚡ Заказ в один клик">
+      <label class="oneclick-field">
+        <span class="oneclick-label">Ваше имя</span>
+        <input type="text" name="name" id="oneclick-name" placeholder="Как к вам обращаться" autocomplete="name" required>
+      </label>
+      <label class="oneclick-field">
+        <span class="oneclick-label">Телефон</span>
+        <input type="tel" name="phone" id="oneclick-phone" placeholder="+7 (999) 000-00-00" autocomplete="tel" required>
+      </label>
+      <button type="submit" class="btn btn-large oneclick-submit">Сделать заказ</button>
+    </form>
+    <div id="oneclick-status" class="oneclick-status" data-order-status role="status" aria-live="polite"></div>
+    <p class="oneclick-note">18+ · доставка по Москве 24/7</p>
+  </div>
+</div>
+<script src="/script.js" defer></script>
 </body>
 </html>

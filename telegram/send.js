@@ -36,21 +36,48 @@ function sanitizeForTelegram(text) {
   return String(text).replace(/[\u0000-\u001F\\]/g, ' ').slice(0, 2000);
 }
 
-export function buildOrderMessage({ name, phone, comment, source, orderType, pageUrl }) {
+function formatRub(n) {
+  const num = Number(n) || 0;
+  return num.toLocaleString('ru-RU') + ' ₽';
+}
+
+export function buildOrderMessage({ name, phone, comment, address, cart, source, orderType, pageUrl }) {
   const safeName = sanitizeForTelegram(name);
   const safePhone = sanitizeForTelegram(phone);
   const safeComment = sanitizeForTelegram(comment);
+  const safeAddress = sanitizeForTelegram(address);
   const safeSource = sanitizeForTelegram(source);
   const safeType = sanitizeForTelegram(orderType || 'Заявка');
   const safePage = sanitizeForTelegram(pageUrl);
+  const items = Array.isArray(cart) ? cart.filter((it) => it && it.name) : [];
 
-  let message =
-    `📩 ${safeType} — АЛКОдоставка\n\n` +
-    `👤 Имя: ${safeName}\n` +
-    `📞 Телефон: ${safePhone}\n` +
-    `💬 Комментарий: ${safeComment}\n` +
-    `🕐 Время: ${new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' })}\n` +
-    `📍 Источник: ${safeSource}`;
+  let message = `📩 ${safeType} — АЛКОдоставка\n\n`;
+  message += `👤 Имя: ${safeName}\n`;
+  message += `📞 Телефон: ${safePhone}\n`;
+
+  if (safeAddress && safeAddress !== '—') {
+    message += `📍 Адрес: ${safeAddress}\n`;
+  }
+
+  if (items.length) {
+    message += `\n📦 Состав заказа:\n`;
+    let total = 0;
+    items.forEach(function (it, idx) {
+      const qty = Number(it.qty) || 1;
+      const price = Number(it.price) || 0;
+      const lineTotal = price * qty;
+      total += lineTotal;
+      message += `${idx + 1}. ${sanitizeForTelegram(it.name)} × ${qty} — ${formatRub(lineTotal)}\n`;
+    });
+    message += `\n💰 Итого: ${formatRub(total)}\n`;
+  }
+
+  if (safeComment && safeComment !== '—') {
+    message += `\n💬 Комментарий: ${safeComment}\n`;
+  }
+
+  message += `\n🕐 Время: ${new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' })}\n`;
+  message += `📍 Источник: ${safeSource}`;
 
   if (pageUrl) {
     message += `\nСтраница: ${safePage}`;
@@ -72,19 +99,27 @@ export async function sendTelegramMessage(text) {
 
   const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text,
-      disable_web_page_preview: true,
-    }),
-  });
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        disable_web_page_preview: true,
+      }),
+    });
 
-  const data = await response.json();
-  if (data.ok) {
-    return { ok: true };
+    const data = await response.json();
+    if (data.ok) {
+      return { ok: true };
+    }
+    return { ok: false, error: data.description || 'Telegram API error', code: 'TELEGRAM_API' };
+  } catch (err) {
+    return {
+      ok: false,
+      error: err.message || 'Не удалось связаться с Telegram',
+      code: 'TELEGRAM_NETWORK',
+    };
   }
-  return { ok: false, error: data.description || 'Telegram API error', code: 'TELEGRAM_API' };
 }
