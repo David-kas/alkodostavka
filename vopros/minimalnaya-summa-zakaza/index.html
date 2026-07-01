@@ -22,7 +22,46 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://mc.yandex.ru" crossorigin>
   <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Какая минимальная сумма заказа?","acceptedAnswer":{"@type":"Answer","text":"Ориентир по минимальной сумме — от 1000 ₽. Точная цифра зависит от адреса, времени и акций; оператор назовёт её до подтверждения заказа."}}]}
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://alkodostavka24.vercel.app/#organization",
+      "name": "АЛКОдоставка",
+      "url": "https://alkodostavka24.vercel.app/",
+      "logo": "https://alkodostavka24.vercel.app/favicon.svg",
+      "telephone": "+79997863967",
+      "sameAs": [
+        "https://t.me/alkotaxi_bot"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://alkodostavka24.vercel.app/#website",
+      "url": "https://alkodostavka24.vercel.app/",
+      "name": "АЛКОдоставка",
+      "inLanguage": "ru-RU",
+      "publisher": {
+        "@id": "https://alkodostavka24.vercel.app/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Какая минимальная сумма заказа?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ориентир по минимальной сумме — от 1000 ₽. Точная цифра зависит от адреса, времени и акций; оператор назовёт её до подтверждения заказа."
+          }
+        }
+      ]
+    }
+  ]
+}
 </script>
 </head>
 <body>

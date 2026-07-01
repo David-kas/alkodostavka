@@ -254,21 +254,8 @@ if (!catalogHtml.includes('catalog-promo-banner')) {
   );
 }
 
-if (!catalogHtml.includes('catalog-crosssell-section')) {
-  const crossSell = `
-            <section class="catalog-crosssell-section" id="catalog-crosssell" hidden aria-labelledby="crosssell-heading">
-                <h2 id="crosssell-heading">С этим товаром часто заказывают</h2>
-                <div class="catalog-crosssell-grid" id="crosssell-grid"></div>
-            </section>
-`;
-  catalogHtml = catalogHtml.replace(
-    '</div>\n            <!-- SEO-текст каталога',
-    `</div>${crossSell}\n            <!-- SEO-текст каталога`,
-  );
-}
-
 fs.writeFileSync(CATALOG, catalogHtml, 'utf8');
-console.log('catalog.html: alts, watermark class, JSON-LD, promo, cross-sell');
+console.log('catalog.html: alts, watermark class, JSON-LD, promo');
 
 // --- all HTML: metrika alt ---
 let metrikaFixed = 0;

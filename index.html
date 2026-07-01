@@ -25,123 +25,148 @@
     <noscript><link rel="stylesheet" href="/style.min.css"></noscript>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="manifest" href="/site.webmanifest">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="Описание сайта для LLM">
 
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@graph": [
-            {
-                "@type": "WebSite",
-                "@id": "https://alkodostavka24.vercel.app/#website",
-                "url": "https://alkodostavka24.vercel.app/",
-                "name": "АЛКОдоставка",
-                "inLanguage": "ru-RU",
-                "publisher": { "@id": "https://alkodostavka24.vercel.app/#business" },
-                "potentialAction": {
-                    "@type": "SearchAction",
-                    "target": "https://alkodostavka24.vercel.app/catalog.html?q={search_term_string}",
-                    "query-input": "required name=search_term_string"
-                }
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "WebSite",
+            "@id": "https://alkodostavka24.vercel.app/#website",
+            "url": "https://alkodostavka24.vercel.app/",
+            "name": "АЛКОдоставка",
+            "inLanguage": "ru-RU",
+            "publisher": {
+                "@id": "https://alkodostavka24.vercel.app/#organization"
             },
-            {
-                "@type": ["LocalBusiness", "DeliveryService"],
-                "@id": "https://alkodostavka24.vercel.app/#business",
-                "name": "АЛКОдоставка",
-                "image": "https://alkodostavka24.vercel.app/favicon.svg",
-                "url": "https://alkodostavka24.vercel.app/",
-                "telephone": "+79997863967",
-                "priceRange": "₽₽",
-                "description": "Круглосуточная доставка алкоголя и закусок на дом по Москве и Московской области",
-                "address": {
-                    "@type": "PostalAddress",
-                    "addressLocality": "Москва",
-                    "addressRegion": "Москва",
-                    "addressCountry": "RU"
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://alkodostavka24.vercel.app/catalog.html?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        },
+        {
+            "@type": [
+                "LocalBusiness",
+                "DeliveryService",
+                "Organization"
+            ],
+            "@id": "https://alkodostavka24.vercel.app/#business",
+            "name": "АЛКОдоставка",
+            "image": "https://alkodostavka24.vercel.app/favicon.svg",
+            "url": "https://alkodostavka24.vercel.app/",
+            "telephone": "+79997863967",
+            "priceRange": "₽₽",
+            "description": "Круглосуточная доставка алкоголя и закусок на дом по Москве и Московской области",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Москва",
+                "addressRegion": "Москва",
+                "addressCountry": "RU"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 55.755826,
+                "longitude": 37.6173
+            },
+            "areaServed": [
+                {
+                    "@type": "City",
+                    "name": "Москва"
                 },
-                "geo": {
-                    "@type": "GeoCoordinates",
-                    "latitude": 55.755826,
-                    "longitude": 37.617300
-                },
-                "areaServed": [
-                    { "@type": "City", "name": "Москва" },
-                    { "@type": "AdministrativeArea", "name": "Московская область" }
-                ],
-                "openingHoursSpecification": [{
+                {
+                    "@type": "AdministrativeArea",
+                    "name": "Московская область"
+                }
+            ],
+            "openingHoursSpecification": [
+                {
                     "@type": "OpeningHoursSpecification",
-                    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+                    "dayOfWeek": [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday",
+                        "Sunday"
+                    ],
                     "opens": "00:00",
                     "closes": "23:59"
-                }],
-                "hasOfferCatalog": {
-                    "@type": "OfferCatalog",
-                    "name": "Каталог алкоголя",
-                    "url": "https://alkodostavka24.vercel.app/catalog.html"
-                },
-                "aggregateRating": {
-                    "@type": "AggregateRating",
-                    "ratingValue": "4.8",
-                    "bestRating": "5",
-                    "worstRating": "1",
-                    "ratingCount": "312"
                 }
+            ],
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Каталог алкоголя",
+                "url": "https://alkodostavka24.vercel.app/catalog.html"
             },
-            {
-                "@type": "Organization",
-                "@id": "https://alkodostavka24.vercel.app/#organization",
-                "name": "АЛКОдоставка",
-                "url": "https://alkodostavka24.vercel.app/",
-                "logo": "https://alkodostavka24.vercel.app/favicon.svg",
-                "telephone": "+79997863967",
-                "sameAs": ["https://t.me/alkotaxi_bot"]
-            },
-            {
-                "@type": "FAQPage",
-                "mainEntity": [
-                    {
-                        "@type": "Question",
-                        "name": "Как заказать доставку алкоголя на дом?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Напишите в WhatsApp или Telegram, либо оставьте заявку на странице Контакты. Мы принимаем заказы круглосуточно."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "Работаете ли вы круглосуточно?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Да, приём заказов и доставка по согласованию доступны 24/7, включая ночные часы и выходные."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "Доставляете ли алкоголь ночью?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Да, ночная доставка по Москве и области возможна. Точное время зависит от района и загрузки — уточняйте у оператора."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "Какая минимальная сумма заказа?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Минимальная сумма заказа от 1000 ₽. Условия акций и бесплатной доставки уточняйте при оформлении."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "Как быстро привезут заказ?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Во многих заказах по Москве укладываемся в 20–40 минут после подтверждения; в часы пик, ночью или при плохой погоде срок может быть ближе к часу. Менеджер назовёт реалистичное окно."
-                        }
-                    }
-                ]
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.8",
+                "bestRating": "5",
+                "worstRating": "1",
+                "ratingCount": "312"
             }
-        ]
-    }
+        },
+        {
+            "@type": "Organization",
+            "@id": "https://alkodostavka24.vercel.app/#organization",
+            "name": "АЛКОдоставка",
+            "url": "https://alkodostavka24.vercel.app/",
+            "logo": "https://alkodostavka24.vercel.app/favicon.svg",
+            "telephone": "+79997863967",
+            "sameAs": [
+                "https://t.me/alkotaxi_bot"
+            ]
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Как заказать доставку алкоголя на дом?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Напишите в WhatsApp или Telegram, либо оставьте заявку на странице Контакты. Мы принимаем заказы круглосуточно."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Работаете ли вы круглосуточно?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Да, приём заказов и доставка по согласованию доступны 24/7, включая ночные часы и выходные."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Доставляете ли алкоголь ночью?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Да, ночная доставка по Москве и области возможна. Точное время зависит от района и загрузки — уточняйте у оператора."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Какая минимальная сумма заказа?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Минимальная сумма заказа от 1000 ₽. Условия акций и бесплатной доставки уточняйте при оформлении."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Как быстро привезут заказ?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Во многих заказах по Москве укладываемся в 20–40 минут после подтверждения; в часы пик, ночью или при плохой погоде срок может быть ближе к часу. Менеджер назовёт реалистичное окно."
+                    }
+                }
+            ]
+        }
+    ]
+}
     </script>
 </head>
 <body>

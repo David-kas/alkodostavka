@@ -51,7 +51,6 @@
             var name = nameEl.textContent.trim();
             var price = parsePrice(priceEl.textContent);
             var image = imgEl ? imgEl.getAttribute('src') || '' : '';
-            var category = card.getAttribute('data-category') || 'strong';
 
             var actions = document.createElement('div');
             actions.className = 'product-card-actions';
@@ -68,7 +67,6 @@
                     btn.classList.remove('btn-add-cart--added');
                     btn.innerHTML = '<span class="btn-add-cart-icon" aria-hidden="true">+</span> В корзину';
                 }, 1400);
-                if (typeof window.showCrossSell === 'function') window.showCrossSell(card, category, name);
             });
 
             var quickBtn = document.createElement('button');
@@ -78,17 +76,11 @@
             quickBtn.setAttribute('aria-label', 'Быстрый заказ: ' + name);
             quickBtn.addEventListener('click', function () {
                 if (openOneClickModal) openOneClickModal(name);
-                if (typeof window.showCrossSell === 'function') window.showCrossSell(card, category, name);
             });
 
             actions.appendChild(btn);
             actions.appendChild(quickBtn);
             card.appendChild(actions);
-
-            card.addEventListener('click', function (e) {
-                if (e.target.closest('button')) return;
-                if (typeof window.showCrossSell === 'function') window.showCrossSell(card, category, name);
-            });
         });
 
         var timerEl = document.getElementById('promo-countdown');
@@ -123,60 +115,5 @@
             tick();
             window.setInterval(tick, 1000);
         }
-
-        var crossSection = document.getElementById('catalog-crosssell');
-        var crossGrid = document.getElementById('crosssell-grid');
-        if (!crossSection || !crossGrid) return;
-
-        var allCards = Array.from(products);
-
-        window.showCrossSell = function (sourceCard, category) {
-            var related = allCards
-                .filter(function (c) {
-                    return c !== sourceCard && c.getAttribute('data-category') === category;
-                })
-                .slice(0, 3);
-            if (related.length < 2) {
-                related = allCards.filter(function (c) {
-                    return c !== sourceCard;
-                }).slice(0, 3);
-            }
-            crossGrid.innerHTML = '';
-            related.forEach(function (c) {
-                var n = c.querySelector('h3');
-                var p = c.querySelector('.product-price');
-                var img = c.querySelector('.product-image img');
-                if (!n || !p) return;
-                var mini = document.createElement('div');
-                mini.className = 'crosssell-mini-card';
-                mini.innerHTML =
-                    '<div class="product-image image-wrap" data-watermark>' +
-                    (img
-                        ? '<img loading="lazy" decoding="async" src="' +
-                          img.getAttribute('src') +
-                          '" alt="' +
-                          (img.getAttribute('alt') || '') +
-                          '">'
-                        : '') +
-                    '</div>' +
-                    '<h3>' +
-                    n.textContent +
-                    '</h3>' +
-                    '<span class="product-price">' +
-                    p.textContent +
-                    '</span>';
-                var addBtn = document.createElement('button');
-                addBtn.type = 'button';
-                addBtn.className = 'btn btn-add-cart';
-                addBtn.textContent = 'В корзину';
-                addBtn.addEventListener('click', function () {
-                    addToCart(n.textContent.trim(), parsePrice(p.textContent), img ? img.getAttribute('src') : '');
-                });
-                mini.appendChild(addBtn);
-                crossGrid.appendChild(mini);
-            });
-            crossSection.hidden = false;
-            crossSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        };
     });
 })();

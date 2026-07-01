@@ -19,43 +19,87 @@
     <noscript><link rel="stylesheet" href="/style.min.css"></noscript>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Как заказать доставку алкоголя в Москве?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Напишите в WhatsApp или Telegram, либо заполните форму на странице Контакты. Сообщите адрес и состав заказа — оператор подтвердит время и сумму." }
-            },
-            {
-                "@type": "Question",
-                "name": "Доставляете ли вы ночью?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Да, приём заявок круглосуточно. По Москве часто 20–40 минут после подтверждения; ночью и в пик может быть до ~60 минут — уточнит оператор." }
-            },
-            {
-                "@type": "Question",
-                "name": "Какие районы и метро вы обслуживаете?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Доставляем по Москве и МО. Список районов — на странице Районы; по станциям метро — раздел Метро. Точную возможность по адресу скажем при заказе." }
-            },
-            {
-                "@type": "Question",
-                "name": "Какая минимальная сумма заказа и стоимость доставки?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Ориентир: заказ от 1000 ₽, доставка в пределах МКАД от 650 ₽. Итоговые условия фиксируются при подтверждении заказа." }
-            },
-            {
-                "@type": "Question",
-                "name": "Как оплатить заказ?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Наличные курьеру или перевод по СБП. Другие способы уточняйте при оформлении." }
-            },
-            {
-                "@type": "Question",
-                "name": "Продаёте ли вы алкоголь несовершеннолетним?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Нет. Передача алкоголя только лицам старше 18 лет при предъявлении документа по запросу курьера." }
-            }
-        ]
+      "@type": "Organization",
+      "@id": "https://alkodostavka24.vercel.app/#organization",
+      "name": "АЛКОдоставка",
+      "url": "https://alkodostavka24.vercel.app/",
+      "logo": "https://alkodostavka24.vercel.app/favicon.svg",
+      "telephone": "+79997863967",
+      "sameAs": [
+        "https://t.me/alkotaxi_bot"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://alkodostavka24.vercel.app/#website",
+      "url": "https://alkodostavka24.vercel.app/",
+      "name": "АЛКОдоставка",
+      "inLanguage": "ru-RU",
+      "publisher": {
+        "@id": "https://alkodostavka24.vercel.app/#organization"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Как заказать доставку алкоголя в Москве?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Напишите в WhatsApp или Telegram, либо заполните форму на странице Контакты. Сообщите адрес и состав заказа — оператор подтвердит время и сумму."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Доставляете ли вы ночью?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да, приём заявок круглосуточно. По Москве часто 20–40 минут после подтверждения; ночью и в пик может быть до ~60 минут — уточнит оператор."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Какие районы и метро вы обслуживаете?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Доставляем по Москве и МО. Список районов — на странице Районы; по станциям метро — раздел Метро. Точную возможность по адресу скажем при заказе."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Какая минимальная сумма заказа и стоимость доставки?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ориентир: заказ от 1000 ₽, доставка в пределах МКАД от 650 ₽. Итоговые условия фиксируются при подтверждении заказа."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как оплатить заказ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Наличные курьеру или перевод по СБП. Другие способы уточняйте при оформлении."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Продаёте ли вы алкоголь несовершеннолетним?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Нет. Передача алкоголя только лицам старше 18 лет при предъявлении документа по запросу курьера."
+          }
+        }
+      ]
     }
-    </script>
+  ]
+}
+</script>
 </head>
 <body>
 <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
