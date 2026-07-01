@@ -17,8 +17,8 @@
   <meta property="og:description" content="У метро «Рязанский проспект» в Москве: алкоголь и закуски. Линия: Таганско-Краснопресненская. Часто по Москве 20–40 мин от подтверждения; в пик до ~60 мин — предупредим заранее. Заказ от 1000 ₽, МКАД от 650 ₽, ночью 24/7. телефон, WhatsApp, Telegram или форма заявки. 18+.">
   <meta property="og:image" content="https://alkodostavka24.vercel.app/favicon.svg">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preload" href="/style.css" as="style">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="preload" href="/style.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/style.min.css"></noscript>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://mc.yandex.ru" crossorigin>
   <script type="application/ld+json">
@@ -259,12 +259,15 @@
     <button type="button" class="sticky-cta-item sticky-cta-form js-oneclick-open">Заявка</button>
   </div>
   <script>
-(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();
-for(var j=0;j<document.scripts.length;j++)if(document.scripts[j].src===r)return;
-k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=107712343','ym');
-ym(107712343,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
-</script>
+        function loadMetrika(){if(window.__alkoMetrikaLoaded)return;window.__alkoMetrikaLoaded=1;
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();
+        for(var j=0;j<document.scripts.length;j++)if(document.scripts[j].src===r)return;
+        k=e.createElement(t);a=e.getElementsByTagName(t)[0];k.async=1;k.src=r;a.parentNode.insertBefore(k,a);
+        })(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=107712343','ym');
+        ym(107712343,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});}
+        if('requestIdleCallback' in window){requestIdleCallback(loadMetrika,{timeout:3500});}
+        else{window.addEventListener('load',function(){setTimeout(loadMetrika,1500);});}
+    </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/107712343" style="position:absolute;left:-9999px" width="1" height="1" alt="Счётчик Яндекс.Метрика" aria-hidden="true"/></div></noscript>
   <div id="oneclick-backdrop" class="oneclick-backdrop" hidden></div>
 <div id="oneclick-modal" class="oneclick-modal" hidden role="dialog" aria-labelledby="oneclick-title" aria-modal="true">
@@ -287,6 +290,6 @@ ym(107712343,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
     <p class="oneclick-note">18+ · доставка по Москве 24/7</p>
   </div>
 </div>
-<script src="/script.js" defer></script>
+<script src="/script.min.js" defer></script>
 </body>
 </html>

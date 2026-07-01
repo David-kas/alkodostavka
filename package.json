@@ -13,6 +13,13 @@
     "enhance:yandex": "node scripts/enhance-yandex-seo.mjs",
     "apply:headers": "node scripts/apply-manual-headers.mjs",
     "seo:all": "node scripts/generate-seo-pages.mjs && node scripts/fix-site-seo.mjs && node scripts/enhance-yandex-seo.mjs && node scripts/apply-manual-headers.mjs",
-    "seo:audit": "node scripts/seo-full-audit.mjs"
+    "seo:audit": "node scripts/seo-full-audit.mjs",
+    "build:assets": "node scripts/build-assets.mjs",
+    "patch:perf": "node scripts/patch-performance.mjs",
+    "perf": "npm run build:assets && npm run patch:perf"
+  },
+  "devDependencies": {
+    "clean-css": "^5.3.3",
+    "terser": "^5.48.0"
   }
 }
