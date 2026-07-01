@@ -3,15 +3,22 @@
  * Подключается только на catalog.html (не грузится на главной).
  */
 (function () {
-    function ready(fn) {
+    function whenCoreReady(fn) {
+        function run() {
+            if (window.alkoAddToCart && window.alkoParsePrice) {
+                fn();
+                return;
+            }
+            window.setTimeout(run, 30);
+        }
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', fn);
+            document.addEventListener('DOMContentLoaded', run);
         } else {
-            fn();
+            run();
         }
     }
 
-    ready(function () {
+    whenCoreReady(function () {
         var addToCart = window.alkoAddToCart;
         var parsePrice = window.alkoParsePrice;
         var openOneClickModal = window.alkoOpenOneClickModal;
