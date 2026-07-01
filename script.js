@@ -281,7 +281,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const data = {
             name: name,
             phone: phone,
-            comment: comment,
+            comment: comment || (form.getAttribute('data-product-quick')
+                ? 'Быстрый заказ: ' + form.getAttribute('data-product-quick')
+                : ''),
             address: address,
             cart: cart,
             source: form.getAttribute('data-source') || 'Сайт АЛКОдоставка',
@@ -384,21 +386,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* ===== Заказ в один клик ===== */
     var closeOneClickModal = function () {};
+    var openOneClickModal = function () {};
 
     (function initOneClickOrder() {
         var backdrop = document.getElementById('oneclick-backdrop');
         var modal = document.getElementById('oneclick-modal');
         if (!modal || !backdrop) return;
 
-        function openOneClickModal() {
+        openOneClickModal = function (productName) {
             backdrop.hidden = false;
             modal.hidden = false;
             document.body.classList.add('oneclick-open');
             var status = document.getElementById('oneclick-status');
             if (status) status.textContent = '';
+            var form = document.getElementById('oneclick-order-form');
+            if (form) {
+                if (productName) {
+                    form.setAttribute('data-product-quick', productName);
+                    form.setAttribute('data-order-type', '⚡ Быстрый заказ: ' + productName);
+                } else {
+                    form.removeAttribute('data-product-quick');
+                    form.setAttribute('data-order-type', '⚡ Заказ в один клик');
+                }
+            }
             var nameInput = document.getElementById('oneclick-name');
             if (nameInput) window.setTimeout(function () { nameInput.focus(); }, 80);
-        }
+        };
 
         closeOneClickModal = function () {
             backdrop.hidden = true;
@@ -676,6 +689,11 @@ document.addEventListener('DOMContentLoaded', function () {
         var name = nameEl.textContent.trim();
         var price = parsePrice(priceEl.textContent);
         var image = imgEl ? imgEl.getAttribute('src') || '' : '';
+        var category = card.getAttribute('data-category') || 'strong';
+
+        var actions = document.createElement('div');
+        actions.className = 'product-card-actions';
+
         var btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'btn btn-add-cart';
@@ -688,9 +706,107 @@ document.addEventListener('DOMContentLoaded', function () {
                 btn.classList.remove('btn-add-cart--added');
                 btn.innerHTML = '<span class="btn-add-cart-icon" aria-hidden="true">+</span> В корзину';
             }, 1400);
+            if (typeof showCrossSell === 'function') showCrossSell(card, category, name);
         });
-        card.appendChild(btn);
+
+        var quickBtn = document.createElement('button');
+        quickBtn.type = 'button';
+        quickBtn.className = 'btn-quick-order';
+        quickBtn.textContent = '1 клик';
+        quickBtn.setAttribute('aria-label', 'Быстрый заказ: ' + name);
+        quickBtn.addEventListener('click', function () {
+            openOneClickModal(name);
+            if (typeof showCrossSell === 'function') showCrossSell(card, category, name);
+        });
+
+        actions.appendChild(btn);
+        actions.appendChild(quickBtn);
+        card.appendChild(actions);
+
+        card.addEventListener('click', function (e) {
+            if (e.target.closest('button')) return;
+            if (typeof showCrossSell === 'function') showCrossSell(card, category, name);
+        });
     });
+
+    /* Таймер акции и cross-sell в каталоге */
+    (function initCatalogPromo() {
+        var timerEl = document.getElementById('promo-countdown');
+        if (timerEl) {
+            function nextSundayEnd() {
+                var now = new Date();
+                var end = new Date(now);
+                var day = now.getDay();
+                var daysUntil = day === 0 ? 0 : 7 - day;
+                end.setDate(now.getDate() + daysUntil);
+                end.setHours(23, 59, 59, 999);
+                if (end <= now) end.setDate(end.getDate() + 7);
+                return end;
+            }
+            var promoEnd = nextSundayEnd();
+            function tick() {
+                var diff = promoEnd - Date.now();
+                if (diff <= 0) {
+                    promoEnd = nextSundayEnd();
+                    diff = promoEnd - Date.now();
+                }
+                var d = Math.floor(diff / 86400000);
+                var h = Math.floor((diff % 86400000) / 3600000);
+                var m = Math.floor((diff % 3600000) / 60000);
+                var s = Math.floor((diff % 60000) / 1000);
+                timerEl.textContent =
+                    (d ? d + 'д ' : '') +
+                    String(h).padStart(2, '0') + ':' +
+                    String(m).padStart(2, '0') + ':' +
+                    String(s).padStart(2, '0');
+            }
+            tick();
+            window.setInterval(tick, 1000);
+        }
+
+        var crossSection = document.getElementById('catalog-crosssell');
+        var crossGrid = document.getElementById('crosssell-grid');
+        if (!crossSection || !crossGrid) return;
+
+        var allCards = Array.from(document.querySelectorAll('.catalog-grid .product-card'));
+
+        window.showCrossSell = function (sourceCard, category, excludeName) {
+            var related = allCards
+                .filter(function (c) {
+                    return c !== sourceCard && c.getAttribute('data-category') === category;
+                })
+                .slice(0, 3);
+            if (related.length < 2) {
+                related = allCards.filter(function (c) { return c !== sourceCard; }).slice(0, 3);
+            }
+            crossGrid.innerHTML = '';
+            related.forEach(function (c) {
+                var n = c.querySelector('h3');
+                var p = c.querySelector('.product-price');
+                var img = c.querySelector('.product-image img');
+                if (!n || !p) return;
+                var mini = document.createElement('div');
+                mini.className = 'crosssell-mini-card';
+                mini.innerHTML =
+                    '<div class="product-image image-wrap" data-watermark>' +
+                    (img ? '<img loading="lazy" decoding="async" src="' + img.getAttribute('src') + '" alt="' + (img.getAttribute('alt') || '') + '">' : '') +
+                    '</div>' +
+                    '<h3>' + n.textContent + '</h3>' +
+                    '<span class="product-price">' + p.textContent + '</span>';
+                var addBtn = document.createElement('button');
+                addBtn.type = 'button';
+                addBtn.className = 'btn btn-add-cart';
+                addBtn.textContent = 'В корзину';
+                addBtn.addEventListener('click', function () {
+                    addToCart(n.textContent.trim(), parsePrice(p.textContent), img ? img.getAttribute('src') : '');
+                });
+                mini.appendChild(addBtn);
+                crossGrid.appendChild(mini);
+            });
+            crossSection.hidden = false;
+            crossSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        };
+    })();
 
     var commentField = document.querySelector('#order-form [name="comment"], #comment');
     if (commentField && !commentField.value.trim()) {

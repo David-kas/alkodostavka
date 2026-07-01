@@ -12,6 +12,7 @@
     "dev": "node scripts/dev-server.mjs",
     "enhance:yandex": "node scripts/enhance-yandex-seo.mjs",
     "apply:headers": "node scripts/apply-manual-headers.mjs",
-    "seo:all": "node scripts/generate-seo-pages.mjs && node scripts/fix-site-seo.mjs && node scripts/enhance-yandex-seo.mjs && node scripts/apply-manual-headers.mjs"
+    "seo:all": "node scripts/generate-seo-pages.mjs && node scripts/fix-site-seo.mjs && node scripts/enhance-yandex-seo.mjs && node scripts/apply-manual-headers.mjs",
+    "seo:audit": "node scripts/seo-full-audit.mjs"
   }
 }
