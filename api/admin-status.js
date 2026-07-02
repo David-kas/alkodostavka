@@ -1,4 +1,4 @@
-import { probeBlobStorage, getAdminPassword } from '../lib/catalog-store.mjs';
+import { probeBlobStorage, getAdminPassword, getBlobEnvFlags } from '../lib/catalog-store.mjs';
 
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
@@ -10,6 +10,8 @@ export default async function handler(req, res) {
   const isVercel = Boolean(process.env.VERCEL);
   const hasPassword = Boolean(getAdminPassword());
   const blob = await probeBlobStorage();
+  const blobEnv = getBlobEnvFlags();
+  const connected = blobEnv.hasToken || blobEnv.hasStoreId;
 
   return res.status(200).json({
     ok: true,
@@ -19,16 +21,21 @@ export default async function handler(req, res) {
     adminConfigured: hasPassword,
     blob: {
       available: blob.available,
+      connected,
+      hasStoreId: blobEnv.hasStoreId,
+      hasToken: blobEnv.hasToken,
       reason: blob.reason || null,
     },
     hints: isVercel
-      ? blob.available
-        ? ['Сохранение пишет в Vercel Blob — каталог на сайте обновится без нового деплоя.']
-        : [
-            'На Vercel диск только для чтения.',
-            'Подключите Blob: Vercel → Storage → Create Blob → Connect to project → Redeploy.',
-            'Или сохраняйте локально: npm run dev → http://127.0.0.1:3000/admin/',
-          ]
+      ? connected
+        ? ['Blob подключён. Нажмите «Сохранить на сайт» в админке — каталог запишется в хранилище.']
+        : blob.available
+          ? ['Хранилище отвечает, но проект сайта ещё не связан с Blob.']
+          : [
+              'Хранилище alkodostavka-blob создано, но не привязано к проекту сайта.',
+              'На странице Blob → вкладка Projects → Connect to Project → выберите alkodostavka24.',
+              'Затем Redeploy проекта сайта (Deployments → Redeploy).',
+            ]
       : ['Локальный режим: изменения пишутся в data/catalog.json и catalog.html.'],
   });
 }
