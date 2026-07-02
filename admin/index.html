@@ -8,10 +8,13 @@
   <link rel="stylesheet" href="/admin/admin.css">
 </head>
 <body>
+  <div id="env-banner" class="env-banner" hidden></div>
+
   <div id="login-screen" class="login-screen">
     <form id="login-form" class="login-card">
       <h1>Админ-панель</h1>
       <p class="login-hint">Управление каталогом: цены, фото, наличие</p>
+      <p class="login-hint login-hint--accent">Для сохранения локально: <code>npm run dev</code> → <a href="http://127.0.0.1:3000/admin/">127.0.0.1:3000/admin/</a></p>
       <label class="field">
         <span>Пароль</span>
         <input type="password" id="login-password" autocomplete="current-password" required>
@@ -29,6 +32,7 @@
           <span id="product-count" class="badge">0 товаров</span>
           <button type="button" id="btn-add" class="btn btn-primary">+ Добавить товар</button>
           <button type="button" id="btn-save" class="btn btn-success">Сохранить на сайт</button>
+          <button type="button" id="btn-export" class="btn btn-ghost" title="Скачать JSON на случай ошибки сохранения">Скачать JSON</button>
           <button type="button" id="btn-logout" class="btn btn-ghost">Выйти</button>
         </div>
       </div>

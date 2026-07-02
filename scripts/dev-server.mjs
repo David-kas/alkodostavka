@@ -8,6 +8,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import telegramHandler from '../api/telegram.js';
 import catalogHandler, { handleCatalogUpload, handleAdminLogin } from '../api/catalog.js';
+import adminStatusHandler from '../api/admin-status.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
@@ -122,6 +123,12 @@ async function handleApiRoute(req, res, bodyStr, bodyBuffer) {
     return telegramHandler(fakeReq, fakeRes);
   }
 
+  if (urlPath.startsWith('/api/admin-status')) {
+    const fakeReq = createReq(req.method, req.url, req.headers, null);
+    const fakeRes = createRes(res);
+    return adminStatusHandler(fakeReq, fakeRes);
+  }
+
   if (urlPath.startsWith('/api/catalog')) {
     let body = bodyStr;
     if (req.method === 'PUT') {
@@ -133,7 +140,7 @@ async function handleApiRoute(req, res, bodyStr, bodyBuffer) {
     }
     const fakeReq = createReq(req.method, req.url, req.headers, body);
     const fakeRes = createRes(res);
-    return catalogHandler(fakeReq, fakeRes);
+    return await catalogHandler(fakeReq, fakeRes);
   }
 
   if (urlPath.startsWith('/api/admin-login')) {

@@ -3,10 +3,87 @@
  * Подключается только на catalog.html (не грузится на главной).
  */
 (function () {
+    function escapeHtml(str) {
+        return String(str || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function formatPrice(n) {
+        return (Number(n) || 0).toLocaleString('ru-RU') + ' ₽';
+    }
+
+    function buildCardHtml(p) {
+        var inStock = p.inStock !== false;
+        var stockClass = inStock ? '' : ' product-card--out-of-stock';
+        var stockAttr = inStock ? 'true' : 'false';
+        var overlay = inStock
+            ? ''
+            : '\n                        <span class="product-stock-overlay" aria-hidden="true">Нет в наличии</span>';
+        var imgSrc = escapeHtml(p.image || 'images/placeholder.jpg');
+        var alt = escapeHtml(p.alt || p.name);
+        var name = escapeHtml(p.name);
+        var desc = escapeHtml(p.desc || 'Доставка по Москве 24/7.');
+        var price = formatPrice(p.price);
+        var cat = escapeHtml(p.category || 'strong');
+        var id = escapeHtml(p.id || '');
+
+        return (
+            '                <div class="product-card' +
+            stockClass +
+            '" data-category="' +
+            cat +
+            '" data-product-id="' +
+            id +
+            '" data-in-stock="' +
+            stockAttr +
+            '">\n' +
+            '                    <div class="product-image image-wrap" data-watermark>\n' +
+            '                        <img loading="lazy" decoding="async" src="' +
+            imgSrc +
+            '" alt="' +
+            alt +
+            '">' +
+            overlay +
+            '\n' +
+            '                    </div>\n' +
+            '                    <h3>' +
+            name +
+            '</h3>\n' +
+            '                    <p class="product-desc">' +
+            desc +
+            '</p>\n' +
+            '                    <span class="product-price">' +
+            price +
+            '</span>\n' +
+            '                </div>'
+        );
+    }
+
+    function hydrateGrid() {
+        var grid = document.querySelector('.catalog-grid');
+        if (!grid) return Promise.resolve(false);
+        return fetch('/api/catalog', { cache: 'no-store' })
+            .then(function (res) {
+                if (!res.ok) return false;
+                return res.json();
+            })
+            .then(function (data) {
+                if (!data || !data.products || !data.products.length) return false;
+                grid.innerHTML = data.products.map(buildCardHtml).join('\n');
+                return true;
+            })
+            .catch(function () {
+                return false;
+            });
+    }
+
     function whenCoreReady(fn) {
         function run() {
             if (window.alkoAddToCart && window.alkoParsePrice) {
-                fn();
+                Promise.resolve(fn()).catch(function () {});
                 return;
             }
             window.setTimeout(run, 30);
@@ -18,7 +95,7 @@
         }
     }
 
-    whenCoreReady(function () {
+    function initCatalogUi() {
         var addToCart = window.alkoAddToCart;
         var parsePrice = window.alkoParsePrice;
         var openOneClickModal = window.alkoOpenOneClickModal;
@@ -111,12 +188,20 @@
                 var s = Math.floor((diff % 60000) / 1000);
                 timerEl.textContent =
                     (d ? d + 'д ' : '') +
-                    String(h).padStart(2, '0') + ':' +
-                    String(m).padStart(2, '0') + ':' +
+                    String(h).padStart(2, '0') +
+                    ':' +
+                    String(m).padStart(2, '0') +
+                    ':' +
                     String(s).padStart(2, '0');
             }
             tick();
             window.setInterval(tick, 1000);
         }
+    }
+
+    whenCoreReady(function () {
+        return hydrateGrid().then(function () {
+            initCatalogUi();
+        });
     });
 })();

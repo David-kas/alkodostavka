@@ -1,6 +1,6 @@
 import {
-  readCatalog,
-  writeCatalog,
+  readCatalogAsync,
+  writeCatalogAsync,
   verifyAdminToken,
   getAdminPassword,
   IMAGES_DIR,
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET') {
     try {
-      const data = readCatalog();
+      const data = await readCatalogAsync();
       return res.status(200).json({ success: true, ...data });
     } catch (err) {
       return res.status(500).json({ error: 'Не удалось прочитать каталог', code: 'READ_ERROR' });
@@ -45,27 +45,43 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Нужен массив products', code: 'VALIDATION' });
     }
     try {
-      const normalized = body.products.map((p) => ({
-        id: String(p.id || '').trim() || makeProductId(p.name),
-        name: String(p.name || '').trim(),
-        category: String(p.category || 'strong'),
-        price: Math.max(0, parseInt(p.price, 10) || 0),
-        image: String(p.image || '').trim(),
-        alt: String(p.alt || p.name || '').trim(),
-        desc: String(p.desc || '').trim(),
-        inStock: p.inStock !== false,
-      })).filter((p) => p.name);
-      const data = writeCatalog({ ...readCatalog(), products: normalized });
-      return res.status(200).json({ success: true, count: data.products.length, updatedAt: data.updatedAt });
+      const normalized = body.products
+        .map((p) => ({
+          id: String(p.id || '').trim() || makeProductId(p.name),
+          name: String(p.name || '').trim(),
+          category: String(p.category || 'strong'),
+          price: Math.max(0, parseInt(p.price, 10) || 0),
+          image: String(p.image || '').trim(),
+          alt: String(p.alt || p.name || '').trim(),
+          desc: String(p.desc || '').trim(),
+          inStock: p.inStock !== false,
+        }))
+        .filter((p) => p.name);
+      const prev = await readCatalogAsync();
+      const data = await writeCatalogAsync({ ...prev, products: normalized });
+      return res.status(200).json({
+        success: true,
+        count: data.products.length,
+        updatedAt: data.updatedAt,
+        storage: process.env.VERCEL ? 'blob' : 'local',
+      });
     } catch (err) {
       console.error(err);
+      if (err.code === 'NO_BLOB') {
+        return res.status(503).json({
+          error:
+            'На Vercel нет Blob Storage. Vercel → Storage → Blob → Connect to project → Redeploy. Либо локально: npm run dev → http://127.0.0.1:3000/admin/',
+          code: 'NO_BLOB',
+        });
+      }
       if (err.code === 'EROFS' || err.code === 'EPERM') {
         return res.status(503).json({
-          error: 'Сохранение на сервере недоступно. Запустите npm run dev локально.',
+          error:
+            'Диск на сервере только для чтения. Локально: npm run dev → http://127.0.0.1:3000/admin/',
           code: 'READONLY_FS',
         });
       }
-      return res.status(500).json({ error: 'Ошибка сохранения', code: 'WRITE_ERROR' });
+      return res.status(500).json({ error: 'Ошибка сохранения: ' + (err.message || ''), code: 'WRITE_ERROR' });
     }
   }
 
@@ -76,6 +92,13 @@ export async function handleCatalogUpload(req, res, bodyBuffer, contentType) {
   const auth = verifyAdminToken(req.headers.authorization || req.headers.Authorization);
   if (!auth.ok) {
     return res.status(401).json({ success: false, error: 'Unauthorized', code: auth.code });
+  }
+
+  if (process.env.VERCEL) {
+    return res.status(501).json({
+      error: 'Загрузка фото на Vercel: укажите путь images/... вручную',
+      code: 'UPLOAD_DEV_ONLY',
+    });
   }
 
   const boundary = /boundary=(.+)$/i.exec(contentType || '');
@@ -108,10 +131,8 @@ export async function handleCatalogUpload(req, res, bodyBuffer, contentType) {
   }
 
   fs.mkdirSync(IMAGES_DIR, { recursive: true });
-  const dest = path.join(IMAGES_DIR, filename);
-  if (fs.existsSync(dest)) {
-    const base = path.basename(filename, ext);
-    filename = `${base}-${Date.now()}${ext}`;
+  if (fs.existsSync(path.join(IMAGES_DIR, filename))) {
+    filename = `${path.basename(filename, ext)}-${Date.now()}${ext}`;
   }
   const finalPath = path.join(IMAGES_DIR, filename);
   fs.writeFileSync(finalPath, fileData);

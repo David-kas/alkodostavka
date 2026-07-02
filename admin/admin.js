@@ -4,8 +4,73 @@
 
   let products = [];
   let editIndex = -1;
+  let serverStatus = null;
 
   const $ = (sel) => document.querySelector(sel);
+
+  function isLocalDev() {
+    const h = window.location.hostname;
+    return h === '127.0.0.1' || h === 'localhost';
+  }
+
+  function downloadCatalogJson() {
+    const payload = {
+      version: 1,
+      updatedAt: new Date().toISOString(),
+      products: products,
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'catalog.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  async function loadServerStatus() {
+    const banner = $('#env-banner');
+    if (!banner) return;
+    try {
+      const res = await fetch(apiBase + '/api/admin-status', { cache: 'no-store' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'status error');
+      serverStatus = data;
+
+      if (data.canSave && data.host === 'local') {
+        banner.className = 'env-banner env-banner--ok';
+        banner.innerHTML = '✓ Локальный сервер — сохранение работает (файлы catalog.json и catalog.html).';
+        banner.hidden = false;
+        return;
+      }
+
+      if (data.canSave && data.host === 'vercel') {
+        banner.className = 'env-banner env-banner--ok';
+        banner.innerHTML = '✓ Продакшен (Vercel Blob) — сохранение обновит каталог на сайте без деплоя.';
+        banner.hidden = false;
+        return;
+      }
+
+      banner.className = 'env-banner env-banner--warn';
+      const hints = (data.hints || []).map(function (h) {
+        return '<li>' + h + '</li>';
+      }).join('');
+      banner.innerHTML =
+        '<strong>Сохранение на этом адресе недоступно.</strong>' +
+        (hints ? '<ul>' + hints + '</ul>' : '') +
+        (!isLocalDev()
+          ? ' <p style="margin:8px 0 0">Откройте <a href="http://127.0.0.1:3000/admin/">127.0.0.1:3000/admin/</a> после <code>npm run dev</code>.</p>'
+          : '');
+      banner.hidden = false;
+    } catch {
+      if (!isLocalDev()) {
+        banner.className = 'env-banner env-banner--err';
+        banner.innerHTML =
+          'API недоступен (открыт не dev-сервер). Запустите <code>npm run dev</code> и откройте <a href="http://127.0.0.1:3000/admin/">127.0.0.1:3000/admin/</a>.';
+        banner.hidden = false;
+      }
+    }
+  }
 
   function token() {
     return sessionStorage.getItem(TOKEN_KEY) || '';
@@ -28,6 +93,18 @@
     if (!el) return;
     el.textContent = msg || '';
     el.className = 'status-msg' + (type ? ' status-msg--' + type : '');
+  }
+
+  function setBtnLoading(btn, loading, label) {
+    if (!btn) return;
+    if (loading) {
+      if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = label || 'Подождите…';
+    } else {
+      btn.disabled = false;
+      btn.textContent = btn.dataset.label || label || btn.textContent;
+    }
   }
 
   function categoryLabel(cat) {
@@ -171,19 +248,51 @@
   }
 
   async function saveCatalog() {
+    const btn = $('#btn-save');
+    setBtnLoading(btn, true, 'Сохранение…');
     setStatus('Сохранение…');
     try {
+      if (!isLocalDev() && serverStatus && !serverStatus.canSave) {
+        throw new Error(
+          'На alkodostavka24.vercel.app сохранение не работает без Blob Storage. Запустите npm run dev и откройте http://127.0.0.1:3000/admin/'
+        );
+      }
+
       const res = await fetch(apiBase + '/api/catalog', {
         method: 'PUT',
         headers: authHeaders(),
         body: JSON.stringify({ products: products }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Ошибка сохранения');
-      setStatus('✓ Сохранено ' + data.count + ' товаров. Каталог на сайте обновлён.', 'ok');
+      let data = {};
+      const raw = await res.text();
+      try {
+        data = raw ? JSON.parse(raw) : {};
+      } catch {
+        if (res.status === 404 || res.status === 405) {
+          throw new Error(
+            'API не найден. Откройте http://127.0.0.1:3000/admin/ (команда npm run dev), не Live Server и не файл с диска.'
+          );
+        }
+        throw new Error('Сервер вернул некорректный ответ');
+      }
+      if (!res.ok) {
+        const msg = data.error || 'Ошибка сохранения';
+        if (data.code === 'NO_BLOB' || data.code === 'READONLY_FS') {
+          downloadCatalogJson();
+          throw new Error(msg + ' JSON каталога скачан — не потеряйте изменения.');
+        }
+        throw new Error(msg);
+      }
+      const hint =
+        data.storage === 'blob'
+          ? 'Изменения уже на сайте (каталог подгружается с API).'
+          : 'Файл catalog.html обновлён.';
+      setStatus('✓ Сохранено ' + data.count + ' товаров. ' + hint, 'ok');
       await loadCatalog();
     } catch (e) {
       setStatus('Ошибка: ' + e.message, 'err');
+    } finally {
+      setBtnLoading(btn, false);
     }
   }
 
@@ -208,7 +317,9 @@
   $('#login-form').addEventListener('submit', async function (e) {
     e.preventDefault();
     const errEl = $('#login-error');
+    const submitBtn = this.querySelector('button[type="submit"]');
     errEl.hidden = true;
+    setBtnLoading(submitBtn, true, 'Вход…');
     try {
       const res = await fetch(apiBase + '/api/admin-login', {
         method: 'POST',
@@ -219,10 +330,13 @@
       if (!res.ok) throw new Error(data.error || 'Ошибка входа');
       setToken(data.token);
       showApp(true);
+      loadServerStatus();
       await loadCatalog();
     } catch (err) {
       errEl.textContent = err.message;
       errEl.hidden = false;
+    } finally {
+      setBtnLoading(submitBtn, false, 'Войти');
     }
   });
 
@@ -237,6 +351,11 @@
   });
 
   $('#btn-save').addEventListener('click', saveCatalog);
+
+  $('#btn-export').addEventListener('click', function () {
+    downloadCatalogJson();
+    setStatus('Файл catalog.json скачан', 'ok');
+  });
 
   $('#search').addEventListener('input', renderTable);
   $('#filter-category').addEventListener('change', renderTable);
@@ -285,8 +404,10 @@
 
   if (token()) {
     showApp(true);
+    loadServerStatus();
     loadCatalog();
   } else {
     showApp(false);
+    loadServerStatus();
   }
 })();
