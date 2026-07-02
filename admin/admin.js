@@ -1,0 +1,292 @@
+(function () {
+  const TOKEN_KEY = 'alko_admin_token';
+  const apiBase = '';
+
+  let products = [];
+  let editIndex = -1;
+
+  const $ = (sel) => document.querySelector(sel);
+
+  function token() {
+    return sessionStorage.getItem(TOKEN_KEY) || '';
+  }
+
+  function setToken(t) {
+    if (t) sessionStorage.setItem(TOKEN_KEY, t);
+    else sessionStorage.removeItem(TOKEN_KEY);
+  }
+
+  function authHeaders() {
+    return {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token(),
+    };
+  }
+
+  function setStatus(msg, type) {
+    const el = $('#status-msg');
+    if (!el) return;
+    el.textContent = msg || '';
+    el.className = 'status-msg' + (type ? ' status-msg--' + type : '');
+  }
+
+  function categoryLabel(cat) {
+    const map = { strong: 'Крепкий', wine: 'Вино', beer: 'Пиво', snacks: 'Закуски' };
+    return map[cat] || cat;
+  }
+
+  function formatRub(n) {
+    return (Number(n) || 0).toLocaleString('ru-RU') + ' ₽';
+  }
+
+  function makeId(name) {
+    return (
+      String(name || 'item')
+        .toLowerCase()
+        .replace(/[«»"']/g, '')
+        .replace(/[^a-z0-9а-яё]+/gi, '-')
+        .replace(/^-|-$/g, '')
+        .slice(0, 40) +
+      '-' +
+      Date.now().toString(36).slice(-4)
+    );
+  }
+
+  function filteredProducts() {
+    const q = ($('#search') && $('#search').value.trim().toLowerCase()) || '';
+    const cat = $('#filter-category') ? $('#filter-category').value : 'all';
+    const onlyOut = $('#filter-outstock') && $('#filter-outstock').checked;
+    return products.filter(function (p) {
+      if (cat !== 'all' && p.category !== cat) return false;
+      if (onlyOut && p.inStock !== false) return false;
+      if (q && p.name.toLowerCase().indexOf(q) === -1) return false;
+      return true;
+    });
+  }
+
+  function renderTable() {
+    const tbody = $('#product-tbody');
+    const countEl = $('#product-count');
+    if (!tbody) return;
+    const list = filteredProducts();
+    if (countEl) countEl.textContent = products.length + ' товаров';
+    tbody.innerHTML = '';
+    list.forEach(function (p) {
+      const idx = products.indexOf(p);
+      const tr = document.createElement('tr');
+      const inStock = p.inStock !== false;
+      tr.innerHTML =
+        '<td><img class="product-thumb" src="/' +
+        (p.image || '').replace(/^\//, '') +
+        '" alt="" loading="lazy" onerror="this.src=\'/favicon.svg\'"></td>' +
+        '<td class="product-name">' +
+        escapeHtml(p.name) +
+        '</td>' +
+        '<td>' +
+        categoryLabel(p.category) +
+        '</td>' +
+        '<td><strong>' +
+        formatRub(p.price) +
+        '</strong></td>' +
+        '<td>' +
+        (inStock
+          ? '<span class="in-stock-pill">В наличии</span>'
+          : '<span class="out-stock-pill">Нет в наличии</span>') +
+        '</td>' +
+        '<td>' +
+        '<button type="button" class="btn btn-sm btn-primary" data-edit="' +
+        idx +
+        '">Изменить</button> ' +
+        '<button type="button" class="btn btn-sm btn-danger" data-del="' +
+        idx +
+        '">Удалить</button>' +
+        '</td>';
+      tbody.appendChild(tr);
+    });
+
+    tbody.querySelectorAll('[data-edit]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        openEdit(parseInt(btn.getAttribute('data-edit'), 10));
+      });
+    });
+    tbody.querySelectorAll('[data-del]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const i = parseInt(btn.getAttribute('data-del'), 10);
+        if (confirm('Удалить «' + products[i].name + '»?')) {
+          products.splice(i, 1);
+          renderTable();
+          setStatus('Товар удалён. Нажмите «Сохранить на сайт».', 'ok');
+        }
+      });
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function openEdit(index) {
+    editIndex = index;
+    const p = index >= 0 ? products[index] : null;
+    $('#modal-title').textContent = p ? 'Редактировать товар' : 'Новый товар';
+    $('#edit-id').value = p ? p.id : '';
+    $('#edit-name').value = p ? p.name : '';
+    $('#edit-category').value = p ? p.category : 'strong';
+    $('#edit-price').value = p ? p.price : '';
+    $('#edit-desc').value = p ? p.desc || '' : '';
+    $('#edit-alt').value = p ? p.alt || '' : '';
+    $('#edit-image').value = p ? p.image || '' : '';
+    $('#edit-instock').checked = p ? p.inStock !== false : true;
+    updatePreview();
+    $('#edit-modal').hidden = false;
+  }
+
+  function closeEdit() {
+    $('#edit-modal').hidden = true;
+    editIndex = -1;
+  }
+
+  function updatePreview() {
+    const img = $('#edit-image').value.trim();
+    const prev = $('#edit-preview');
+    if (!prev) return;
+    prev.src = img ? '/' + img.replace(/^\//, '') : '/favicon.svg';
+  }
+
+  async function loadCatalog() {
+    setStatus('Загрузка…');
+    try {
+      const res = await fetch(apiBase + '/api/catalog');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Ошибка загрузки');
+      products = data.products || [];
+      renderTable();
+      setStatus('Загружено ' + products.length + ' товаров', 'ok');
+    } catch (e) {
+      setStatus('Ошибка: ' + e.message, 'err');
+    }
+  }
+
+  async function saveCatalog() {
+    setStatus('Сохранение…');
+    try {
+      const res = await fetch(apiBase + '/api/catalog', {
+        method: 'PUT',
+        headers: authHeaders(),
+        body: JSON.stringify({ products: products }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Ошибка сохранения');
+      setStatus('✓ Сохранено ' + data.count + ' товаров. Каталог на сайте обновлён.', 'ok');
+      await loadCatalog();
+    } catch (e) {
+      setStatus('Ошибка: ' + e.message, 'err');
+    }
+  }
+
+  async function uploadImage(file) {
+    const fd = new FormData();
+    fd.append('file', file);
+    const res = await fetch(apiBase + '/api/admin-upload', {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + token() },
+      body: fd,
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Ошибка загрузки');
+    return data.path;
+  }
+
+  function showApp(show) {
+    $('#login-screen').hidden = show;
+    $('#admin-app').hidden = !show;
+  }
+
+  $('#login-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const errEl = $('#login-error');
+    errEl.hidden = true;
+    try {
+      const res = await fetch(apiBase + '/api/admin-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: $('#login-password').value }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Ошибка входа');
+      setToken(data.token);
+      showApp(true);
+      await loadCatalog();
+    } catch (err) {
+      errEl.textContent = err.message;
+      errEl.hidden = false;
+    }
+  });
+
+  $('#btn-logout').addEventListener('click', function () {
+    setToken('');
+    showApp(false);
+    $('#login-password').value = '';
+  });
+
+  $('#btn-add').addEventListener('click', function () {
+    openEdit(-1);
+  });
+
+  $('#btn-save').addEventListener('click', saveCatalog);
+
+  $('#search').addEventListener('input', renderTable);
+  $('#filter-category').addEventListener('change', renderTable);
+  $('#filter-outstock').addEventListener('change', renderTable);
+
+  $('#edit-image').addEventListener('input', updatePreview);
+
+  $('#edit-upload').addEventListener('change', async function () {
+    const file = this.files && this.files[0];
+    if (!file) return;
+    setStatus('Загрузка фото…');
+    try {
+      const path = await uploadImage(file);
+      $('#edit-image').value = path;
+      updatePreview();
+      setStatus('Фото загружено: ' + path, 'ok');
+    } catch (e) {
+      setStatus('Ошибка загрузки: ' + e.message, 'err');
+    }
+    this.value = '';
+  });
+
+  $('#edit-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const item = {
+      id: $('#edit-id').value || makeId($('#edit-name').value),
+      name: $('#edit-name').value.trim(),
+      category: $('#edit-category').value,
+      price: parseInt($('#edit-price').value, 10) || 0,
+      desc: $('#edit-desc').value.trim(),
+      alt: $('#edit-alt').value.trim() || $('#edit-name').value.trim(),
+      image: $('#edit-image').value.trim(),
+      inStock: $('#edit-instock').checked,
+    };
+    if (!item.name) return;
+    if (editIndex >= 0) products[editIndex] = item;
+    else products.push(item);
+    closeEdit();
+    renderTable();
+    setStatus('Изменения применены. Нажмите «Сохранить на сайт».', 'ok');
+  });
+
+  document.querySelectorAll('[data-close-modal]').forEach(function (el) {
+    el.addEventListener('click', closeEdit);
+  });
+
+  if (token()) {
+    showApp(true);
+    loadCatalog();
+  } else {
+    showApp(false);
+  }
+})();

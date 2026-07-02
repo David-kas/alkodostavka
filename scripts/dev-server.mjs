@@ -7,6 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import telegramHandler from '../api/telegram.js';
+import catalogHandler, { handleCatalogUpload, handleAdminLogin } from '../api/catalog.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
@@ -106,21 +107,69 @@ function resolveStatic(urlPath) {
   return filePath;
 }
 
+async function handleApiRoute(req, res, bodyStr, bodyBuffer) {
+  const urlPath = (req.url || '').split('?')[0];
+
+  if (urlPath.startsWith('/api/telegram')) {
+    let body = bodyStr;
+    try {
+      body = JSON.parse(bodyStr || '{}');
+    } catch {
+      return sendJson(res, 400, { error: 'Некорректный JSON', code: 'INVALID_JSON' });
+    }
+    const fakeReq = createReq(req.method, req.url, req.headers, body);
+    const fakeRes = createRes(res);
+    return telegramHandler(fakeReq, fakeRes);
+  }
+
+  if (urlPath.startsWith('/api/catalog')) {
+    let body = bodyStr;
+    if (req.method === 'PUT') {
+      try {
+        body = JSON.parse(bodyStr || '{}');
+      } catch {
+        return sendJson(res, 400, { error: 'Некорректный JSON', code: 'INVALID_JSON' });
+      }
+    }
+    const fakeReq = createReq(req.method, req.url, req.headers, body);
+    const fakeRes = createRes(res);
+    return catalogHandler(fakeReq, fakeRes);
+  }
+
+  if (urlPath.startsWith('/api/admin-login')) {
+    let body = bodyStr;
+    try {
+      body = JSON.parse(bodyStr || '{}');
+    } catch {
+      body = {};
+    }
+    const fakeReq = createReq(req.method, req.url, req.headers, body);
+    const fakeRes = createRes(res);
+    return handleAdminLogin(fakeReq, fakeRes);
+  }
+
+  if (urlPath.startsWith('/api/admin-upload') && req.method === 'POST') {
+    const fakeReq = createReq(req.method, req.url, req.headers, bodyBuffer);
+    const fakeRes = createRes(res);
+  return handleCatalogUpload(fakeReq, fakeRes, bodyBuffer, req.headers['content-type'] || '');
+  }
+
+  return sendJson(res, 404, { error: 'Not found' });
+}
+
 const server = http.createServer(async (req, res) => {
   const urlPath = req.url || '/';
 
-  if (urlPath.startsWith('/api/telegram')) {
+  if (urlPath.startsWith('/api/')) {
     try {
-      if (req.method === 'GET') {
-        return await handleTelegram(req, res, '{}');
+      const chunks = [];
+      for await (const chunk of req) chunks.push(chunk);
+      const bodyBuffer = Buffer.concat(chunks);
+      const bodyStr = bodyBuffer.toString('utf8');
+      if (req.method === 'GET' && urlPath.startsWith('/api/telegram')) {
+        return await handleApiRoute(req, res, '{}', bodyBuffer);
       }
-      if (req.method === 'POST') {
-        const chunks = [];
-        for await (const chunk of req) chunks.push(chunk);
-        const bodyStr = Buffer.concat(chunks).toString('utf8');
-        return await handleTelegram(req, res, bodyStr);
-      }
-      return sendJson(res, 405, { error: 'Method not allowed' });
+      return await handleApiRoute(req, res, bodyStr, bodyBuffer);
     } catch (err) {
       console.error('API error:', err);
       return sendJson(res, 500, { error: 'Внутренняя ошибка сервера', code: 'SERVER_ERROR' });
@@ -142,7 +191,8 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, '127.0.0.1', () => {
   console.log(`АЛКОдоставка dev: http://127.0.0.1:${PORT}`);
   console.log(`API заказов:       http://127.0.0.1:${PORT}/api/telegram`);
-  console.log('Для корзины используйте этот сервер вместо Live Server (порт 5500).');
+  console.log(`Админ-панель:      http://127.0.0.1:${PORT}/admin/`);
+  console.log('Для корзины и админки используйте этот сервер вместо Live Server (порт 5500).');
 });
 
 process.on('unhandledRejection', (err) => {

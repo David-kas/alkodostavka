@@ -17,7 +17,10 @@
     "fix:schema": "node scripts/fix-schema.mjs",
     "build:assets": "node scripts/build-assets.mjs",
     "patch:perf": "node scripts/patch-performance.mjs",
-    "perf": "npm run build:assets && npm run patch:perf"
+    "export:catalog": "node scripts/export-catalog-json.mjs",
+    "catalog:render": "node scripts/render-catalog-html.mjs",
+    "perf": "npm run build:assets && npm run patch:perf",
+    "site:audit": "node scripts/site-audit.mjs"
   },
   "devDependencies": {
     "clean-css": "^5.3.3",

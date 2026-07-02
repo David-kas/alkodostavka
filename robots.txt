@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
 
 Sitemap: https://alkodostavka24.vercel.app/sitemap.xml
 Host: https://alkodostavka24.vercel.app

@@ -44,6 +44,9 @@
 
         products.forEach(function (card) {
             if (card.querySelector('.btn-add-cart')) return;
+            if (card.getAttribute('data-in-stock') === 'false' || card.classList.contains('product-card--out-of-stock')) {
+                return;
+            }
             var nameEl = card.querySelector('h3');
             var priceEl = card.querySelector('.product-price');
             var imgEl = card.querySelector('.product-image img');
