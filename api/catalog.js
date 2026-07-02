@@ -135,7 +135,7 @@ export function handleAdminLogin(req, res) {
   if (!password) {
     return res.status(503).json({ error: 'ADMIN_PASSWORD не задан', code: 'ADMIN_NOT_CONFIGURED' });
   }
-  if (body.password !== password) {
+  if (String(body.password || '').trim() !== password) {
     return res.status(401).json({ error: 'Неверный пароль', code: 'UNAUTHORIZED' });
   }
   return res.status(200).json({ success: true, token: password });

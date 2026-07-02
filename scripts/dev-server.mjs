@@ -26,7 +26,7 @@ function loadEnvFile() {
     if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
       val = val.slice(1, -1);
     }
-    if (!process.env[key]) process.env[key] = val;
+    if (!process.env[key] || key === 'ADMIN_PASSWORD') process.env[key] = val;
   }
 }
 
