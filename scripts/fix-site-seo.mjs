@@ -1,5 +1,5 @@
 /**
- * SEO / домен / телефоны: звонки +79997863967, WhatsApp 79626289777 (без текста WA на странице).
+ * SEO / домен / телефоны: звонки +79251219972, WhatsApp 79626289777 (без текста WA на странице).
  * Запуск: node scripts/fix-site-seo.mjs
  */
 import fs from 'fs';
@@ -9,8 +9,8 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
 const BASE = 'https://alkodostavka24.vercel.app';
-const CALL_TEL = '+79997863967';
-const CALL_DISPLAY = '+7 (999) 786-39-67';
+const CALL_TEL = '+79251219972';
+const CALL_DISPLAY = '+7 (925) 121-99-72';
 const WA_PHONE = '79626289777';
 
 const OLD_DOMAINS = [
@@ -46,15 +46,15 @@ function fixPhones(c) {
   let out = c;
 
   out = out.replace(/tel:\+79626289777/g, `tel:${CALL_TEL}`);
-  out = out.replace(/tel:\+79997863967/g, `tel:${CALL_TEL}`);
+  out = out.replace(/tel:\+79251219972/g, `tel:${CALL_TEL}`);
 
-  out = out.replace(/wa\.me\/79997863967/g, `wa.me/${WA_PHONE}`);
+  out = out.replace(/wa\.me\/79251219972/g, `wa.me/${WA_PHONE}`);
   out = out.replace(/wa\.me\/79648489888/g, `wa.me/${WA_PHONE}`);
-  out = out.replace(/whatsapp:\/\/send\?phone=79997863967/g, `whatsapp://send?phone=${WA_PHONE}`);
+  out = out.replace(/whatsapp:\/\/send\?phone=79251219972/g, `whatsapp://send?phone=${WA_PHONE}`);
   out = out.replace(/whatsapp:\/\/send\?phone=79626289777/g, `whatsapp://send?phone=${WA_PHONE}`);
 
   out = out.replace(/"telephone": "\+79626289777"/g, `"telephone": "${CALL_TEL}"`);
-  out = out.replace(/"telephone": "\+79997863967"/g, `"telephone": "${CALL_TEL}"`);
+  out = out.replace(/"telephone": "\+79251219972"/g, `"telephone": "${CALL_TEL}"`);
 
   out = out.replace(
     /<div class="header-phone-promo">\s*<span class="badge-247">24\/7<\/span>\s*<span class="phone-sub">/g,
@@ -66,7 +66,7 @@ function fixPhones(c) {
   );
 
   out = out.replace(
-    /<div class="mobile-callbar-right">\s*<a href="tel:\+79997863967" class="mobile-callbar-cta">Позвонить<\/a>\s*<\/div>/g,
+    /<div class="mobile-callbar-right">\s*<a href="tel:\+79251219972" class="mobile-callbar-cta">Позвонить<\/a>\s*<\/div>/g,
     `<div class="mobile-callbar-right">\n      <a href="tel:${CALL_TEL}" class="mobile-callbar-tel"><span class="mobile-callbar-icon" aria-hidden="true">☎</span><span class="mobile-callbar-num">${CALL_DISPLAY}</span></a>\n    </div>`,
   );
 
@@ -82,11 +82,11 @@ function fixPhones(c) {
     );
   }
 
-  out = out.replace(/<a href="tel:\+79997863967">\+79626289777<\/a>/g, `<a href="tel:${CALL_TEL}">${CALL_DISPLAY}</a>`);
-  out = out.replace(/<a href="tel:\+79997863967">79626289777<\/a>/g, `<a href="tel:${CALL_TEL}">${CALL_DISPLAY}</a>`);
-  out = out.replace(/<a href="tel:\+79997863967">\+79997863967<\/a>/g, `<a href="tel:${CALL_TEL}">${CALL_DISPLAY}</a>`);
-  out = out.replace(/<a href="tel:\+79997863967">Позвонить<\/a>/g, `<a href="tel:${CALL_TEL}">${CALL_DISPLAY}</a>`);
-  out = out.replace(/<a href="tel:\+79997863967">позвонить<\/a>/g, `<a href="tel:${CALL_TEL}">${CALL_DISPLAY}</a>`);
+  out = out.replace(/<a href="tel:\+79251219972">\+79626289777<\/a>/g, `<a href="tel:${CALL_TEL}">${CALL_DISPLAY}</a>`);
+  out = out.replace(/<a href="tel:\+79251219972">79626289777<\/a>/g, `<a href="tel:${CALL_TEL}">${CALL_DISPLAY}</a>`);
+  out = out.replace(/<a href="tel:\+79251219972">\+79251219972<\/a>/g, `<a href="tel:${CALL_TEL}">${CALL_DISPLAY}</a>`);
+  out = out.replace(/<a href="tel:\+79251219972">Позвонить<\/a>/g, `<a href="tel:${CALL_TEL}">${CALL_DISPLAY}</a>`);
+  out = out.replace(/<a href="tel:\+79251219972">позвонить<\/a>/g, `<a href="tel:${CALL_TEL}">${CALL_DISPLAY}</a>`);
 
   out = out.replace(/ ☎ \+79626289777/g, '');
   out = out.replace(/ \+79626289777\. 18/g, '. 18');
