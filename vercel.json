@@ -2,7 +2,12 @@
   "redirects": [
     {
       "source": "/korporativ.html",
-      "destination": "/povod/korporativ/",
+      "destination": "https://alkodastavka.vercel.app/povod/korporativ/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "destination": "https://alkodastavka.vercel.app/:path*",
       "permanent": true
     }
   ],
