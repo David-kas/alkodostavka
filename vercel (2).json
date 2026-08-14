@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "destination": "https://alkodastavka.vercel.app/:path*",
+      "statusCode": 301
+    }
+  ]
+}
