@@ -17,17 +17,3 @@
     }
   ]
 }
-{
-  "redirects": [
-    {
-      "source": "/korporativ.html",
-      "destination": "https://alkodastavka.vercel.app/povod/korporativ/",
-      "statusCode": 301
-    },
-    {
-      "source": "/:path*",
-      "destination": "https://alkodastavka.vercel.app/:path*",
-      "statusCode": 301
-    }
-  ]
-}
