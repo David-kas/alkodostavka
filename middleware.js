@@ -4,7 +4,15 @@ export const config = {
 
 export default function middleware(request) {
   const url = new URL(request.url);
+  const host = url.hostname.toLowerCase();
   const userAgent = request.headers.get('user-agent') || '';
+
+  // === 301 РЕДИРЕКТ НА alkodastavka.vercel.app ===
+  // Редиректим все запросы с любых доменов, кроме alkodastavka.vercel.app
+  if (host !== 'alkodastavka.vercel.app') {
+    const target = new URL(url.pathname + url.search, 'https://alkodastavka.vercel.app');
+    return Response.redirect(target.toString(), 301);
+  }
 
   // Пропускаем статику и API без проверки
   const staticPathPattern = /^\/(favicon|apple-touch-icon|site\.webmanifest|favicon-.*\.png)/i;
